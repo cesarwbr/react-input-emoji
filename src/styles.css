@@ -1,8 +1,134 @@
-/* add css styles here (optional) */
+.react-emoji-input--container {
+  color: #4b4b4b;
+  text-rendering: optimizeLegibility;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 21px;
+  padding: 9px 12px 11px;
+  margin: 5px 10px;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  min-height: 20px;
+  min-width: 0;
+  outline: none;
+  width: inherit;
+  will-change: width;
+  vertical-align: baseline;
+  border: 1px solid #EAEAEA;
+  font-display: sans-serif;
+  margin-right: 0;
+}
 
-.test {
-  display: inline-block;
-  margin: 2em auto;
-  border: 2px solid #000;
-  font-size: 2em;
+.react-emoji-input--wrapper {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+  padding-right: 0;
+  vertical-align: baseline;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.react-emoji-input--input {
+  font-size: 15px;
+  font-weight: 400;
+  max-height: 100px;
+  min-height: 20px;
+  outline: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  z-index: 1;
+  width: 100%;
+  user-select: text;
+  font-family: sans-serif;
+}
+
+
+.react-emoji-input--input img {
+  vertical-align: middle;
+  width: 18px!important;
+  height: 18px!important;
+  display: inline!important;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.react-emoji-input--placeholder {
+  color: #a0a0a0;
+  font-size: 15px;
+  line-height: 20px;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity .08s linear;
+  user-select: none;
+  z-index: 2;
+  left: 2;
+  top: 0;
+  font-family: sans-serif;
+}
+
+.react-emoji-input--button {
+  position: relative;
+  display: block;
+  text-align: center;
+  padding: 0 10px;
+  overflow: hidden;
+  transition: color .1s ease-out;
+  margin: 0;
+  box-shadow: none;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+
+.react-emoji-input--button svg {
+  fill: #858585;
+}
+
+.react-emoji-input--button__show svg {
+  fill: #128b7e;
+}
+
+.react-emoji {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.react-emoji-picker--container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.react-emoji-picker--wrapper {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 357px;
+  width: 338px;
+  overflow: hidden;
+}
+
+.react-emoji-picker {
+  position: absolute;
+  top: 357px;
+  left: 0;
+  transition: top 0.1s ease-in-out;
+}
+
+.react-emoji-picker__show {
+  top: 0;
 }
