@@ -13,16 +13,19 @@ npm install --save react-emoji-input
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
-import MyComponent from 'react-emoji-input'
+import ReactEmojiInput from 'react-emoji-input'
 
-class Example extends Component {
-  render () {
-    return (
-      <MyComponent />
-    )
-  }
+function Example () {
+  const [ text, setText ] = useState('')
+
+  return (
+    <ReactEmojiInput
+      text={text}
+      onChange={setText}
+    />
+  )
 }
 ```
 
