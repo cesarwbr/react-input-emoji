@@ -69,6 +69,11 @@ export default class ReactEmojiInput extends Component {
     }
   }
 
+  setValue = (value) => {
+    this.updateHTML(value)
+    this.textInput.current.blur()
+  }
+
   updateHTML = (value = this.props.value) => {
     this.setState({ html: value })
     this.textInput.current.innerHTML = this.replaceAllTextEmojis(value)
@@ -272,13 +277,27 @@ export default class ReactEmojiInput extends Component {
     })
   }
 
+  // handleContainerClick = () => {
+  //   var p = this.textInput.current
+  //   var s = window.getSelection()
+  //   var r = document.createRange()
+  //   p.innerHTML = '\u00a0'
+  //   r.selectNodeContents(p)
+  //   s.removeAllRanges()
+  //   s.addRange(r)
+  //   document.execCommand('delete', false, null)
+  // }
+
   render () {
     const { showPicker, html } = this.state
     const placeholder = 'Type a message'
 
     return (
       <div className='react-emoji'>
-        <div className='react-emoji-picker--container'>
+        <div
+          className='react-emoji-picker--container'
+          onClick={this.handleContainerClick}
+        >
           <div className='react-emoji-picker--wrapper'>
             <div
               className={

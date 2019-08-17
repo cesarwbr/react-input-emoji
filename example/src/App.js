@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import ReactEmojiInput from 'react-emoji-input'
 import Highlight from 'react-highlight.js'
@@ -27,6 +27,8 @@ import {
 
 export default function App (){
   const [ text, setText ] = useState('asdfasdfklasdfa🙄')
+
+  const inputEl = useRef(null)
 
   const exampleCode = `import React, { useState } from 'react'
 import ReactEmojiInput from 'react-emoji-input'
@@ -79,14 +81,19 @@ export default function Example () {
         <Description>Use react-emoji-input to display your input with emoji support like so:</Description>
         <Example>
           <ReactEmojiInput
+            ref={inputEl}
             value={text}
             onChange={(text) => {
               console.log('text', text)
               setText(text)
+              console.log('inputEl', inputEl)
             }}
             cleanOnEnter
             onEnter={text => {
               console.log('enter', text)
+              setTimeout(() => {
+                inputEl.current.setValue('kkkkk')
+              }, 2000)
             }}
           />
         </Example>

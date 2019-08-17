@@ -4,7 +4,6 @@
   background-color: #fff;
   border: 1px solid #fff;
   border-radius: 21px;
-  padding: 9px 12px 11px;
   margin: 5px 10px;
   box-sizing: border-box;
   flex: 1 1 auto;
@@ -50,6 +49,7 @@
   width: 100%;
   user-select: text;
   font-family: sans-serif;
+  padding: 9px 12px 11px;
 }
 
 
@@ -65,15 +65,18 @@
 .react-emoji-input--placeholder {
   color: #a0a0a0;
   font-size: 15px;
-  line-height: 20px;
   pointer-events: none;
   position: absolute;
   transition: opacity .08s linear;
   user-select: none;
   z-index: 2;
-  left: 2;
+  left: 12px;
   top: 0;
+  bottom: 0;
   font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 22px);
 }
 
 .react-emoji-input--button {
