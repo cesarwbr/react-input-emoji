@@ -26,7 +26,7 @@ import {
 } from './style';
 
 export default function App (){
-  const [ text, setText ] = useState('')
+  const [ text, setText ] = useState('asdfasdfklasdfa🙄')
 
   const exampleCode = `import React, { useState } from 'react'
 import ReactEmojiInput from 'react-emoji-input'
@@ -78,7 +78,17 @@ export default function Example () {
         <h1>Usage</h1>
         <Description>Use react-emoji-input to display your input with emoji support like so:</Description>
         <Example>
-          <ReactEmojiInput html={text} onChange={setText} />
+          <ReactEmojiInput
+            value={text}
+            onChange={(text) => {
+              console.log('text', text)
+              setText(text)
+            }}
+            cleanOnEnter
+            onEnter={text => {
+              console.log('enter', text)
+            }}
+          />
         </Example>
         <Snippet>
           <Code>

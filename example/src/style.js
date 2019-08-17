@@ -139,11 +139,16 @@ export const EmojiInput = styled.div`
   border-radius: 25px;
   color: #15a085;
   line-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 export const EmojiInputCursor = styled.span`
   font-size: 26px;
   animation: blinker 1s linear infinite;
+  line-height: 30px;
+  padding-bottom: 7px;
 
   @keyframes blinker {
     50% {
