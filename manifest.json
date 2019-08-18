@@ -1,6 +1,6 @@
 {
-  "short_name": "react-emoji-input",
-  "name": "react-emoji-input",
+  "short_name": "react-input-emoji",
+  "name": "react-input-emoji",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
