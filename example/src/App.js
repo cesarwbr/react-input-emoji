@@ -26,7 +26,7 @@ import {
 } from './style';
 
 export default function App (){
-  const [ text, setText ] = useState('asdfasdfklasdfa🙄')
+  const [ text, setText ] = useState('')
 
   const inputEl = useRef(null)
 
@@ -83,19 +83,13 @@ export default function Example () {
           <ReactEmojiInput
             ref={inputEl}
             value={text}
-            onChange={(text) => {
-              console.log('text', text)
-              setText(text)
-              console.log('inputEl', inputEl)
-            }}
+            onChange={setText}
             cleanOnEnter
             onEnter={text => {
               console.log('enter', text)
-              setTimeout(() => {
-                inputEl.current.setValue('kkkkk')
-              }, 2000)
             }}
             height={40}
+            placeholder='Type a message'
           />
         </Example>
         <Snippet>

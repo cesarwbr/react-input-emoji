@@ -24,14 +24,6 @@ export default class ReactEmojiInput extends Component {
     }
   }
 
-  // componentWillReceiveProps (nextProps) {
-  //   const { value } = this.props
-
-  //   if (value !== nextProps.value) {
-  //     this.updateHTML(nextProps.value)
-  //   }
-  // }
-
   componentDidMount () {
     this.handleContentEditableInputCopyAndPaste()
 
@@ -99,7 +91,6 @@ export default class ReactEmojiInput extends Component {
       allEmojiStyle[emoji] = style
     })
 
-    console.log(allEmojiStyle)
     this.setState({ allEmojiStyle })
   }
 
@@ -169,7 +160,6 @@ export default class ReactEmojiInput extends Component {
   }
 
   getImage = (emoji) => {
-    console.log('emoji', emoji)
     let shortNames = `${emoji.short_names}`
 
     shortNames = this.replaceAll(shortNames, ',', ', ')
@@ -227,11 +217,6 @@ export default class ReactEmojiInput extends Component {
   handleContentEditableInputCopyAndPaste = () => {
     const self = this
     this.textInput.current.addEventListener('copy', function (e) {
-      // var selectedText = window.getSelection()
-      // var range = selectedText.getRangeAt(0)
-      // var selectedTextReplacement = range.toString()
-      // e.clipboardData.setData('text/plain', selectedTextReplacement)
-      // e.preventDefault() // default behaviour is to copy any selected text
       const selectedText = window.getSelection()
 
       let container = document.createElement('div')
@@ -241,7 +226,7 @@ export default class ReactEmojiInput extends Component {
       }
 
       container = replaceEmojiToString(container)
-      console.log('container.innerText', container.innerText)
+
       e.clipboardData.setData('text', container.innerText)
       e.preventDefault()
 
@@ -277,21 +262,12 @@ export default class ReactEmojiInput extends Component {
     })
   }
 
-  // handleContainerClick = () => {
-  //   var p = this.textInput.current
-  //   var s = window.getSelection()
-  //   var r = document.createRange()
-  //   p.innerHTML = '\u00a0'
-  //   r.selectNodeContents(p)
-  //   s.removeAllRanges()
-  //   s.addRange(r)
-  //   document.execCommand('delete', false, null)
-  // }
-
   render () {
-    const { height = 40 } = this.props
+    const {
+      height = 40,
+      placeholder = 'Type a message'
+    } = this.props
     const { showPicker, html } = this.state
-    const placeholder = 'Type a message'
 
     return (
       <div className='react-emoji'>
@@ -358,5 +334,6 @@ ReactEmojiInput.propTypes = {
   onChange: t.func,
   cleanOnEnter: t.bool,
   onEnter: t.func,
-  height: t.number
+  height: t.number,
+  placeholder: t.string
 }
