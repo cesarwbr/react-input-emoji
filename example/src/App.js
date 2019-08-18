@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 
-import ReactEmojiInput from 'react-input-emoji'
+import InputEmoji from 'react-input-emoji'
 import Highlight from 'react-highlight.js'
 
 // style
@@ -32,7 +32,7 @@ export default function App (){
   const inputEl = useRef(null)
 
   const exampleCode = `import React, { useState } from 'react'
-import ReactEmojiInput from 'react-input-emoji'
+import InputEmoji from 'react-input-emoji'
 
 export default function Example () {
   const [ text, setText ] = useState('')
@@ -42,7 +42,7 @@ export default function Example () {
   }
 
   return (
-    <ReactEmojiInput
+    <InputEmoji
       value={text}
       onChange={setText}
       cleanOnEnter
@@ -71,7 +71,7 @@ export default function Example () {
       </Header>
       <Main>
         <Description>
-          ReactEmojiInput provides a simple way to have an input element with emoji picker support. Click the picker button next to the input field and select an emoji from the popup window. Done!
+          InputEmoji provides a simple way to have an input element with emoji picker support. Click the picker button next to the input field and select an emoji from the popup window. Done!
         </Description>
         <h1>Install</h1>
         <Description>
@@ -87,7 +87,7 @@ export default function Example () {
           After install import the react-input-emoji component to display your input with emoji support like so:
         </Description>
         <Example>
-          <ReactEmojiInput
+          <InputEmoji
             ref={inputEl}
             value={text}
             onChange={setText}

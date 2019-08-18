@@ -6,7 +6,7 @@
 
 ## About
 
-ReactEmojiInput provides a simple way to have an input element with emoji picker support. Click the picker button next to the input field and select an emoji from the popup window. Done!
+InputEmoji provides a simple way to have an input element with emoji picker support. Click the picker button next to the input field and select an emoji from the popup window. Done!
 
 ## Install
 
@@ -20,7 +20,7 @@ After install import the react-input-emoji component to display your input with 
 
 ```jsx
 import React, { useState } from 'react'
-import ReactEmojiInput from 'react-input-emoji'
+import InputEmoji from 'react-input-emoji'
 
 export default function Example () {
   const [ text, setText ] = useState('')
@@ -30,7 +30,7 @@ export default function Example () {
   }
 
   return (
-    <ReactEmojiInput
+    <InputEmoji
       value={text}
       onChange={setText}
       cleanOnEnter

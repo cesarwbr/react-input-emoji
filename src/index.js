@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce'
 
 import './styles.css'
 
-export default class ReactEmojiInput extends Component {
+export default class InputEmoji extends Component {
   state = {
     html: '',
     showPicker: false,
@@ -329,7 +329,7 @@ export default class ReactEmojiInput extends Component {
   }
 }
 
-ReactEmojiInput.propTypes = {
+InputEmoji.propTypes = {
   value: t.string,
   onChange: t.func,
   cleanOnEnter: t.bool,
