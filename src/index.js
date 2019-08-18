@@ -68,7 +68,7 @@ export default class ReactEmojiInput extends Component {
 
   updateHTML = (value = this.props.value) => {
     this.setState({ html: value })
-    this.textInput.current.innerHTML = this.replaceAllTextEmojis(value)
+    this.textInput.current.innerHTML = this.replaceAllTextEmojis(value || '')
   }
 
   emitOnChange = () => {
