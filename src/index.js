@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
-import PropTypes from 'prop-types'
+import t from 'prop-types'
+import debounce from 'lodash/debounce'
 
 import './styles.css'
 
@@ -17,19 +18,61 @@ export default class ReactEmojiInput extends Component {
     super(props)
 
     this.textInput = React.createRef()
-  }
 
-  componentWillReceiveProps (nextProps) {
-    const { value } = this.props
-
-    if (value !== nextProps.value) {
-      this.setState({ html: nextProps.value })
+    if (typeof props.onChange === 'function') {
+      this.onChangeDebounced = debounce(this.emitOnChange, 100)
     }
   }
 
   componentDidMount () {
     this.handleContentEditableInputCopyAndPaste()
+
     this.getAllEmojiStyle()
+
+    this.updateHTML()
+
+    this.listenKeydown()
+  }
+
+  listenKeydown = () => {
+    const { cleanOnEnter, onChange, onEnter } = this.props
+
+    if (cleanOnEnter) {
+      this.textInput.current.addEventListener('keydown', event => {
+        if (event.keyCode === 13) {
+          event.preventDefault()
+          return false
+        }
+      })
+      this.textInput.current.addEventListener('keyup', event => {
+        if (event.keyCode === 13) {
+          const cleanedText = this.replaceAllTextEmojiToString()
+          if (typeof onEnter === 'function') {
+            onEnter(cleanedText)
+          }
+
+          if (typeof onChange === 'function') {
+            onChange(cleanedText)
+          }
+
+          this.updateHTML('')
+        }
+      })
+    }
+  }
+
+  setValue = (value) => {
+    this.updateHTML(value)
+    this.textInput.current.blur()
+  }
+
+  updateHTML = (value = this.props.value) => {
+    this.setState({ html: value })
+    this.textInput.current.innerHTML = this.replaceAllTextEmojis(value)
+  }
+
+  emitOnChange = () => {
+    this.props.onChange(this.replaceAllTextEmojiToString())
   }
 
   getAllEmojiStyle = () => {
@@ -48,7 +91,6 @@ export default class ReactEmojiInput extends Component {
       allEmojiStyle[emoji] = style
     })
 
-    console.log(allEmojiStyle)
     this.setState({ allEmojiStyle })
   }
 
@@ -62,12 +104,25 @@ export default class ReactEmojiInput extends Component {
     this.setState({ html })
 
     if (typeof this.props.onChange === 'function') {
-      this.props.onChange(html)
+      this.onChangeDebounced(html)
     }
   }
 
+  replaceAllTextEmojiToString = () => {
+    const container = document.createElement('div')
+    container.innerHTML = this.textInput.current.innerHTML
+
+    const images = container.querySelectorAll('img')
+
+    images.forEach(image => {
+      image.outerHTML = image.dataset.emoji
+    })
+
+    return container.innerText
+  }
+
   pasteHtmlAtCaret = (html) => {
-    var sel, range
+    let sel, range
     if (window.getSelection) {
       // IE9 and non-IE
       sel = window.getSelection()
@@ -77,9 +132,9 @@ export default class ReactEmojiInput extends Component {
 
         // Range.createContextualFragment() would be useful here but is
         // non-standard and not supported in all browsers (IE9, for one)
-        var el = document.createElement('div')
+        const el = document.createElement('div')
         el.innerHTML = html
-        var frag = document.createDocumentFragment(); var node; var lastNode
+        const frag = document.createDocumentFragment(); var node; var lastNode
         while ((node = el.firstChild)) {
           lastNode = frag.appendChild(node)
         }
@@ -105,7 +160,6 @@ export default class ReactEmojiInput extends Component {
   }
 
   getImage = (emoji) => {
-    console.log('emoji', emoji)
     let shortNames = `${emoji.short_names}`
 
     shortNames = this.replaceAll(shortNames, ',', ', ')
@@ -163,11 +217,6 @@ export default class ReactEmojiInput extends Component {
   handleContentEditableInputCopyAndPaste = () => {
     const self = this
     this.textInput.current.addEventListener('copy', function (e) {
-      // var selectedText = window.getSelection()
-      // var range = selectedText.getRangeAt(0)
-      // var selectedTextReplacement = range.toString()
-      // e.clipboardData.setData('text/plain', selectedTextReplacement)
-      // e.preventDefault() // default behaviour is to copy any selected text
       const selectedText = window.getSelection()
 
       let container = document.createElement('div')
@@ -177,7 +226,7 @@ export default class ReactEmojiInput extends Component {
       }
 
       container = replaceEmojiToString(container)
-      console.log('container.innerText', container.innerText)
+
       e.clipboardData.setData('text', container.innerText)
       e.preventDefault()
 
@@ -214,12 +263,18 @@ export default class ReactEmojiInput extends Component {
   }
 
   render () {
+    const {
+      height = 40,
+      placeholder = 'Type a message'
+    } = this.props
     const { showPicker, html } = this.state
-    const placeholder = 'Type a message'
 
     return (
       <div className='react-emoji'>
-        <div className='react-emoji-picker--container'>
+        <div
+          className='react-emoji-picker--container'
+          onClick={this.handleContainerClick}
+        >
           <div className='react-emoji-picker--wrapper'>
             <div
               className={
@@ -253,6 +308,10 @@ export default class ReactEmojiInput extends Component {
               className='react-emoji-input--input'
               onInput={this.emitChange}
               onBlur={this.emitChange}
+              style={{
+                paddingTop: (height - 20) / 2,
+                paddingBottom: (height - 20) / 2
+              }}
             />
           </div>
         </div>
@@ -271,6 +330,10 @@ export default class ReactEmojiInput extends Component {
 }
 
 ReactEmojiInput.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func
+  value: t.string,
+  onChange: t.func,
+  cleanOnEnter: t.bool,
+  onEnter: t.func,
+  height: t.number,
+  placeholder: t.string
 }
