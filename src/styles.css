@@ -123,6 +123,7 @@
   height: 357px;
   width: 338px;
   overflow: hidden;
+  z-index: 10;
 }
 
 .react-emoji-picker {
