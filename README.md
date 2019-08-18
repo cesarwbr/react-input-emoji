@@ -45,7 +45,7 @@ export default function Example () {
 ## Props
 
 | Prop | Type | Default | Description |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | `value` | string | "" | The input value. |
 | `onChange` | function | - | This function is called when the value of the input changes. The first argument is the current value. |
 | `cleanOnEnter` | boolean | false | Clean the input value after the keydown event. |
