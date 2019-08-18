@@ -289,6 +289,7 @@ export default class ReactEmojiInput extends Component {
   // }
 
   render () {
+    const { height = 40 } = this.props
     const { showPicker, html } = this.state
     const placeholder = 'Type a message'
 
@@ -331,6 +332,10 @@ export default class ReactEmojiInput extends Component {
               className='react-emoji-input--input'
               onInput={this.emitChange}
               onBlur={this.emitChange}
+              style={{
+                paddingTop: (height - 20) / 2,
+                paddingBottom: (height - 20) / 2
+              }}
             />
           </div>
         </div>
@@ -352,5 +357,6 @@ ReactEmojiInput.propTypes = {
   value: t.string,
   onChange: t.func,
   cleanOnEnter: t.bool,
-  onEnter: t.func
+  onEnter: t.func,
+  height: t.number
 }

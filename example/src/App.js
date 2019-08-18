@@ -95,6 +95,7 @@ export default function Example () {
                 inputEl.current.setValue('kkkkk')
               }, 2000)
             }}
+            height={40}
           />
         </Example>
         <Snippet>
