@@ -22,7 +22,8 @@ import {
   EmojiInputCursor,
   Footer,
   Credits,
-  FooterLink
+  FooterLink,
+  GithubButtons
 } from './style';
 
 export default function App (){
@@ -36,10 +37,18 @@ import ReactEmojiInput from 'react-emoji-input'
 export default function Example () {
   const [ text, setText ] = useState('')
 
+  function handleOnEnter (text) {
+    console.log('enter', text)
+  }
+
   return (
     <ReactEmojiInput
       value={text}
       onChange={setText}
+      cleanOnEnter
+      onEnter={handleOnEnter}
+      height={40}
+      placeholder="Type a message"
     />
   )
 }`
@@ -47,14 +56,6 @@ export default function Example () {
   return (
     <React.Fragment>
       <GlobalStyle />
-      {/* <div style={{
-        height: '640px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end'
-      }}>
-        <ReactEmojiInput html={this.state.html} onChange={this.handleHTMLChange} />
-      </div> */}
       <Header>
         <Title>react-emoji-input</Title>
         <Subtitle>A React input that supports emojis</Subtitle>
@@ -63,10 +64,14 @@ export default function Example () {
             😍 😜 😂 😛 <EmojiInputCursor>|</EmojiInputCursor>
           </EmojiInput>
         </Subtitle>
+        <GithubButtons>
+          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-emoji-input&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-emoji-input&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
+        </GithubButtons>
       </Header>
       <Main>
         <Description>
-          ReactEmojiInput provides a simple way to insert emojis an input element. Click the picker button next to the text field and select an emoji from the popup window. Done.
+          ReactEmojiInput provides a simple way to have an input element with emoji picker support. Click the picker button next to the input field and select an emoji from the popup window. Done!
         </Description>
         <h1>Install</h1>
         <Description>
@@ -78,7 +83,9 @@ export default function Example () {
           </Code>
         </Snippet>
         <h1>Usage</h1>
-        <Description>Use react-emoji-input to display your input with emoji support like so:</Description>
+        <Description>
+          After install import the react-emoji-input component to display your input with emoji support like so:
+        </Description>
         <Example>
           <ReactEmojiInput
             ref={inputEl}
@@ -88,8 +95,8 @@ export default function Example () {
             onEnter={text => {
               console.log('enter', text)
             }}
-            height={40}
-            placeholder='Type a message'
+            height={36}
+            placeholder="Type a message"
           />
         </Example>
         <Snippet>
@@ -110,11 +117,27 @@ export default function Example () {
           <tbody>
             <TableTr>
               <TableTd><Code>value</Code></TableTd>
-              <TableTd>The input value</TableTd>
+              <TableTd>The input value.</TableTd>
             </TableTr>
             <TableTr>
               <TableTd><Code>onChange</Code></TableTd>
-              <TableTd>Runs when the value of the input changes. The first parameter is the value.</TableTd>
+              <TableTd>This function is called when the value of the input changes. The first argument is the current value.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>cleanOnEnter</Code></TableTd>
+              <TableTd>Clean the input value after the keydown event.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>onEnter</Code></TableTd>
+              <TableTd>This function is called after the keydown event is fired with the <Code inline>keyCode === 13</Code> returning the last value.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>height</Code></TableTd>
+              <TableTd>Defaults to 40. The total height of the area in which the element is rendered.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>placeholder</Code></TableTd>
+              <TableTd>Defaults to "Type a message". Set the placeholder of the input.</TableTd>
             </TableTr>
           </tbody>
         </Table>

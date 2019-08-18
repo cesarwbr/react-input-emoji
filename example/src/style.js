@@ -30,7 +30,6 @@ export const GlobalStyle = createGlobalStyle`
 
 export const Header = styled.header`
   padding-top: 92px;
-  padding-bottom: 90px;
   background: linear-gradient(45deg,#4cd964 0%,#5ac8fa 100%);
   margin: 0 auto;
   text-align: center;
@@ -65,18 +64,10 @@ export const Description = styled.p`
   line-height: 1.7;
 `
 
-export const Snippet = styled.pre`
-  position: relative;
-  overflow: visible;
-  margin-top: 0;
-  margin-bottom: 0;
-  font: 12px Consolas,liberation mono,Menlo,Courier,monospace;
-`
-
 export const Code = styled.code`
   font-size: 14px;
   line-height: 20px;
-  display: block;
+  display: inline-block;
   overflow-x: auto;
   padding: .5em;
   color: #333;
@@ -84,9 +75,22 @@ export const Code = styled.code`
   border-radius: 3px;
   margin: 0;
   font-family: Consolas,liberation mono,Menlo,Courier,monospace;
+  margin-bottom: ${props => props.inline ? '-11px' : '0'};
 
   span {
     font-family: Consolas,liberation mono,Menlo,Courier,monospace;
+  }
+`
+
+export const Snippet = styled.pre`
+  position: relative;
+  overflow: visible;
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas,liberation mono,Menlo,Courier,monospace;
+
+  ${Code} {
+    width: 100%;
   }
 `
 
@@ -130,6 +134,7 @@ export const TableTr = styled.tr`
 export const TableTd = styled.td`
   border: 1px solid #dfe2e5;
   padding: 6px 13px;
+  line-height: 20px;
 `
 
 export const EmojiInput = styled.div`
@@ -181,4 +186,13 @@ export const FooterLink = styled.a`
   transition: opacity .3s ease-in-out;
   text-decoration: none;
   background-color: transparent;
+`
+
+export const GithubButtons = styled.p`
+  margin: 92px 0 0;
+  background: rgba(0,0,0,.1);
+  padding: 20px 0 10px;
+  color: #333;
+  font-size: 18px;
+  line-height: 1.7;
 `
