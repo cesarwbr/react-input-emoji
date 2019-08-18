@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 
-import ReactEmojiInput from 'react-emoji-input'
+import ReactEmojiInput from 'react-input-emoji'
 import Highlight from 'react-highlight.js'
 
 // style
@@ -32,7 +32,7 @@ export default function App (){
   const inputEl = useRef(null)
 
   const exampleCode = `import React, { useState } from 'react'
-import ReactEmojiInput from 'react-emoji-input'
+import ReactEmojiInput from 'react-input-emoji'
 
 export default function Example () {
   const [ text, setText ] = useState('')
@@ -57,7 +57,7 @@ export default function Example () {
     <React.Fragment>
       <GlobalStyle />
       <Header>
-        <Title>react-emoji-input</Title>
+        <Title>react-input-emoji</Title>
         <Subtitle>A React input that supports emojis</Subtitle>
         <Subtitle color='white'>
           <EmojiInput>
@@ -65,8 +65,8 @@ export default function Example () {
           </EmojiInput>
         </Subtitle>
         <GithubButtons>
-          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-emoji-input&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
-          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-emoji-input&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
         </GithubButtons>
       </Header>
       <Main>
@@ -79,12 +79,12 @@ export default function Example () {
         </Description>
         <Snippet>
           <Code>
-            npm install react-emoji-input --save
+            npm install react-input-emoji --save
           </Code>
         </Snippet>
         <h1>Usage</h1>
         <Description>
-          After install import the react-emoji-input component to display your input with emoji support like so:
+          After install import the react-input-emoji component to display your input with emoji support like so:
         </Description>
         <Example>
           <ReactEmojiInput

@@ -1,8 +1,8 @@
-# react-emoji-input
+# react-input-emoji
 
 > A React input with an option to pick emojis
 
-[![NPM](https://img.shields.io/npm/v/react-emoji-input.svg)](https://www.npmjs.com/package/react-emoji-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-input-emoji.svg)](https://www.npmjs.com/package/react-input-emoji) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## About
 
@@ -11,16 +11,16 @@ ReactEmojiInput provides a simple way to have an input element with emoji picker
 ## Install
 
 ```bash
-npm install --save react-emoji-input
+npm install --save react-input-emoji
 ```
 
 ## Usage
 
-After install import the react-emoji-input component to display your input with emoji support like so:
+After install import the react-input-emoji component to display your input with emoji support like so:
 
 ```jsx
 import React, { useState } from 'react'
-import ReactEmojiInput from 'react-emoji-input'
+import ReactEmojiInput from 'react-input-emoji'
 
 export default function Example () {
   const [ text, setText ] = useState('')

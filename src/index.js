@@ -292,10 +292,10 @@ export default class ReactEmojiInput extends Component {
             </div>
           </div>
         </div>
-        <div className='react-emoji-input--container'>
-          <div className='react-emoji-input--wrapper'>
+        <div className='react-input-emoji--container'>
+          <div className='react-input-emoji--wrapper'>
             <div
-              className='react-emoji-input--placeholder'
+              className='react-input-emoji--placeholder'
               style={{
                 visibility: html ? 'hidden' : 'visible'
               }}
@@ -305,7 +305,7 @@ export default class ReactEmojiInput extends Component {
             <div
               ref={this.textInput}
               contentEditable
-              className='react-emoji-input--input'
+              className='react-input-emoji--input'
               onInput={this.emitChange}
               onBlur={this.emitChange}
               style={{
@@ -317,8 +317,8 @@ export default class ReactEmojiInput extends Component {
         </div>
         <button
           className={
-            `react-emoji-input--button${
-              showPicker ? ' react-emoji-input--button__show' : ''
+            `react-input-emoji--button${
+              showPicker ? ' react-input-emoji--button__show' : ''
             }`
           }
           onClick={this.toggleShowPicker}>

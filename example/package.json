@@ -1,6 +1,6 @@
 {
-  "name": "react-emoji-input-example",
-  "homepage": "https://cesarwbr.github.io/react-emoji-input",
+  "name": "react-input-emoji-example",
+  "homepage": "https://cesarwbr.github.io/react-input-emoji",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -8,7 +8,7 @@
     "prop-types": "^15.6.2",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-emoji-input": "link:..",
+    "react-input-emoji": "link:..",
     "react-highlight.js": "^1.0.7",
     "react-scripts": "^1.1.4",
     "styled-components": "^4.3.2"

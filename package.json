@@ -1,11 +1,17 @@
 {
-  "name": "react-emoji-input",
+  "name": "react-input-emoji",
   "version": "1.0.0",
   "description": "A React input with an option to add an emoji",
   "author": "cesarwbr",
   "license": "MIT",
-  "repository": "cesarwbr/react-emoji-input",
+  "repository": "cesarwbr/react-input-emoji",
   "main": "dist/index.js",
+  "keywords": [
+    "emoji",
+    "react",
+    "input",
+    "picker"
+  ],
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "engines": {
