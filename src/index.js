@@ -109,6 +109,10 @@ export default class InputEmoji extends Component {
   }
 
   replaceAllTextEmojiToString = () => {
+    if (!this.textInput.current) {
+      return ''
+    }
+
     const container = document.createElement('div')
     container.innerHTML = this.textInput.current.innerHTML
 
@@ -118,7 +122,12 @@ export default class InputEmoji extends Component {
       image.outerHTML = image.dataset.emoji
     })
 
-    return container.innerText
+    let text = container.innerText
+
+    // remove all ↵ for safari
+    text = text.replace(/\n/ig, '')
+
+    return text
   }
 
   pasteHtmlAtCaret = (html) => {
@@ -262,12 +271,18 @@ export default class InputEmoji extends Component {
     })
   }
 
+  checkIsEmpty = () => {
+    const text = this.replaceAllTextEmojiToString()
+
+    return text === ''
+  }
+
   render () {
     const {
       height = 40,
       placeholder = 'Type a message'
     } = this.props
-    const { showPicker, html } = this.state
+    const { showPicker } = this.state
 
     return (
       <div className='react-emoji'>
@@ -297,7 +312,7 @@ export default class InputEmoji extends Component {
             <div
               className='react-input-emoji--placeholder'
               style={{
-                visibility: html ? 'hidden' : 'visible'
+                visibility: !this.checkIsEmpty() ? 'hidden' : 'visible'
               }}
             >
               {placeholder}
@@ -309,8 +324,9 @@ export default class InputEmoji extends Component {
               onInput={this.emitChange}
               onBlur={this.emitChange}
               style={{
-                paddingTop: (height - 20) / 2,
-                paddingBottom: (height - 20) / 2
+                paddingTop: `${(height - 20) / 2}px`,
+                paddingBottom: `${(height - 20) / 2}px`,
+                minHeight: `${height}px`
               }}
             />
           </div>
