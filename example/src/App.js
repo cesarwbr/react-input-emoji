@@ -95,7 +95,7 @@ export default function Example () {
             onEnter={text => {
               console.log('enter', text)
             }}
-            height={36}
+            height={40}
             placeholder="Type a message"
           />
         </Example>

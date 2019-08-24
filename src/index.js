@@ -309,8 +309,9 @@ export default class InputEmoji extends Component {
               onInput={this.emitChange}
               onBlur={this.emitChange}
               style={{
-                paddingTop: (height - 20) / 2,
-                paddingBottom: (height - 20) / 2
+                paddingTop: `${(height - 20) / 2}px`,
+                paddingBottom: `${(height - 20) / 2}px`,
+                minHeight: `${height}px`
               }}
             />
           </div>
