@@ -65,8 +65,8 @@ export default function Example () {
           </EmojiInput>
         </Subtitle>
         <GithubButtons>
-          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
-          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameBorder="0" scrolling="0" width="152" height="30"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameBorder="0" scrolling="0" width="156" height="30"></iframe>
         </GithubButtons>
       </Header>
       <Main>
