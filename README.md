@@ -4,6 +4,8 @@
 
 [![NPM](https://img.shields.io/npm/v/react-input-emoji.svg)](https://www.npmjs.com/package/react-input-emoji) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+<a href="https://cesarwbr.github.io/react-input-emoji/"><img width="500" src="https://cesarwbr.github.io/react-input-emoji/assets/images/screely-1566732641740.png" alt="Demo"></a>
+
 ## About
 
 InputEmoji provides a simple way to have an input element with emoji picker support. Click the picker button next to the input field and select an emoji from the popup window. Done!
@@ -35,7 +37,6 @@ export default function Example () {
       onChange={setText}
       cleanOnEnter
       onEnter={handleOnEnter}
-      height={40}
       placeholder="Type a message"
     />
   )
@@ -50,8 +51,12 @@ export default function Example () {
 | `onChange` | function | - | This function is called when the value of the input changes. The first argument is the current value. |
 | `cleanOnEnter` | boolean | false | Clean the input value after the keydown event. |
 | `onEnter` | function | - | This function is called after the keydown event is fired with the `keyCode === 13` returning the last value. |
-| `height` | number | 40 | The total height of the area in which the element is rendered. |
 | `placeholder` | string | "Type a message" | Set the placeholder of the input. |
+| `height` | number | 40 | The total height of the area in which the element is rendered. |
+| `borderRadius` | number | 21 | The border radius of the input container. |
+| `borderColor` | string | "#EAEAEA" | The border color of the input container. |
+| `fontSize` | number | 15 | The font size of the placeholder and input container. |
+| `fontFamily` | string | "sans-serif" | The font family of the placeholder and input container. |
 
 ## License
 
