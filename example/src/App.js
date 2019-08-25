@@ -47,7 +47,6 @@ export default function Example () {
       onChange={setText}
       cleanOnEnter
       onEnter={handleOnEnter}
-      height={40}
       placeholder="Type a message"
     />
   )
@@ -95,7 +94,6 @@ export default function Example () {
             onEnter={text => {
               console.log('enter', text)
             }}
-            height={40}
             placeholder="Type a message"
           />
         </Example>
@@ -132,12 +130,28 @@ export default function Example () {
               <TableTd>This function is called after the keydown event is fired with the <Code inline>keyCode === 13</Code> returning the last value.</TableTd>
             </TableTr>
             <TableTr>
+              <TableTd><Code>placeholder</Code></TableTd>
+              <TableTd>Defaults to "Type a message". Set the placeholder of the input.</TableTd>
+            </TableTr>
+            <TableTr>
               <TableTd><Code>height</Code></TableTd>
               <TableTd>Defaults to 40. The total height of the area in which the element is rendered.</TableTd>
             </TableTr>
             <TableTr>
-              <TableTd><Code>placeholder</Code></TableTd>
-              <TableTd>Defaults to "Type a message". Set the placeholder of the input.</TableTd>
+              <TableTd><Code>borderRadius</Code></TableTd>
+              <TableTd>Defaults to 21. The border radius of the input container.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>borderColor</Code></TableTd>
+              <TableTd>Defaults to <Code inline>#EAEAEA</Code>. The border color of the input container.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>fontSize</Code></TableTd>
+              <TableTd>Defaults to 15. The font size of the placeholder and input container.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>fontFamily</Code></TableTd>
+              <TableTd>Defaults to "sans-serif". The font family of the placeholder and input container.</TableTd>
             </TableTr>
           </tbody>
         </Table>

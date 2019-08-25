@@ -280,7 +280,11 @@ export default class InputEmoji extends Component {
   render () {
     const {
       height = 40,
-      placeholder = 'Type a message'
+      placeholder = 'Type a message',
+      borderRadius = 21,
+      borderColor = '#EAEAEA',
+      fontSize = 15,
+      fontFamily = 'sans-serif'
     } = this.props
     const { showPicker } = this.state
 
@@ -307,7 +311,15 @@ export default class InputEmoji extends Component {
             </div>
           </div>
         </div>
-        <div className='react-input-emoji--container'>
+        <div
+          className='react-input-emoji--container'
+          style={{
+            borderRadius,
+            borderColor,
+            fontSize,
+            fontFamily
+          }}
+        >
           <div className='react-input-emoji--wrapper'>
             <div
               className='react-input-emoji--placeholder'
@@ -350,6 +362,11 @@ InputEmoji.propTypes = {
   onChange: t.func,
   cleanOnEnter: t.bool,
   onEnter: t.func,
+  placeholder: t.string,
+  // style
   height: t.number,
-  placeholder: t.string
+  borderRadius: t.number,
+  borderColor: t.number,
+  fontSize: t.number,
+  fontFamily: t.string
 }
