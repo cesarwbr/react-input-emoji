@@ -294,7 +294,11 @@ export default class InputEmoji extends Component {
           className='react-emoji-picker--container'
           onClick={this.handleContainerClick}
         >
-          <div className='react-emoji-picker--wrapper'>
+          <div className={
+            `react-emoji-picker--wrapper${
+              showPicker ? ' react-emoji-picker--wrapper__show' : ''
+            }`
+          }>
             <div
               className={
                 `react-emoji-picker${

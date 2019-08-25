@@ -113,11 +113,15 @@
   width: 100%;
 }
 
+.react-emoji-picker--wrapper.react-emoji-picker--wrapper__show {
+  height: 357px;
+}
+
 .react-emoji-picker--wrapper {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 357px;
+  height: 0;
   width: 338px;
   overflow: hidden;
   z-index: 10;
