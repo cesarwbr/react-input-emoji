@@ -17,7 +17,7 @@
   width: inherit;
   will-change: width;
   vertical-align: baseline;
-  border: 1px solid #EAEAEA;
+  border: 1px solid #eaeaea;
   margin-right: 0;
 }
 
@@ -51,12 +51,11 @@
   text-align: left;
 }
 
-
 .react-input-emoji--input img {
   vertical-align: middle;
-  width: 18px!important;
-  height: 18px!important;
-  display: inline!important;
+  width: 18px !important;
+  height: 18px !important;
+  display: inline !important;
   margin-left: 1px;
   margin-right: 1px;
 }
@@ -65,7 +64,7 @@
   color: #a0a0a0;
   pointer-events: none;
   position: absolute;
-  transition: opacity .08s linear;
+  transition: opacity 0.08s linear;
   user-select: none;
   z-index: 2;
   left: 12px;
@@ -82,7 +81,7 @@
   text-align: center;
   padding: 0 10px;
   overflow: hidden;
-  transition: color .1s ease-out;
+  transition: color 0.1s ease-out;
   margin: 0;
   box-shadow: none;
   background: none;
@@ -105,6 +104,7 @@
   display: flex;
   align-items: flex-end;
   position: relative;
+  width: 100%;
 }
 
 .react-emoji-picker--container {

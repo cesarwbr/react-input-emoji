@@ -24,9 +24,9 @@ import {
   Credits,
   FooterLink,
   GithubButtons
-} from './style';
+} from './style'
 
-export default function App (){
+export default function App () {
   const [ text, setText ] = useState('')
 
   const inputEl = useRef(null)
@@ -64,8 +64,8 @@ export default function Example () {
           </EmojiInput>
         </Subtitle>
         <GithubButtons>
-          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameBorder="0" scrolling="0" width="152" height="30"></iframe>
-          <iframe src="https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameBorder="0" scrolling="0" width="156" height="30"></iframe>
+          <iframe src='https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=watch&amp;count=true&amp;size=large' allowtransparency='true' frameBorder='0' scrolling='0' width='152' height='30' />
+          <iframe src='https://ghbtns.com/github-btn.html?user=cesarwbr&amp;repo=react-input-emoji&amp;type=fork&amp;count=true&amp;size=large' allowtransparency='true' frameBorder='0' scrolling='0' width='156' height='30' />
         </GithubButtons>
       </Header>
       <Main>
@@ -94,7 +94,10 @@ export default function Example () {
             onEnter={text => {
               console.log('enter', text)
             }}
-            placeholder="Type a message"
+            placeholder='Type a message'
+            onResize={(value) => console.log('resize', value)}
+            onClick={() => console.log('clicked')}
+            onFocus={() => console.log('focus')}
           />
         </Example>
         <Snippet>
@@ -122,6 +125,18 @@ export default function Example () {
               <TableTd>This function is called when the value of the input changes. The first argument is the current value.</TableTd>
             </TableTr>
             <TableTr>
+              <TableTd><Code>onResize</Code></TableTd>
+              <TableTd>This function is called when the width or the height of the input changes. The first argument is the current size value.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>onClick</Code></TableTd>
+              <TableTd>This function is called when the input is clicked.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>onFocus</Code></TableTd>
+              <TableTd>This function is called when the input has received focus.</TableTd>
+            </TableTr>
+            <TableTr>
               <TableTd><Code>cleanOnEnter</Code></TableTd>
               <TableTd>Clean the input value after the keydown event.</TableTd>
             </TableTr>
@@ -136,6 +151,10 @@ export default function Example () {
             <TableTr>
               <TableTd><Code>height</Code></TableTd>
               <TableTd>Defaults to 40. The total height of the area in which the element is rendered.</TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd><Code>maxLength</Code></TableTd>
+              <TableTd>The maximum number of characters allowed in the element.</TableTd>
             </TableTr>
             <TableTr>
               <TableTd><Code>borderRadius</Code></TableTd>
@@ -158,7 +177,7 @@ export default function Example () {
       </Main>
       <Footer>
         <Credits>
-          Made by <FooterLink href="https://github.com/cesarwbr">Cesar William</FooterLink> under <FooterLink href="https://cesarwilliam.mit-license.org/">MIT license</FooterLink>
+          Made by <FooterLink href='https://github.com/cesarwbr'>Cesar William</FooterLink> under <FooterLink href='https://cesarwilliam.mit-license.org/'>MIT license</FooterLink>
         </Credits>
       </Footer>
     </React.Fragment>

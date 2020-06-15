@@ -11,7 +11,8 @@ export default class InputEmoji extends Component {
   state = {
     html: '',
     showPicker: false,
-    allEmojiStyle: {}
+    allEmojiStyle: {},
+    currentSize: null
   }
 
   constructor (props) {
@@ -24,6 +25,18 @@ export default class InputEmoji extends Component {
     }
   }
 
+  get value () {
+    return this.replaceAllTextEmojiToString()
+  }
+
+  set value (value) {
+    this.setValue(value)
+  }
+
+  focus () {
+    this.textInput.current.focus()
+  }
+
   componentDidMount () {
     this.handleContentEditableInputCopyAndPaste()
 
@@ -32,6 +45,40 @@ export default class InputEmoji extends Component {
     this.updateHTML()
 
     this.listenKeydown()
+
+    this.listenFocus()
+
+    this.setCurrentSize()
+  }
+
+  setCurrentSize = () => {
+    if (!this.textInput.current) {
+      return
+    }
+
+    this.setState({
+      currentSize: {
+        width: this.textInput.current.offsetWidth,
+        height: this.textInput.current.offsetHeight
+      }
+    })
+  }
+
+  checkAndEmitResize = () => {
+    const { onResize } = this.props
+    const { currentSize } = this.state
+
+    const nextSize = {
+      width: this.textInput.current.offsetWidth,
+      height: this.textInput.current.offsetHeight
+    }
+
+    if (!this.state.currentSize ||
+      currentSize.width !== nextSize.width ||
+      currentSize.height !== nextSize.height) {
+      onResize(nextSize)
+      this.setState({currentSize: nextSize})
+    }
   }
 
   listenKeydown = () => {
@@ -99,12 +146,26 @@ export default class InputEmoji extends Component {
   }
 
   emitChange = () => {
+    const { onChange, onResize, maxLength } = this.props
+
+    if (typeof maxLength !== 'undefined' && Number.isInteger(maxLength)) {
+      if (this.textInput.current.innerHTML.length > maxLength) {
+        this.textInput.current.innerHTML = ''
+        this.pasteHtmlAtCaret(this.state.html)
+        return
+      }
+    }
+
     const html = this.textInput.current.innerHTML
 
     this.setState({ html })
 
-    if (typeof this.props.onChange === 'function') {
+    if (typeof onChange === 'function') {
       this.onChangeDebounced(html)
+    }
+
+    if (typeof onResize === 'function') {
+      this.checkAndEmitResize()
     }
   }
 
@@ -277,6 +338,24 @@ export default class InputEmoji extends Component {
     return text === ''
   }
 
+  handleClick = () => {
+    const { onClick } = this.props
+
+    if (typeof onClick === 'function') {
+      onClick()
+    }
+  }
+
+  listenFocus = () => {
+    this.textInput.current.addEventListener('focus', () => {
+      const { onFocus } = this.props
+
+      if (typeof onFocus === 'function') {
+        onFocus()
+      }
+    })
+  }
+
   render () {
     const {
       height = 40,
@@ -324,7 +403,7 @@ export default class InputEmoji extends Component {
             fontFamily
           }}
         >
-          <div className='react-input-emoji--wrapper'>
+          <div className='react-input-emoji--wrapper' onClick={this.handleClick}>
             <div
               className='react-input-emoji--placeholder'
               style={{
@@ -367,6 +446,10 @@ InputEmoji.propTypes = {
   cleanOnEnter: t.bool,
   onEnter: t.func,
   placeholder: t.string,
+  onResize: t.func,
+  onClick: t.func,
+  onFocus: t.func,
+  maxLength: t.number,
   // style
   height: t.number,
   borderRadius: t.number,

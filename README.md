@@ -21,14 +21,14 @@ npm install --save react-input-emoji
 After install import the react-input-emoji component to display your input with emoji support like so:
 
 ```jsx
-import React, { useState } from 'react'
-import InputEmoji from 'react-input-emoji'
+import React, { useState } from "react";
+import InputEmoji from "react-input-emoji";
 
-export default function Example () {
-  const [ text, setText ] = useState('')
+export default function Example() {
+  const [text, setText] = useState("");
 
-  function handleOnEnter (text) {
-    console.log('enter', text)
+  function handleOnEnter(text) {
+    console.log("enter", text);
   }
 
   return (
@@ -39,24 +39,28 @@ export default function Example () {
       onEnter={handleOnEnter}
       placeholder="Type a message"
     />
-  )
+  );
 }
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | string | "" | The input value. |
-| `onChange` | function | - | This function is called when the value of the input changes. The first argument is the current value. |
-| `cleanOnEnter` | boolean | false | Clean the input value after the keydown event. |
-| `onEnter` | function | - | This function is called after the keydown event is fired with the `keyCode === 13` returning the last value. |
-| `placeholder` | string | "Type a message" | Set the placeholder of the input. |
-| `height` | number | 40 | The total height of the area in which the element is rendered. |
-| `borderRadius` | number | 21 | The border radius of the input container. |
-| `borderColor` | string | "#EAEAEA" | The border color of the input container. |
-| `fontSize` | number | 15 | The font size of the placeholder and input container. |
-| `fontFamily` | string | "sans-serif" | The font family of the placeholder and input container. |
+| Prop           | Type     | Default          | Description                                                                                                              |
+| -------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `value`        | string   | ""               | The input value.                                                                                                         |
+| `onChange`     | function | -                | This function is called when the value of the input changes. The first argument is the current value.                    |
+| `onResize`     | function | -                | This function is called when the width or the height of the input changes. The first argument is the current size value. |
+| `onClick`      | function | -                | This function is called when the input is clicked.                                                                       |
+| `onFocus`      | function | -                | This function is called when the input has received focus.                                                               |
+| `cleanOnEnter` | boolean  | false            | Clean the input value after the keydown event.                                                                           |
+| `onEnter`      | function | -                | This function is called after the keydown event is fired with the `keyCode === 13` returning the last value.             |
+| `placeholder`  | string   | "Type a message" | Set the placeholder of the input.                                                                                        |
+| `height`       | number   | 40               | The total height of the area in which the element is rendered.                                                           |
+| `maxLength`    | number   | -                | The maximum number of characters allowed in the element.                                                                 |
+| `borderRadius` | number   | 21               | The border radius of the input container.                                                                                |
+| `borderColor`  | string   | "#EAEAEA"        | The border color of the input container.                                                                                 |
+| `fontSize`     | number   | 15               | The font size of the placeholder and input container.                                                                    |
+| `fontFamily`   | string   | "sans-serif"     | The font family of the placeholder and input container.                                                                  |
 
 ## License
 
