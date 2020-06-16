@@ -98,6 +98,7 @@ export default function Example () {
             onResize={(value) => console.log('resize', value)}
             onClick={() => console.log('clicked')}
             onFocus={() => console.log('focus')}
+            onKeyDown={(e) => console.log('key down', e)}
           />
         </Example>
         <Snippet>

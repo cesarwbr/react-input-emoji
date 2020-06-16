@@ -361,6 +361,14 @@ export default class InputEmoji extends Component {
     })
   }
 
+  handleKeyDown = (event) => {
+    const { onKeyDown } = this.props
+
+    if (typeof onKeyDown === 'function') {
+      onKeyDown(event)
+    }
+  }
+
   render () {
     const {
       height = 40,
@@ -423,6 +431,7 @@ export default class InputEmoji extends Component {
               className='react-input-emoji--input'
               onInput={this.emitChange}
               onBlur={this.emitChange}
+              onKeyDown={this.handleKeyDown}
               style={{
                 paddingTop: `${(height - 20) / 2}px`,
                 paddingBottom: `${(height - 20) / 2}px`,
@@ -462,6 +471,7 @@ InputEmoji.propTypes = {
   onFocus: t.func,
   maxLength: t.number,
   keepOpenend: t.bool,
+  onKeyDown: t.func,
   // style
   height: t.number,
   borderRadius: t.number,
