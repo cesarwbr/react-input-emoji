@@ -99,6 +99,7 @@ export default function Example () {
             onClick={() => console.log('clicked')}
             onFocus={() => console.log('focus')}
             onKeyDown={(e) => console.log('key down', e)}
+            inputClass='my-input-class'
           />
         </Example>
         <Snippet>
