@@ -369,6 +369,18 @@ export default class InputEmoji extends Component {
     }
   }
 
+  getExcludePicker = () => {
+    const { disableRecent } = this.props
+
+    const exclude = []
+
+    if (disableRecent) {
+      exclude.push('recent')
+    }
+
+    return exclude
+  }
+
   render () {
     const {
       height = 40,
@@ -404,6 +416,7 @@ export default class InputEmoji extends Component {
                 showSkinTones={false}
                 set='apple'
                 onSelect={this.handleSelectEmoji}
+                exclude={this.getExcludePicker()}
               />
             </div>
           </div>
@@ -474,6 +487,7 @@ InputEmoji.propTypes = {
   keepOpenend: t.bool,
   onKeyDown: t.func,
   inputClass: t.string,
+  disableRecent: t.bool,
   // style
   height: t.number,
   borderRadius: t.number,

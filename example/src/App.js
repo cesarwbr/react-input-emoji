@@ -100,6 +100,8 @@ export default function Example () {
             onFocus={() => console.log('focus')}
             onKeyDown={(e) => console.log('key down', e)}
             inputClass='my-input-class'
+            keepOpenend
+            disableRecent
           />
         </Example>
         <Snippet>
