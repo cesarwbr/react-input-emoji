@@ -244,7 +244,7 @@ export default class InputEmoji extends Component {
 
     const style = this.replaceAll(emojiSpanEl.style.cssText, '"', "'")
 
-    return `<img style="${style}" data-emoji="${emoji.native}" src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />`
+    return `<img style="${style}" data-emoji="${emoji.native}" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />`
   }
 
   replaceAllTextEmojis = (text) => {
@@ -261,7 +261,7 @@ export default class InputEmoji extends Component {
         text = this.replaceAll(
           text,
           emoji,
-          `<img style="${style}" data-emoji="${emoji}" src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />`
+          `<img style="${style}" data-emoji="${emoji}" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />`
         )
       })
     }
