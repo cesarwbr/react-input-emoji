@@ -149,7 +149,9 @@ export default class InputEmoji extends Component {
     const { onChange, onResize, maxLength } = this.props
 
     if (typeof maxLength !== 'undefined' && Number.isInteger(maxLength)) {
-      if (this.textInput.current.innerHTML.length > maxLength) {
+      const totalCharacters = [...this.replaceAllTextEmojiToString()].length
+
+      if (totalCharacters > maxLength) {
         this.textInput.current.innerHTML = ''
         this.pasteHtmlAtCaret(this.state.html)
         return
