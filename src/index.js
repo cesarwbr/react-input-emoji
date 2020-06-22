@@ -391,7 +391,8 @@ export default class InputEmoji extends Component {
       borderColor = '#EAEAEA',
       fontSize = 15,
       fontFamily = 'sans-serif',
-      inputClass
+      inputClass,
+      tabIndex = 0
     } = this.props
     const { showPicker } = this.state
 
@@ -443,6 +444,7 @@ export default class InputEmoji extends Component {
             </div>
             <div
               ref={this.textInput}
+              tabIndex={tabIndex}
               contentEditable
               className={`react-input-emoji--input${inputClass ? ` ${inputClass}` : ''}`}
               onInput={this.emitChange}
@@ -490,6 +492,7 @@ InputEmoji.propTypes = {
   onKeyDown: t.func,
   inputClass: t.string,
   disableRecent: t.bool,
+  tabIndex: t.number,
   // style
   height: t.number,
   borderRadius: t.number,

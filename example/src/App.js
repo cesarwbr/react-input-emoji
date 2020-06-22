@@ -100,6 +100,7 @@ export default function Example () {
             onFocus={() => console.log('focus')}
             onKeyDown={(e) => console.log('key down', e)}
             inputClass='my-input-class'
+            tabIndex={1}
           />
         </Example>
         <Snippet>
