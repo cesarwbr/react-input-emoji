@@ -123,7 +123,7 @@ export default class InputEmoji extends Component {
   }
 
   getAllEmojiStyle = () => {
-    const allEmojiButton = document.querySelectorAll('.emoji-mart-category-list > li > button')
+    const allEmojiButton = Array.prototype.slice.call(document.querySelectorAll('.emoji-mart-category-list > li > button'))
 
     const allEmojiStyle = {}
 
@@ -179,7 +179,7 @@ export default class InputEmoji extends Component {
     const container = document.createElement('div')
     container.innerHTML = this.textInput.current.innerHTML
 
-    const images = container.querySelectorAll('img')
+    const images = Array.prototype.slice.call(container.querySelectorAll('img'))
 
     images.forEach(image => {
       image.outerHTML = image.dataset.emoji
@@ -308,7 +308,7 @@ export default class InputEmoji extends Component {
       e.preventDefault()
 
       function replaceEmojiToString (container) {
-        const images = container.querySelectorAll('img')
+        const images = Array.prototype.slice.call(container.querySelectorAll('img'))
 
         images.forEach(image => {
           image.outerHTML = image.dataset.emoji
