@@ -48,6 +48,8 @@ export default class InputEmoji extends Component {
 
     this.listenFocus()
 
+    this.listenInput()
+
     this.setCurrentSize()
   }
 
@@ -363,6 +365,13 @@ export default class InputEmoji extends Component {
     })
   }
 
+  listenInput = () => {
+    const isIE = /Trident/.test(navigator.userAgent)
+    const eventType = isIE ? 'textinput' : 'input'
+
+    this.textInput.current.addEventListener(eventType, this.emitChange)
+  }
+
   handleKeyDown = (event) => {
     const { onKeyDown } = this.props
 
@@ -447,7 +456,6 @@ export default class InputEmoji extends Component {
               tabIndex={tabIndex}
               contentEditable
               className={`react-input-emoji--input${inputClass ? ` ${inputClass}` : ''}`}
-              onInput={this.emitChange}
               onBlur={this.emitChange}
               onKeyDown={this.handleKeyDown}
               style={{
