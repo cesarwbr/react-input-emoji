@@ -99,7 +99,6 @@
   outline: none;
   cursor: pointer;
   flex-shrink: 0;
-  margin-bottom: 12px;
 }
 
 .react-input-emoji--button svg {
@@ -112,7 +111,7 @@
 
 .react-emoji {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   position: relative;
   width: 100%;
 }

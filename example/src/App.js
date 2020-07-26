@@ -103,6 +103,7 @@ export default function Example () {
             inputClass='my-input-class'
             tabIndex={1}
             maxLength={1200}
+            height={40}
           />
         </Example>
         <Snippet>

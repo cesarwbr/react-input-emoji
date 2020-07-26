@@ -246,22 +246,22 @@ function InputEmoji ({
           onChange(cleanedText)
         }
 
-        updateHTML('')
+        if (cleanOnEnter) {
+          updateHTML('')
+        }
       }
     }
 
     const inputEl = textInputRef.current
 
-    if (cleanOnEnter) {
-      inputEl.addEventListener('keydown', handleKeydown)
-      inputEl.addEventListener('keyup', handleKeyup)
-    }
+    inputEl.addEventListener('keydown', handleKeydown)
+    inputEl.addEventListener('keyup', handleKeyup)
 
     return () => {
       inputEl.removeEventListener('keydown', handleKeydown)
       inputEl.removeEventListener('keyup', handleKeyup)
     }
-  }, [cleanOnEnter, onChange, onEnter, updateHTML, replaceAllTextEmojiToString, replaceAllTextEmojiToStringDebounced, emitChange, maxLength, onKeyDown])
+  }, [onChange, cleanOnEnter, onEnter, updateHTML, replaceAllTextEmojiToString, replaceAllTextEmojiToStringDebounced, emitChange, maxLength, onKeyDown])
 
   useEffect(() => {
     function handleFocus() {
@@ -458,11 +458,6 @@ function InputEmoji ({
             contentEditable
             className={`react-input-emoji--input${inputClass ? ` ${inputClass}` : ''}`}
             onBlur={emitChange}
-            style={{
-              paddingTop: `${(height - 20) / 2}px`,
-              paddingBottom: `${(height - 20) / 2}px`,
-              minHeight: `${height}px`
-            }}
           />
         </div>
       </div>
@@ -511,7 +506,7 @@ InputEmojiWithRef.propTypes = {
 }
 
 InputEmojiWithRef.defaultProps = {
-  height: 40,
+  height: 30,
   placeholder: 'Type a message',
   borderRadius: 21,
   borderColor: '#EAEAEA',
