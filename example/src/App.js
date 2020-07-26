@@ -98,10 +98,6 @@ export default function Example () {
               console.log('enter', text)
             }}
             placeholder='Type a message'
-            onResize={(value) => console.log('resize', value)}
-            onClick={() => console.log('clicked')}
-            onFocus={() => console.log('focus')}
-            onKeyDown={(e) => console.log('key down', e)}
             keepOpenend
             disableRecent
             inputClass='my-input-class'
