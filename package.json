@@ -1,6 +1,6 @@
 {
   "name": "react-input-emoji",
-  "version": "1.1.9",
+  "version": "2.0.0",
   "description": "A React input with an option to add an emoji",
   "author": "cesarwbr",
   "license": "MIT",
@@ -28,9 +28,9 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "prop-types": "^15.5.4",
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "prop-types": "^15.7.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
@@ -48,10 +48,9 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-standard": "^3.1.0",
     "gh-pages": "^1.2.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
     "react-scripts": "^1.1.4",
     "rollup": "^0.64.1",
     "rollup-plugin-babel": "^3.0.7",
@@ -66,7 +65,6 @@
     "dist"
   ],
   "dependencies": {
-    "emoji-mart": "2.11.1",
-    "lodash": "^4.17.15"
+    "emoji-mart": "2.11.1"
   }
 }

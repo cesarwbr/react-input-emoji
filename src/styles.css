@@ -75,6 +75,7 @@
   position: absolute;
   transition: opacity 0.08s linear;
   user-select: none;
+  opacity: 1;
   z-index: 2;
   left: 12px;
   top: 0;

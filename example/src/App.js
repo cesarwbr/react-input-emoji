@@ -89,7 +89,10 @@ export default function Example () {
           <InputEmoji
             ref={inputEl}
             value={text}
-            onChange={setText}
+            onChange={(value) => {
+              console.log({value})
+              setText(value)
+            }}
             cleanOnEnter
             onEnter={text => {
               console.log('enter', text)
@@ -99,8 +102,11 @@ export default function Example () {
             onClick={() => console.log('clicked')}
             onFocus={() => console.log('focus')}
             onKeyDown={(e) => console.log('key down', e)}
+            keepOpenend
+            disableRecent
             inputClass='my-input-class'
             tabIndex={1}
+            maxLength={1200}
           />
         </Example>
         <Snippet>
