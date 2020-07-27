@@ -222,34 +222,35 @@ function InputEmoji ({
         event.preventDefault()
       }
 
-      if (typeof onKeyDown === 'function') {
-        onKeyDown(event)
-      }
-
       if (event.keyCode === 13) {
         event.preventDefault()
-        return false
-      }
-    }
 
-    function handleKeyup(event) {
-      replaceAllTextEmojiToStringDebounced()
-
-      if (event.keyCode === 13) {
         replaceAllTextEmojiToString()
+
         const cleanedText = cleanedTextRef.current
+
         if (typeof onEnter === 'function') {
           onEnter(cleanedText)
-        }
-
-        if (typeof onChange === 'function') {
-          onChange(cleanedText)
         }
 
         if (cleanOnEnter) {
           updateHTML('')
         }
+
+        if (typeof onKeyDown === 'function') {
+          onKeyDown(event)
+        }
+
+        return false
       }
+
+      if (typeof onKeyDown === 'function') {
+        onKeyDown(event)
+      }
+    }
+
+    function handleKeyup(event) {
+      replaceAllTextEmojiToStringDebounced()
     }
 
     const inputEl = textInputRef.current
