@@ -49,6 +49,9 @@ function InputEmoji ({
     },
     focus: () => {
       textInputRef.current.focus()
+    },
+    blur: () => {
+      replaceAllTextEmojiToString()
     }
   }))
 
