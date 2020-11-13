@@ -55,6 +55,14 @@ function InputEmoji ({
     }
   }))
 
+  useEffect(() => {
+    if (value && value.length > 0) {
+      placeholderRef.current.style.opacity = 0
+    } else {
+      placeholderRef.current.style.opacity = 1
+    }
+  }, [value])
+
   const replaceAllTextEmojis = useCallback((text) => {
     let allEmojis = getAllEmojisFromText(text)
 
