@@ -30,7 +30,8 @@ function InputEmoji ({
   borderRadius,
   borderColor,
   fontSize,
-  fontFamily
+  fontFamily,
+  emojiSet
 }, ref) {
   const [showPicker, setShowPicker] = useState(false)
   const [allEmojiStyle, setAllEmojiStyle] = useState({})
@@ -441,7 +442,7 @@ function InputEmoji ({
             <Picker
               showPreview={false}
               showSkinTones={false}
-              set='apple'
+              set={emojiSet}
               onSelect={handleSelectEmoji}
               exclude={excluePicker}
             />
@@ -514,7 +515,8 @@ InputEmojiWithRef.propTypes = {
   borderRadius: t.number,
   borderColor: t.string,
   fontSize: t.number,
-  fontFamily: t.string
+  fontFamily: t.string,
+  emojiSet: t.string
 }
 
 InputEmojiWithRef.defaultProps = {
@@ -524,7 +526,8 @@ InputEmojiWithRef.defaultProps = {
   borderColor: '#EAEAEA',
   fontSize: 15,
   fontFamily: 'sans-serif',
-  tabIndex: 0
+  tabIndex: 0,
+  emojiSet: 'apple'
 }
 
 export default InputEmojiWithRef
