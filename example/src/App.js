@@ -27,6 +27,7 @@ import {
 } from './style'
 
 export default function App () {
+  // const [ text, setText ] = useState('Hello @[Cesar William](userId:123456)')
   const [ text, setText ] = useState('')
 
   const inputEl = useRef(null)
@@ -86,6 +87,21 @@ export default function Example () {
           After install import the react-input-emoji component to display your input with emoji support like so:
         </Description>
         <Example>
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: '10',
+              background: 'white',
+              bottom: '65px',
+              border: '1px solid #E0E0E0',
+              width: '83%',
+              margin: '0',
+              listStyle: 'none',
+              padding: '10px'
+            }}
+          >
+            <button onClick={() => inputEl.current.setUserMention('@[Cesar William](userId:123456)')}>Cesar William</button>
+          </div>
           <InputEmoji
             ref={inputEl}
             value={text}

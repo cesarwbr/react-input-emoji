@@ -39,6 +39,7 @@ function InputEmoji ({
   const textInputRef = useRef(null)
   const cleanedTextRef = useRef('')
   const placeholderRef = useRef(null)
+  const mentionRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
     get value () {
@@ -51,7 +52,10 @@ function InputEmoji ({
       textInputRef.current.focus()
     },
     blur: () => {
-      replaceAllTextEmojiToString()
+      replaceAllTextToString()
+    },
+    setUserMention: (userMention) => {
+      handleSetUserMention(userMention)
     }
   }))
 
@@ -85,10 +89,36 @@ function InputEmoji ({
     return text
   }, [allEmojiStyle])
 
+  const replaceAllMentions = useCallback((text) => {
+    const allUserMentions = getAllMentions(text)
+
+    if (!allUserMentions) {
+      return text
+    }
+
+    allUserMentions.forEach(userMention => {
+      const [ name ] = userMention.match(/(?<=\[).+?(?=\])/g)
+      // const [ userId ] = userMention.match(/(?<=\(userId:).+?(?=\))/g)
+      text = text.replaceAll(userMention, `<span style="color: #0A91E6;" data-mention="${userMention}">@${name}</span> `)
+    })
+
+    return text
+  }, [])
+
+  /**
+   *
+   * @param {string} text
+   * @returns {string[] | null}
+   */
+  function getAllMentions (text) {
+    return text.match(/@\[([^\]]+?)\]\(([^)]+?)\)/g)
+  }
+
   const updateHTML = useCallback((nextValue) => {
     nextValue = nextValue || value
     textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue || '')
-  }, [replaceAllTextEmojis])
+    textInputRef.current.innerHTML = replaceAllMentions(nextValue || '')
+  }, [replaceAllTextEmojis, replaceAllMentions])
 
   const checkAndEmitResize = useCallback(() => {
     const nextSize = {
@@ -197,7 +227,7 @@ function InputEmoji ({
     updateHTML()
   }, [updateHTML])
 
-  const replaceAllTextEmojiToString = useCallback(() => {
+  const replaceAllTextToString = useCallback(() => {
     if (!textInputRef.current) {
       cleanedTextRef.current = ''
     }
@@ -209,6 +239,12 @@ function InputEmoji ({
 
     images.forEach(image => {
       image.outerHTML = image.dataset.emoji
+    })
+
+    const mentions = Array.prototype.slice.call(container.querySelectorAll('[data-mention]'))
+
+    mentions.forEach(mention => {
+      mention.outerHTML = mention.dataset.mention
     })
 
     let text = container.innerText
@@ -223,7 +259,7 @@ function InputEmoji ({
     emitChange()
   }, [emitChange])
 
-  const [ replaceAllTextEmojiToStringDebounced ] = useDebounce(replaceAllTextEmojiToString, 500)
+  const [ replaceAllTextToStringDebounced ] = useDebounce(replaceAllTextToString, 500)
 
   useEffect(() => {
     function handleKeydown (event) {
@@ -236,7 +272,7 @@ function InputEmoji ({
       if (event.keyCode === 13) {
         event.preventDefault()
 
-        replaceAllTextEmojiToString()
+        replaceAllTextToString()
 
         const cleanedText = cleanedTextRef.current
 
@@ -260,8 +296,91 @@ function InputEmoji ({
       }
     }
 
+    /**
+     *
+     * @param {number} keyCode
+     */
+    function isKeyArrow (keyCode) {
+      return keyCode >= 37 && keyCode <= 40
+    }
+
+    /**
+     *
+     * @param {number} keyCode
+     */
+    function checkMentionStart (keyCode) {
+      if (keyCode === 50) {
+        const selection = window.getSelection()
+        const caretPostion = getCaretPosition()
+        const textContent = selection.focusNode.textContent
+
+        if (caretPostion - 1 === 0 || textContent[caretPostion - 2] === ' ') {
+          console.log('mention status: start')
+          console.log('start mention', {caretPostion, textContent})
+          mentionRef.current = {
+            startPosition: caretPostion - 1,
+            selection,
+            endPosition: caretPostion + 1
+          }
+        }
+      }
+    }
+
+    function checkMentionStatus () {
+      if (mentionRef.current) {
+        /** @type {string} */
+        const textContent = mentionRef.current.selection.focusNode.textContent
+        const caretPostion = getCaretPosition()
+
+        mentionRef.current.endPosition = caretPostion
+        const mentionText = textContent.substring(mentionRef.current.startPosition, caretPostion)
+        const afterStart = textContent.substring(mentionRef.current.startPosition + 1, caretPostion)
+
+        console.log('start:', mentionRef.current.startPosition, 'current:', caretPostion)
+        console.log({afterStart, mentionText})
+        if (afterStart[0] === ' ' || afterStart.includes('@') || mentionText.length === 0) {
+          mentionRef.current = null
+          console.log('mention status: end')
+        } else {
+          console.log('mention:', mentionRef.current, {afterStart, caretPostion})
+          console.log(`mention status: search for "${afterStart}"`)
+        }
+      }
+    }
+
+    /**
+     *
+     * @param {number} keyCode
+     */
+    function checkDeleteMetion (keyCode) {
+      const selection = window.getSelection()
+      const parentEl = selection.focusNode.parentElement
+      if (parentEl.dataset.mention && !isKeyArrow(keyCode)) {
+        console.log(window.getSelection())
+        textInputRef.current.removeChild(parentEl)
+      }
+    }
+
+    /**
+     *
+     * @param {import('react').KeyboardEvent<HTMLElement>} event
+     */
+    function handleMention (event) {
+      const keyCode = event.keyCode
+      checkMentionStart(keyCode)
+
+      checkMentionStatus()
+
+      checkDeleteMetion(keyCode)
+    }
+
+    /**
+     *
+     * @param {import('react').KeyboardEvent<HTMLElement>} event
+     */
     function handleKeyup(event) {
-      replaceAllTextEmojiToStringDebounced()
+      handleMention(event)
+      replaceAllTextToStringDebounced()
     }
 
     const inputEl = textInputRef.current
@@ -273,7 +392,7 @@ function InputEmoji ({
       inputEl.removeEventListener('keydown', handleKeydown)
       inputEl.removeEventListener('keyup', handleKeyup)
     }
-  }, [onChange, cleanOnEnter, onEnter, updateHTML, replaceAllTextEmojiToString, replaceAllTextEmojiToStringDebounced, emitChange, maxLength, onKeyDown])
+  }, [onChange, cleanOnEnter, onEnter, updateHTML, replaceAllTextToString, replaceAllTextToStringDebounced, emitChange, maxLength, onKeyDown])
 
   useEffect(() => {
     function handleFocus() {
@@ -290,6 +409,32 @@ function InputEmoji ({
       inputEl.removeEventListener('focus', handleFocus)
     }
   }, [onFocus])
+
+  function getCaretPosition() {
+    const editableDiv = textInputRef.current
+    var caretPos = 0
+    var sel; var range
+    if (window.getSelection) {
+      sel = window.getSelection()
+      if (sel.rangeCount) {
+        range = sel.getRangeAt(0)
+        if (range.commonAncestorContainer.parentNode === editableDiv) {
+          caretPos = range.endOffset
+        }
+      }
+    } else if (document.selection && document.selection.createRange) {
+      range = document.selection.createRange()
+      if (range.parentElement() === editableDiv) {
+        var tempEl = document.createElement('span')
+        editableDiv.insertBefore(tempEl, editableDiv.firstChild)
+        var tempRange = range.duplicate()
+        tempRange.moveToElementText(tempEl)
+        tempRange.setEndPoint('EndToEnd', range)
+        caretPos = tempRange.text.length
+      }
+    }
+    return caretPos
+  }
 
   function totalCharacters () {
     const text = textInputRef.current.innerText
@@ -392,11 +537,52 @@ function InputEmoji ({
 
     textInputRef.current.focus()
 
+    replaceAllTextToString()
+
     emitChange()
 
     if (!keepOpenend) {
       toggleShowPicker()
     }
+  }
+
+  function selectElementContents(start, end) {
+    var range = document.createRange()
+    // range.selectNodeContents(el)
+    var focusNode = window.getSelection().focusNode
+    range.setStart(focusNode, start)
+    range.setEnd(focusNode, end)
+    var sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
+  }
+
+  /**
+   *
+   * @param {string} metion
+   */
+  function handleSetUserMention (userMention) {
+    placeholderRef.current.style.opacity = 0
+
+    textInputRef.current.focus()
+
+    console.log(mentionRef.current.focusNode)
+
+    selectElementContents(mentionRef.current.startPosition, mentionRef.current.endPosition)
+
+    const [ name ] = userMention.match(/(?<=\[).+?(?=\])/g)
+
+    const mentionHTML = `<span style="color: #0A91E6;" data-mention="${userMention}">@${name}</span> `
+
+    pasteHtmlAtCaret(mentionHTML)
+
+    mentionRef.current = null
+
+    textInputRef.current.focus()
+
+    replaceAllTextToString()
+
+    emitChange()
   }
 
   function getAllEmojisFromText (text) {
@@ -473,6 +659,7 @@ function InputEmoji ({
           />
         </div>
       </div>
+      <button onClick={handleSetUserMention}>test</button>
       <button
         className={
           `react-input-emoji--button${
@@ -494,7 +681,7 @@ function InputEmoji ({
 
 const InputEmojiWithRef = forwardRef(InputEmoji)
 
-InputEmojiWithRef.propTypes = {
+InputEmoji.propTypes = {
   value: t.string,
   onChange: t.func,
   cleanOnEnter: t.bool,
