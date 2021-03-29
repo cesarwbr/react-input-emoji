@@ -87,8 +87,9 @@ function InputEmoji(
   const placeholderRef = useRef(null);
   const onChangeFn = useRef(onChange);
 
-  const updateHTML = useCallback(nextValue => {
-    textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue || "");
+  const updateHTML = useCallback((nextValue = "") => {
+    textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue);
+    cleanedTextRef.current = nextValue;
   }, []);
 
   const setValue = useCallback(
