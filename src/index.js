@@ -1,455 +1,397 @@
+// @ts-check
+/* eslint-disable react/prop-types */
 // vendors
-import React, { useState, useImperativeHandle, useEffect, useRef, forwardRef, useCallback, useMemo } from 'react'
-import 'emoji-mart/css/emoji-mart.css'
-import { Picker } from 'emoji-mart'
-import t from 'prop-types'
+import React, {
+  useState,
+  useImperativeHandle,
+  useEffect,
+  useRef,
+  forwardRef,
+  useCallback
+} from "react";
+import t from "prop-types";
 
 // css
-import './styles.css'
+import "./styles.css";
+import EmojiPicker from "./emoji-picker";
 
 // utils
-import useDebounce from './utils/use-debounce'
+import { replaceAllTextEmojis, TRANSPARENT_GIF } from "./utils/emoji-utils";
+import {
+  handleCopy,
+  handleFocus,
+  handleKeydown,
+  handleKeyup,
+  handlePaste
+} from "./utils/input-event-utils";
 
-function InputEmoji ({
-  value,
-  onChange,
-  cleanOnEnter,
-  onEnter,
-  placeholder,
-  onResize,
-  onClick,
-  onFocus,
-  maxLength,
-  keepOpenend,
-  onKeyDown,
-  inputClass,
-  disableRecent,
-  tabIndex,
-  // style
-  height,
-  borderRadius,
-  borderColor,
-  fontSize,
-  fontFamily
-}, ref) {
-  const [showPicker, setShowPicker] = useState(false)
-  const [allEmojiStyle, setAllEmojiStyle] = useState({})
-  const [currentSize, setCurrentSize] = useState(null)
+/**
+ * @typedef {object} Props
+ * @property {string} value
+ * @property {function(string): void} onChange
+ * @property {boolean} cleanOnEnter
+ * @property {(text: string) => void} onEnter
+ * @property {string} placeholder
+ * @property {function({width: number, height: number}): void} onResize
+ * @property {() => void} onClick
+ * @property {() => void} onFocus
+ * @property {number} maxLength
+ * @property {boolean} keepOpenend
+ * @property {(event: KeyboardEvent) => void} onKeyDown
+ * @property {string} inputClass
+ * @property {boolean} disableRecent
+ * @property {number} tabIndex
+ * @property {number} height
+ * @property {number} borderRadius
+ * @property {string} borderColor
+ * @property {number} fontSize
+ * @property {string} fontFamily
+ */
 
-  const textInputRef = useRef(null)
-  const cleanedTextRef = useRef('')
-  const placeholderRef = useRef(null)
+/**
+ * Input Emoji Component
+ * @param {Props} props
+ * @param {React.Ref<any>} ref
+ * @return {JSX.Element}
+ */
+function InputEmoji(
+  {
+    onChange,
+    cleanOnEnter,
+    onEnter,
+    placeholder,
+    onResize,
+    onClick,
+    onFocus,
+    maxLength,
+    keepOpenend,
+    onKeyDown,
+    inputClass,
+    disableRecent,
+    tabIndex,
+    value,
+    // style
+    height,
+    borderRadius,
+    borderColor,
+    fontSize,
+    fontFamily
+  },
+  ref
+) {
+  const [showPicker, setShowPicker] = useState(false);
+
+  const currentSizeRef = useRef(null);
+  const textInputRef = useRef(null);
+  const cleanedTextRef = useRef("");
+  const placeholderRef = useRef(null);
+  const onChangeFn = useRef(onChange);
 
   useImperativeHandle(ref, () => ({
-    get value () {
-      return cleanedTextRef.current
+    get value() {
+      return cleanedTextRef.current;
     },
-    set value (value) {
-      setValue(value)
+    set value(value) {
+      setValue(value);
     },
     focus: () => {
-      textInputRef.current.focus()
+      textInputRef.current.focus();
     },
     blur: () => {
-      replaceAllTextEmojiToString()
+      replaceAllTextEmojiToString();
     }
-  }))
+  }));
 
   useEffect(() => {
     if (value && value.length > 0) {
-      placeholderRef.current.style.opacity = 0
+      placeholderRef.current.style.opacity = 0;
     } else {
-      placeholderRef.current.style.opacity = 1
+      placeholderRef.current.style.opacity = 1;
     }
-  }, [value])
+  }, [value]);
 
-  const replaceAllTextEmojis = useCallback((text) => {
-    let allEmojis = getAllEmojisFromText(text)
-
-    if (allEmojis) {
-      allEmojis = [...new Set(allEmojis)] // remove duplicates
-
-      allEmojis.forEach(emoji => {
-        const style = allEmojiStyle[emoji]
-
-        if (!style) return
-
-        text = replaceAll(
-          text,
-          emoji,
-          `<img style="${style}" data-emoji="${emoji}" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />`
-        )
-      })
-    }
-
-    return text
-  }, [allEmojiStyle])
-
-  const updateHTML = useCallback((nextValue) => {
-    nextValue = nextValue || value
-    textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue || '')
-  }, [replaceAllTextEmojis])
+  const updateHTML = useCallback(nextValue => {
+    textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue || "");
+  }, []);
 
   const checkAndEmitResize = useCallback(() => {
+    const currentSize = currentSizeRef.current;
+
     const nextSize = {
       width: textInputRef.current.offsetWidth,
       height: textInputRef.current.offsetHeight
+    };
+
+    if (
+      (!currentSize ||
+        currentSize.width !== nextSize.width ||
+        currentSize.height !== nextSize.height) &&
+      typeof onResize === "function"
+    ) {
+      onResize(nextSize);
     }
 
-    if (!currentSize ||
-      currentSize.width !== nextSize.width ||
-      currentSize.height !== nextSize.height) {
-      onResize(nextSize)
-      setCurrentSize(nextSize)
-    }
-  }, [currentSize, onResize])
+    currentSizeRef.current = nextSize;
+  }, [onResize]);
 
   const emitChange = useCallback(() => {
-    if (typeof onChange === 'function') {
-      onChange(cleanedTextRef.current)
+    if (typeof onChangeFn.current === "function") {
+      onChangeFn.current(cleanedTextRef.current);
     }
 
-    if (typeof onResize === 'function') {
-      checkAndEmitResize()
+    if (typeof onResize === "function") {
+      checkAndEmitResize();
     }
-  }, [checkAndEmitResize, onChange, onResize])
+  }, []);
 
   useEffect(() => {
-    function handleCopy (e) {
-      const selectedText = window.getSelection()
-
-      let container = document.createElement('div')
-
-      for (let i = 0, len = selectedText.rangeCount; i < len; ++i) {
-        container.appendChild(selectedText.getRangeAt(i).cloneContents())
-      }
-
-      container = replaceEmojiToString(container)
-
-      e.clipboardData.setData('text', container.innerText)
-      e.preventDefault()
-
-      function replaceEmojiToString (container) {
-        const images = Array.prototype.slice.call(container.querySelectorAll('img'))
-
-        images.forEach(image => {
-          image.outerHTML = image.dataset.emoji
-        })
-
-        return container
-      }
-    }
-
-    function handlePaste (e) {
-      e.preventDefault()
-      let content
-      if (window.clipboardData) {
-        content = window.clipboardData.getData('Text')
-        content = replaceAllTextEmojis(content)
-        if (window.getSelection) {
-          var selObj = window.getSelection()
-          var selRange = selObj.getRangeAt(0)
-          selRange.deleteContents()
-          selRange.insertNode(document.createTextNode(content))
-        }
-      } else if (e.clipboardData) {
-        content = e.clipboardData.getData('text/plain')
-        content = replaceAllTextEmojis(content)
-        document.execCommand('insertHTML', false, content)
-      }
-    }
-
-    const inputEl = textInputRef.current
+    /** @type {HTMLDivElement} */
+    const inputEl = textInputRef.current;
 
     const handleContentEditableInputCopyAndPaste = () => {
-      inputEl.addEventListener('copy', handleCopy)
-      inputEl.addEventListener('paste', handlePaste)
-    }
+      inputEl.addEventListener("copy", handleCopy);
+      inputEl.addEventListener("paste", handlePaste);
+    };
 
-    handleContentEditableInputCopyAndPaste()
+    handleContentEditableInputCopyAndPaste();
 
     return () => {
-      inputEl.removeEventListener('copy', handleCopy)
-      inputEl.removeEventListener('paste', handlePaste)
-    }
-  }, [replaceAllTextEmojis])
+      inputEl.removeEventListener("copy", handleCopy);
+      inputEl.removeEventListener("paste", handlePaste);
+    };
+  }, []);
 
   useEffect(() => {
-    const allEmojiButton = Array.prototype.slice.call(document.querySelectorAll('.emoji-mart-category-list > li > button'))
-
-    const allEmojiStyle = {}
-
-    allEmojiButton.forEach(emojiButton => {
-      const label = emojiButton.getAttribute('aria-label')
-      const [emoji] = label.split(',')
-
-      const emojiSpanEl = emojiButton.querySelector('span')
-
-      const style = replaceAll(emojiSpanEl.style.cssText, '"', "'")
-
-      allEmojiStyle[emoji] = style
-    })
-
-    setAllEmojiStyle(allEmojiStyle)
-  }, [])
-
-  useEffect(() => {
-    updateHTML()
-  }, [updateHTML])
+    updateHTML();
+  }, [updateHTML]);
 
   const replaceAllTextEmojiToString = useCallback(() => {
     if (!textInputRef.current) {
-      cleanedTextRef.current = ''
+      cleanedTextRef.current = "";
     }
 
-    const container = document.createElement('div')
-    container.innerHTML = textInputRef.current.innerHTML
+    const container = document.createElement("div");
+    container.innerHTML = textInputRef.current.innerHTML;
 
-    const images = Array.prototype.slice.call(container.querySelectorAll('img'))
+    const images = Array.prototype.slice.call(
+      container.querySelectorAll("img")
+    );
 
     images.forEach(image => {
-      image.outerHTML = image.dataset.emoji
-    })
+      container.innerHTML = container.innerHTML.replace(
+        image.outerHTML,
+        image.dataset.emoji
+      );
+    });
 
-    let text = container.innerText
+    let text = container.innerText;
 
     // remove all ↵ for safari
-    text = text.replace(/\n/ig, '')
+    text = text.replace(/\n/gi, "");
 
-    cleanedTextRef.current = text
+    cleanedTextRef.current = text;
 
-    checkPlaceholder()
-
-    emitChange()
-  }, [emitChange])
-
-  const [ replaceAllTextEmojiToStringDebounced ] = useDebounce(replaceAllTextEmojiToString, 500)
+    emitChange();
+  }, [emitChange]);
 
   useEffect(() => {
-    function handleKeydown (event) {
-      placeholderRef.current.style.opacity = 0
+    /** @type {HTMLDivElement} */
+    const inputEl = textInputRef.current;
 
-      if (typeof maxLength !== 'undefined' && event.keyCode !== 8 && totalCharacters() >= maxLength) {
-        event.preventDefault()
-      }
+    const onKeydown = handleKeydown({
+      placeholderEl: placeholderRef.current,
+      maxLength,
+      inputEl,
+      cleanedTextRef,
+      emitChange,
+      onEnter,
+      onKeyDown,
+      updateHTML,
+      cleanOnEnter
+    });
 
-      if (event.keyCode === 13) {
-        event.preventDefault()
-
-        replaceAllTextEmojiToString()
-
-        const cleanedText = cleanedTextRef.current
-
-        if (typeof onEnter === 'function') {
-          onEnter(cleanedText)
-        }
-
-        if (cleanOnEnter) {
-          updateHTML('')
-        }
-
-        if (typeof onKeyDown === 'function') {
-          onKeyDown(event)
-        }
-
-        return false
-      }
-
-      if (typeof onKeyDown === 'function') {
-        onKeyDown(event)
-      }
-    }
-
-    function handleKeyup(event) {
-      replaceAllTextEmojiToStringDebounced()
-    }
-
-    const inputEl = textInputRef.current
-
-    inputEl.addEventListener('keydown', handleKeydown)
-    inputEl.addEventListener('keyup', handleKeyup)
+    inputEl.addEventListener("keydown", onKeydown);
 
     return () => {
-      inputEl.removeEventListener('keydown', handleKeydown)
-      inputEl.removeEventListener('keyup', handleKeyup)
-    }
-  }, [onChange, cleanOnEnter, onEnter, updateHTML, replaceAllTextEmojiToString, replaceAllTextEmojiToStringDebounced, emitChange, maxLength, onKeyDown])
+      inputEl.removeEventListener("keydown", onKeydown);
+    };
+  }, [cleanOnEnter, emitChange, maxLength, onEnter, onKeyDown, updateHTML]);
 
   useEffect(() => {
-    function handleFocus() {
-      if (typeof onFocus === 'function') {
-        onFocus()
-      }
-    }
+    /** @type {HTMLDivElement} */
+    const inputEl = textInputRef.current;
 
-    const inputEl = textInputRef.current
+    const onKeyup = handleKeyup(replaceAllTextEmojiToString);
 
-    inputEl.addEventListener('focus', handleFocus)
+    inputEl.addEventListener("keyup", onKeyup);
 
     return () => {
-      inputEl.removeEventListener('focus', handleFocus)
+      inputEl.removeEventListener("keyup", onKeyup);
+    };
+  }, [replaceAllTextEmojiToString]);
+
+  useEffect(() => {
+    /** @type {HTMLDivElement} */
+    const inputEl = textInputRef.current;
+
+    let handleFocusFn;
+    if (typeof onFocus === "function") {
+      handleFocusFn = handleFocus(onFocus);
+
+      inputEl.addEventListener("focus", handleFocusFn);
     }
-  }, [onFocus])
 
-  function totalCharacters () {
-    const text = textInputRef.current.innerText
-    const html = textInputRef.current.innerHTML
-
-    const textCount = text.length
-    const emojisCount = (html.match(/<img/g) || []).length
-
-    return textCount + emojisCount
-  }
+    return () => {
+      if (typeof handleFocusFn === "function") {
+        inputEl.removeEventListener("focus", handleFocusFn);
+      }
+    };
+  }, [onFocus]);
 
   useEffect(() => {
     if (textInputRef.current) {
-      setCurrentSize({
-        width: textInputRef.current.offsetWidth,
-        height: textInputRef.current.offsetHeight
-      })
+      checkAndEmitResize();
     }
-  }, [])
+  }, [checkAndEmitResize]);
 
-  const excluePicker = useMemo(() => {
-    const exclude = []
-
-    if (disableRecent) {
-      exclude.push('recent')
-    }
-
-    return exclude
-  }, [disableRecent])
-
-  function setValue (value) {
-    updateHTML(value)
-    textInputRef.current.blur()
+  /**
+   *
+   * @param {string} value
+   */
+  function setValue(value) {
+    updateHTML(value);
+    textInputRef.current.blur();
   }
 
-  function toggleShowPicker () {
-    setShowPicker(showPicker => !showPicker)
+  /** */
+  function toggleShowPicker() {
+    setShowPicker(showPicker => !showPicker);
   }
 
-  function pasteHtmlAtCaret (html) {
-    let sel, range
+  /**
+   *
+   * @param {string} html
+   */
+  function pasteHtmlAtCaret(html) {
+    let sel;
+    let range;
     if (window.getSelection) {
       // IE9 and non-IE
-      sel = window.getSelection()
+      sel = window.getSelection();
       if (sel.getRangeAt && sel.rangeCount) {
-        range = sel.getRangeAt(0)
-        range.deleteContents()
+        range = sel.getRangeAt(0);
+        range.deleteContents();
 
         // Range.createContextualFragment() would be useful here but is
         // non-standard and not supported in all browsers (IE9, for one)
-        const el = document.createElement('div')
-        el.innerHTML = html
-        const frag = document.createDocumentFragment(); var node; var lastNode
+        const el = document.createElement("div");
+        el.innerHTML = html;
+        const frag = document.createDocumentFragment();
+        let node;
+        let lastNode;
         while ((node = el.firstChild)) {
-          lastNode = frag.appendChild(node)
+          lastNode = frag.appendChild(node);
         }
-        range.insertNode(frag)
+        range.insertNode(frag);
 
         // Preserve the selection
         if (lastNode) {
-          range = range.cloneRange()
-          range.setStartAfter(lastNode)
-          range.collapse(true)
-          sel.removeAllRanges()
-          sel.addRange(range)
+          range = range.cloneRange();
+          range.setStartAfter(lastNode);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
         }
       }
-    } else if (document.selection && document.selection.type !== 'Control') {
-      // IE < 9
-      document.selection.createRange().pasteHTML(html)
     }
   }
 
-  function replaceAll (str, find, replace) {
-    return str.replace(new RegExp(find, 'g'), replace)
+  /**
+   *
+   * @param {string} str
+   * @param {string} find
+   * @param {string} replace
+   * @return {string}
+   */
+  function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, "g"), replace);
   }
 
-  function getImage (emoji) {
-    let shortNames = `${emoji.short_names}`
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   *
+   * @param { import("./types/types").EmojiMartItem } emoji
+   * @return {string}
+   */
+  function getImage(emoji) {
+    let shortNames = `${emoji.short_names}`;
 
-    shortNames = replaceAll(shortNames, ',', ', ')
+    shortNames = replaceAll(shortNames, ",", ", ");
 
+    /** @type {HTMLSpanElement} */
     const emojiSpanEl = document.querySelector(
       `[aria-label="${emoji.native}, ${shortNames}"] > span`
-    )
+    );
 
-    if (!emojiSpanEl) return ''
+    if (!emojiSpanEl) return "";
 
-    const style = replaceAll(emojiSpanEl.style.cssText, '"', "'")
+    const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
 
-    return `<img style="${style}" data-emoji="${emoji.native}" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />`
+    return `<img style="${style}" data-emoji="${emoji.native}" src="${TRANSPARENT_GIF}" />`;
   }
 
-  function handleSelectEmoji (emoji) {
-    placeholderRef.current.style.opacity = 0
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   *
+   * @param { import("./types/types").EmojiMartItem } emoji
+   */
+  function handleSelectEmoji(emoji) {
+    placeholderRef.current.style.opacity = 0;
 
-    textInputRef.current.focus()
+    textInputRef.current.focus();
 
-    pasteHtmlAtCaret(getImage(emoji))
+    pasteHtmlAtCaret(getImage(emoji));
 
-    textInputRef.current.focus()
+    textInputRef.current.focus();
 
-    emitChange()
+    replaceAllTextEmojiToString();
 
     if (!keepOpenend) {
-      toggleShowPicker()
+      toggleShowPicker();
     }
   }
 
-  function getAllEmojisFromText (text) {
-    return text.match(
-      /(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|\ud83c[\udffb-\udfff])?(?:\u200d(?:[^\ud800-\udfff]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|\ud83c[\udffb-\udfff])?)*/g
-    )
-  }
-
-  function checkPlaceholder () {
-    const text = cleanedTextRef.current
-
-    if (text !== '' && placeholderRef.current.opacity !== 0) {
-      placeholderRef.current.style.opacity = 0
-    } else {
-      placeholderRef.current.style.opacity = 1
-    }
-  }
-
-  function handleClick () {
-    if (typeof onClick === 'function') {
-      onClick()
+  /** */
+  function handleClick() {
+    if (typeof onClick === "function") {
+      onClick();
     }
   }
 
   return (
-    <div className='react-emoji'>
-      <div
-        className='react-emoji-picker--container'
-      >
-        <div className={
-          `react-emoji-picker--wrapper${
-            showPicker ? ' react-emoji-picker--wrapper__show' : ''
-          }`
-        }>
+    <div className="react-emoji">
+      <div className="react-emoji-picker--container">
+        <div
+          className={`react-emoji-picker--wrapper${
+            showPicker ? " react-emoji-picker--wrapper__show" : ""
+          }`}
+        >
           <div
-            className={
-              `react-emoji-picker${
-                showPicker ? ' react-emoji-picker__show' : ''
-              }`
-            }
+            className={`react-emoji-picker${
+              showPicker ? " react-emoji-picker__show" : ""
+            }`}
           >
-            <Picker
-              showPreview={false}
-              showSkinTones={false}
-              set='apple'
-              onSelect={handleSelectEmoji}
-              exclude={excluePicker}
-            />
+            {showPicker && (
+              <EmojiPicker
+                onSelectEmoji={handleSelectEmoji}
+                disableRecent={disableRecent}
+              />
+            )}
           </div>
         </div>
       </div>
       <div
-        className='react-input-emoji--container'
+        className="react-input-emoji--container"
         style={{
           borderRadius,
           borderColor,
@@ -457,42 +399,50 @@ function InputEmoji ({
           fontFamily
         }}
       >
-        <div className='react-input-emoji--wrapper' onClick={handleClick}>
-          <div
-            ref={placeholderRef}
-            className='react-input-emoji--placeholder'
-          >
+        <div className="react-input-emoji--wrapper" onClick={handleClick}>
+          <div ref={placeholderRef} className="react-input-emoji--placeholder">
             {placeholder}
           </div>
           <div
             ref={textInputRef}
             tabIndex={tabIndex}
             contentEditable
-            className={`react-input-emoji--input${inputClass ? ` ${inputClass}` : ''}`}
+            className={`react-input-emoji--input${
+              inputClass ? ` ${inputClass}` : ""
+            }`}
             onBlur={emitChange}
           />
         </div>
       </div>
       <button
-        className={
-          `react-input-emoji--button${
-            showPicker ? ' react-input-emoji--button__show' : ''
-          }`
-        }
-        onClick={toggleShowPicker}>
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'><path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10' /><path d='M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0' /></svg>
-      </button>
-      {showPicker &&
-      <div
-        className='react-input-emoji--overlay'
+        className={`react-input-emoji--button${
+          showPicker ? " react-input-emoji--button__show" : ""
+        }`}
         onClick={toggleShowPicker}
-      />
-      }
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+        >
+          {/* eslint-disable-next-line max-len */}
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10" />
+          {/* eslint-disable-next-line max-len */}
+          <path d="M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0" />
+        </svg>
+      </button>
+      {showPicker && (
+        <div
+          className="react-input-emoji--overlay"
+          onClick={toggleShowPicker}
+        />
+      )}
     </div>
-  )
+  );
 }
 
-const InputEmojiWithRef = forwardRef(InputEmoji)
+const InputEmojiWithRef = forwardRef(InputEmoji);
 
 InputEmojiWithRef.propTypes = {
   value: t.string,
@@ -515,16 +465,16 @@ InputEmojiWithRef.propTypes = {
   borderColor: t.string,
   fontSize: t.number,
   fontFamily: t.string
-}
+};
 
 InputEmojiWithRef.defaultProps = {
   height: 30,
-  placeholder: 'Type a message',
+  placeholder: "Type a message",
   borderRadius: 21,
-  borderColor: '#EAEAEA',
+  borderColor: "#EAEAEA",
   fontSize: 15,
-  fontFamily: 'sans-serif',
+  fontFamily: "sans-serif",
   tabIndex: 0
-}
+};
 
-export default InputEmojiWithRef
+export default InputEmojiWithRef;
