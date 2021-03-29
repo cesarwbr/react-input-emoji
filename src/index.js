@@ -142,7 +142,7 @@ function InputEmoji(
     if (typeof onResize === "function") {
       checkAndEmitResize();
     }
-  }, []);
+  }, [checkAndEmitResize, onResize]);
 
   useEffect(() => {
     /** @type {HTMLDivElement} */

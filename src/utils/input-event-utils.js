@@ -83,7 +83,9 @@ export function handleKeydown({
   cleanOnEnter
 }) {
   return event => {
-    placeholderEl.style.opacity = "0";
+    if (event.key.length === 1) {
+      placeholderEl.style.opacity = "0";
+    }
 
     if (
       typeof maxLength !== "undefined" &&
@@ -111,6 +113,7 @@ export function handleKeydown({
 
       if (cleanOnEnter) {
         updateHTML("");
+        placeholderEl.style.opacity = "1";
       }
 
       if (typeof onKeyDown === "function") {
@@ -124,8 +127,25 @@ export function handleKeydown({
       onKeyDown(event);
     }
 
+    checkPlaceholder(cleanedTextRef, placeholderEl);
+
     return true;
   };
+}
+
+/**
+ *
+ * @param {React.MutableRefObject<string>} cleanedTextRef
+ * @param {HTMLDivElement} placeholderEl
+ */
+function checkPlaceholder(cleanedTextRef, placeholderEl) {
+  const text = cleanedTextRef.current;
+
+  if (text !== "") {
+    placeholderEl.style.opacity = "0";
+  } else {
+    placeholderEl.style.opacity = "1";
+  }
 }
 
 /**

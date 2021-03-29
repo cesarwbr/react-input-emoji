@@ -118,7 +118,7 @@ export default function App() {
             onEnter={text => {
               console.log("enter", text);
             }}
-            placeholder="Search"
+            placeholder="Type a message"
             keepOpenend
             disableRecent
             maxLength={1200}
