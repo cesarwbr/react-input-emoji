@@ -2,7 +2,12 @@ module.exports = {
   env: {
     browser: true
   },
-  extends: ["plugin:react/recommended", "google", "prettier"],
+  extends: [
+    "plugin:react/recommended",
+    "google",
+    "prettier",
+    "plugin:react-hooks/recommended"
+  ],
   parser: "babel-eslint",
   plugins: ["react", "react-hooks"],
   rules: {

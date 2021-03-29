@@ -1,7 +1,13 @@
+// @ts-check
+
 // vendors
 import React, { memo, useMemo } from "react";
 import Highlight from "react-highlight.js";
 
+/**
+ *
+ * @return {JSX.Element}
+ */
 function ExampleCode() {
   const exampleCode = useMemo(
     () => `import React, { useState } from 'react'
