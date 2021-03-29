@@ -87,6 +87,18 @@ function InputEmoji(
   const placeholderRef = useRef(null);
   const onChangeFn = useRef(onChange);
 
+  const updateHTML = useCallback(nextValue => {
+    textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue || "");
+  }, []);
+
+  const setValue = useCallback(
+    value => {
+      updateHTML(value);
+      textInputRef.current.blur();
+    },
+    [updateHTML]
+  );
+
   useImperativeHandle(ref, () => ({
     get value() {
       return cleanedTextRef.current;
@@ -108,11 +120,11 @@ function InputEmoji(
     } else {
       placeholderRef.current.style.opacity = 1;
     }
-  }, [value]);
 
-  const updateHTML = useCallback(nextValue => {
-    textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue || "");
-  }, []);
+    if (cleanedTextRef.current !== value) {
+      setValue(value);
+    }
+  }, [setValue, value]);
 
   const checkAndEmitResize = useCallback(() => {
     const currentSize = currentSizeRef.current;
@@ -253,15 +265,6 @@ function InputEmoji(
       checkAndEmitResize();
     }
   }, [checkAndEmitResize]);
-
-  /**
-   *
-   * @param {string} value
-   */
-  function setValue(value) {
-    updateHTML(value);
-    textInputRef.current.blur();
-  }
 
   /** */
   function toggleShowPicker() {
