@@ -46,6 +46,7 @@ import {
  * @property {string} borderColor
  * @property {number} fontSize
  * @property {string} fontFamily
+ * @property {object[]=} customEmojis
  */
 
 /**
@@ -70,6 +71,7 @@ function InputEmoji(
     disableRecent,
     tabIndex,
     value,
+    customEmojis,
     // style
     height,
     borderRadius,
@@ -335,13 +337,21 @@ function InputEmoji(
     /** @type {HTMLSpanElement} */
     const emojiSpanEl = document.querySelector(
       `[aria-label="${emoji.native}, ${shortNames}"] > span`
+    ) || document.querySelector(
+      `[aria-label="${emoji.id}"] > span`
     );
 
     if (!emojiSpanEl) return "";
 
     const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
 
-    return `<img style="${style}" data-emoji="${emoji.native}" src="${TRANSPARENT_GIF}" />`;
+    let dataEmoji = emoji.native
+
+    if (!dataEmoji && emoji.emoticons && emoji.emoticons.length > 0) {
+      dataEmoji = emoji.emoticons[0]
+    }
+ 
+    return `<img style="${style}" data-emoji="${dataEmoji}" src="${TRANSPARENT_GIF}" />`;
   }
 
   // eslint-disable-next-line valid-jsdoc
@@ -389,6 +399,7 @@ function InputEmoji(
               <EmojiPicker
                 onSelectEmoji={handleSelectEmoji}
                 disableRecent={disableRecent}
+                customEmojis={customEmojis}
               />
             )}
           </div>
@@ -463,6 +474,7 @@ InputEmojiWithRef.propTypes = {
   inputClass: t.string,
   disableRecent: t.bool,
   tabIndex: t.number,
+  customEmojis: t.array,
   // style
   height: t.number,
   borderRadius: t.number,
@@ -478,7 +490,8 @@ InputEmojiWithRef.defaultProps = {
   borderColor: "#EAEAEA",
   fontSize: 15,
   fontFamily: "sans-serif",
-  tabIndex: 0
+  tabIndex: 0,
+  customEmojis: []
 };
 
 export default InputEmojiWithRef;

@@ -35,8 +35,6 @@ import {
 export default function App() {
   const [text, setText] = useState("");
 
-  // const inputEl = useRef(null);
-
   /**
    * Handle text change
    * @param {string} text
