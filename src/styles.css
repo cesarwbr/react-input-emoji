@@ -73,11 +73,9 @@
   color: #a0a0a0;
   pointer-events: none;
   position: absolute;
-  transition: opacity 0.02s linear;
   user-select: none;
-  opacity: 1;
   z-index: 2;
-  left: 12px;
+  left: 16px;
   top: 0;
   bottom: 0;
   display: flex;

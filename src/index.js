@@ -118,10 +118,12 @@ function InputEmoji(
   }));
 
   useEffect(() => {
+    /** @type {HTMLDivElement} */
+    const placeholderEl = placeholderRef.current
     if (value && value.length > 0) {
-      placeholderRef.current.style.opacity = 0;
+      placeholderEl.style.visibility = 'hidden'
     } else {
-      placeholderRef.current.style.opacity = 1;
+      placeholderEl.style.visibility = 'visible'
     }
 
     if (cleanedTextRef.current !== value) {
@@ -360,7 +362,7 @@ function InputEmoji(
    * @param { import("./types/types").EmojiMartItem } emoji
    */
   function handleSelectEmoji(emoji) {
-    placeholderRef.current.style.opacity = 0;
+    placeholderRef.current.style.visibility = 'hidden';
 
     textInputRef.current.focus();
 
@@ -379,6 +381,16 @@ function InputEmoji(
   function handleClick() {
     if (typeof onClick === "function") {
       onClick();
+    }
+  }
+
+  /**
+   * 
+   * @param {React.KeyboardEvent} event 
+   */
+  function handleInputKeydown (event) {
+    if (event.key.length === 1) {
+      placeholderRef.current.style.visibility = 'hidden'
     }
   }
 
@@ -420,6 +432,7 @@ function InputEmoji(
           </div>
           <div
             ref={textInputRef}
+            onKeyDown={handleInputKeydown}
             tabIndex={tabIndex}
             contentEditable
             className={`react-input-emoji--input${

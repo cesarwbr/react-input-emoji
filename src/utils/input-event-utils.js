@@ -84,7 +84,7 @@ export function handleKeydown({
 }) {
   return event => {
     if (event.key.length === 1) {
-      placeholderEl.style.opacity = "0";
+      placeholderEl.style.visibility = "hidden";
     }
 
     if (
@@ -113,7 +113,7 @@ export function handleKeydown({
 
       if (cleanOnEnter) {
         updateHTML("");
-        placeholderEl.style.opacity = "1";
+        placeholderEl.style.visibility = "visible";
       }
 
       if (typeof onKeyDown === "function") {
@@ -142,9 +142,9 @@ function checkPlaceholder(cleanedTextRef, placeholderEl) {
   const text = cleanedTextRef.current;
 
   if (text !== "") {
-    placeholderEl.style.opacity = "0";
+    placeholderEl.style.visibility = "hidden";
   } else {
-    placeholderEl.style.opacity = "1";
+    placeholderEl.style.visibility = "visible";
   }
 }
 
