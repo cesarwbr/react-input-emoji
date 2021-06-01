@@ -84,30 +84,52 @@ function getAllEmojiStyle() {
   return allEmojiStyle;
 }
 
+// eslint-disable-next-line valid-jsdoc
 /**
- * Replace all img emoji to string
- * @param {HTMLDivElement} inputEl
- * @param {React.MutableRefObject<string>} cleanedTextRef
- * @param {HTMLDivElement} placeholderEl
- * @param {function(): void} emitChange
+ *
+ * @param { import("../types/types").EmojiMartItem } emoji
+ * @return {string}
  */
-export function replaceAllTextEmojiToString(
-  inputEl,
-  cleanedTextRef,
-  placeholderEl,
-  emitChange
-) {
-  if (!inputEl) {
-    cleanedTextRef.current = "";
+export function getImageEmoji(emoji) {
+  let shortNames = `${emoji.short_names}`;
+
+  shortNames = replaceAll(shortNames, ",", ", ");
+
+  /** @type {HTMLSpanElement} */
+  const emojiSpanEl =
+    document.querySelector(
+      `[aria-label="${emoji.native}, ${shortNames}"] > span`
+    ) || document.querySelector(`[aria-label="${emoji.id}"] > span`);
+
+  if (!emojiSpanEl) return "";
+
+  const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
+
+  let dataEmoji = emoji.native;
+
+  if (!dataEmoji && emoji.emoticons && emoji.emoticons.length > 0) {
+    dataEmoji = emoji.emoticons[0];
   }
 
+  return `<img style="${style}" data-emoji="${dataEmoji}" src="${TRANSPARENT_GIF}" />`;
+}
+
+/**
+ *
+ * @param {string} html
+ * @return {string}
+ */
+export function replaceAllTextEmojiToString(html) {
   const container = document.createElement("div");
-  container.innerHTML = inputEl.innerHTML;
+  container.innerHTML = html;
 
   const images = Array.prototype.slice.call(container.querySelectorAll("img"));
 
   images.forEach(image => {
-    image.outerHTML = image.dataset.emoji;
+    container.innerHTML = container.innerHTML.replace(
+      image.outerHTML,
+      image.dataset.emoji
+    );
   });
 
   let text = container.innerText;
@@ -115,7 +137,5 @@ export function replaceAllTextEmojiToString(
   // remove all ↵ for safari
   text = text.replace(/\n/gi, "");
 
-  cleanedTextRef.current = text;
-
-  emitChange();
+  return text;
 }

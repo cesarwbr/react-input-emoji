@@ -2,12 +2,11 @@
 /* eslint-disable react/prop-types */
 // vendors
 import React, {
-  useState,
-  useImperativeHandle,
   useEffect,
   useRef,
   forwardRef,
-  useCallback
+  useCallback,
+  useState
 } from "react";
 import t from "prop-types";
 
@@ -16,23 +15,28 @@ import "./styles.css";
 import EmojiPicker from "./emoji-picker";
 
 // utils
-import { replaceAllTextEmojis, TRANSPARENT_GIF } from "./utils/emoji-utils";
+import { replaceAllTextEmojis } from "./utils/emoji-utils";
 import {
   handleCopy,
   handleFocus,
   handleKeydown,
   handleKeyup,
-  handlePaste
+  handlePaste,
+  handleSelectEmoji
 } from "./utils/input-event-utils";
+
+// hooks
+import { useExpose } from "./hooks/use-expose";
+import { useEmit } from "./hooks/use-emit";
 
 /**
  * @typedef {object} Props
  * @property {string} value
- * @property {function(string): void} onChange
+ * @property {(value: string) => void} onChange
  * @property {boolean} cleanOnEnter
  * @property {(text: string) => void} onEnter
  * @property {string} placeholder
- * @property {function({width: number, height: number}): void} onResize
+ * @property {(size: {width: number, height: number}) => void} onResize
  * @property {() => void} onClick
  * @property {() => void} onFocus
  * @property {number} maxLength
@@ -83,11 +87,32 @@ function InputEmoji(
 ) {
   const [showPicker, setShowPicker] = useState(false);
 
-  const currentSizeRef = useRef(null);
+  /** @type {React.MutableRefObject<HTMLDivElement>} */
   const textInputRef = useRef(null);
   const cleanedTextRef = useRef("");
+  /** @type {React.MutableRefObject<HTMLDivElement>} */
   const placeholderRef = useRef(null);
-  const onChangeFn = useRef(onChange);
+
+  const toggleShowPicker = useCallback(event => {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    setShowPicker(currentShowPicker => !currentShowPicker);
+  }, []);
+
+  useEffect(() => {
+    /** */
+    function checkClickOutside() {
+      setShowPicker(false);
+    }
+
+    document.addEventListener("click", checkClickOutside);
+
+    return () => {
+      document.removeEventListener("click", checkClickOutside);
+    };
+  }, []);
 
   const updateHTML = useCallback((nextValue = "") => {
     textInputRef.current.innerHTML = replaceAllTextEmojis(nextValue);
@@ -97,69 +122,33 @@ function InputEmoji(
   const setValue = useCallback(
     value => {
       updateHTML(value);
-      textInputRef.current.blur();
     },
     [updateHTML]
   );
 
-  useImperativeHandle(ref, () => ({
-    get value() {
-      return cleanedTextRef.current;
-    },
-    set value(value) {
-      setValue(value);
-    },
-    focus: () => {
-      textInputRef.current.focus();
-    },
-    blur: () => {
-      replaceAllTextEmojiToString();
-    }
-  }));
+  const emitChange = useEmit(textInputRef, onResize, onChange, cleanedTextRef);
+
+  useExpose({
+    ref,
+    cleanedTextRef,
+    setValue,
+    textInputRef,
+    emitChange
+  });
 
   useEffect(() => {
     /** @type {HTMLDivElement} */
-    const placeholderEl = placeholderRef.current
+    const placeholderEl = placeholderRef.current;
     if (value && value.length > 0) {
-      placeholderEl.style.visibility = 'hidden'
+      placeholderEl.style.visibility = "hidden";
     } else {
-      placeholderEl.style.visibility = 'visible'
+      placeholderEl.style.visibility = "visible";
     }
 
     if (cleanedTextRef.current !== value) {
       setValue(value);
     }
   }, [setValue, value]);
-
-  const checkAndEmitResize = useCallback(() => {
-    const currentSize = currentSizeRef.current;
-
-    const nextSize = {
-      width: textInputRef.current.offsetWidth,
-      height: textInputRef.current.offsetHeight
-    };
-
-    if (
-      (!currentSize ||
-        currentSize.width !== nextSize.width ||
-        currentSize.height !== nextSize.height) &&
-      typeof onResize === "function"
-    ) {
-      onResize(nextSize);
-    }
-
-    currentSizeRef.current = nextSize;
-  }, [onResize]);
-
-  const emitChange = useCallback(() => {
-    if (typeof onChangeFn.current === "function") {
-      onChangeFn.current(cleanedTextRef.current);
-    }
-
-    if (typeof onResize === "function") {
-      checkAndEmitResize();
-    }
-  }, [checkAndEmitResize, onResize]);
 
   useEffect(() => {
     /** @type {HTMLDivElement} */
@@ -182,35 +171,6 @@ function InputEmoji(
     updateHTML();
   }, [updateHTML]);
 
-  const replaceAllTextEmojiToString = useCallback(() => {
-    if (!textInputRef.current) {
-      cleanedTextRef.current = "";
-    }
-
-    const container = document.createElement("div");
-    container.innerHTML = textInputRef.current.innerHTML;
-
-    const images = Array.prototype.slice.call(
-      container.querySelectorAll("img")
-    );
-
-    images.forEach(image => {
-      container.innerHTML = container.innerHTML.replace(
-        image.outerHTML,
-        image.dataset.emoji
-      );
-    });
-
-    let text = container.innerText;
-
-    // remove all ↵ for safari
-    text = text.replace(/\n/gi, "");
-
-    cleanedTextRef.current = text;
-
-    emitChange();
-  }, [emitChange]);
-
   useEffect(() => {
     /** @type {HTMLDivElement} */
     const inputEl = textInputRef.current;
@@ -220,6 +180,7 @@ function InputEmoji(
       maxLength,
       inputEl,
       cleanedTextRef,
+      textInputRef,
       emitChange,
       onEnter,
       onKeyDown,
@@ -238,14 +199,14 @@ function InputEmoji(
     /** @type {HTMLDivElement} */
     const inputEl = textInputRef.current;
 
-    const onKeyup = handleKeyup(replaceAllTextEmojiToString);
+    const onKeyup = handleKeyup(emitChange, cleanedTextRef, textInputRef);
 
     inputEl.addEventListener("keyup", onKeyup);
 
     return () => {
       inputEl.removeEventListener("keyup", onKeyup);
     };
-  }, [replaceAllTextEmojiToString]);
+  }, [emitChange]);
 
   useEffect(() => {
     /** @type {HTMLDivElement} */
@@ -265,118 +226,6 @@ function InputEmoji(
     };
   }, [onFocus]);
 
-  useEffect(() => {
-    if (textInputRef.current) {
-      checkAndEmitResize();
-    }
-  }, [checkAndEmitResize]);
-
-  /** */
-  function toggleShowPicker() {
-    setShowPicker(showPicker => !showPicker);
-  }
-
-  /**
-   *
-   * @param {string} html
-   */
-  function pasteHtmlAtCaret(html) {
-    let sel;
-    let range;
-    if (window.getSelection) {
-      // IE9 and non-IE
-      sel = window.getSelection();
-      if (sel.getRangeAt && sel.rangeCount) {
-        range = sel.getRangeAt(0);
-        range.deleteContents();
-
-        // Range.createContextualFragment() would be useful here but is
-        // non-standard and not supported in all browsers (IE9, for one)
-        const el = document.createElement("div");
-        el.innerHTML = html;
-        const frag = document.createDocumentFragment();
-        let node;
-        let lastNode;
-        while ((node = el.firstChild)) {
-          lastNode = frag.appendChild(node);
-        }
-        range.insertNode(frag);
-
-        // Preserve the selection
-        if (lastNode) {
-          range = range.cloneRange();
-          range.setStartAfter(lastNode);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
-        }
-      }
-    }
-  }
-
-  /**
-   *
-   * @param {string} str
-   * @param {string} find
-   * @param {string} replace
-   * @return {string}
-   */
-  function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(find, "g"), replace);
-  }
-
-  // eslint-disable-next-line valid-jsdoc
-  /**
-   *
-   * @param { import("./types/types").EmojiMartItem } emoji
-   * @return {string}
-   */
-  function getImage(emoji) {
-    let shortNames = `${emoji.short_names}`;
-
-    shortNames = replaceAll(shortNames, ",", ", ");
-
-    /** @type {HTMLSpanElement} */
-    const emojiSpanEl = document.querySelector(
-      `[aria-label="${emoji.native}, ${shortNames}"] > span`
-    ) || document.querySelector(
-      `[aria-label="${emoji.id}"] > span`
-    );
-
-    if (!emojiSpanEl) return "";
-
-    const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
-
-    let dataEmoji = emoji.native
-
-    if (!dataEmoji && emoji.emoticons && emoji.emoticons.length > 0) {
-      dataEmoji = emoji.emoticons[0]
-    }
- 
-    return `<img style="${style}" data-emoji="${dataEmoji}" src="${TRANSPARENT_GIF}" />`;
-  }
-
-  // eslint-disable-next-line valid-jsdoc
-  /**
-   *
-   * @param { import("./types/types").EmojiMartItem } emoji
-   */
-  function handleSelectEmoji(emoji) {
-    placeholderRef.current.style.visibility = 'hidden';
-
-    textInputRef.current.focus();
-
-    pasteHtmlAtCaret(getImage(emoji));
-
-    textInputRef.current.focus();
-
-    replaceAllTextEmojiToString();
-
-    if (!keepOpenend) {
-      toggleShowPicker();
-    }
-  }
-
   /** */
   function handleClick() {
     if (typeof onClick === "function") {
@@ -385,37 +234,43 @@ function InputEmoji(
   }
 
   /**
-   * 
-   * @param {React.KeyboardEvent} event 
+   *
+   * @param {React.KeyboardEvent} event
    */
-  function handleInputKeydown (event) {
+  function handleInputKeydown(event) {
     if (event.key.length === 1) {
-      placeholderRef.current.style.visibility = 'hidden'
+      placeholderRef.current.style.visibility = "hidden";
     }
   }
 
   return (
     <div className="react-emoji">
       <div className="react-emoji-picker--container">
-        <div
-          className={`react-emoji-picker--wrapper${
-            showPicker ? " react-emoji-picker--wrapper__show" : ""
-          }`}
-        >
+        {showPicker && (
           <div
-            className={`react-emoji-picker${
-              showPicker ? " react-emoji-picker__show" : ""
-            }`}
+            className="react-emoji-picker--wrapper"
+            onClick={evt => evt.stopPropagation()}
           >
-            {showPicker && (
+            <div className="react-emoji-picker">
               <EmojiPicker
-                onSelectEmoji={handleSelectEmoji}
+                onSelectEmoji={emoji =>
+                  handleSelectEmoji({
+                    emoji,
+                    placeholderRef,
+                    textInputRef,
+                    cleanedTextRef,
+                    emitChange,
+                    keepOpenend,
+                    toggleShowPicker,
+                    maxLength
+                  })
+                }
                 disableRecent={disableRecent}
                 customEmojis={customEmojis}
               />
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div
         className="react-input-emoji--container"
@@ -460,12 +315,6 @@ function InputEmoji(
           <path d="M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0" />
         </svg>
       </button>
-      {showPicker && (
-        <div
-          className="react-input-emoji--overlay"
-          onClick={toggleShowPicker}
-        />
-      )}
     </div>
   );
 }

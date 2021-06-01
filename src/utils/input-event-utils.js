@@ -1,6 +1,7 @@
 // @ts-check
 
 import {
+  getImageEmoji,
   replaceAllTextEmojis,
   replaceAllTextEmojiToString
 } from "./emoji-utils";
@@ -22,6 +23,44 @@ export function handleCopy(event) {
 
   event.clipboardData.setData("text", container.innerText);
   event.preventDefault();
+}
+
+/**
+ *
+ * @param {string} html
+ */
+export function handlePasteHtmlAtCaret(html) {
+  let sel;
+  let range;
+  if (window.getSelection) {
+    // IE9 and non-IE
+    sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount) {
+      range = sel.getRangeAt(0);
+      range.deleteContents();
+
+      // Range.createContextualFragment() would be useful here but is
+      // non-standard and not supported in all browsers (IE9, for one)
+      const el = document.createElement("div");
+      el.innerHTML = html;
+      const frag = document.createDocumentFragment();
+      let node;
+      let lastNode;
+      while ((node = el.firstChild)) {
+        lastNode = frag.appendChild(node);
+      }
+      range.insertNode(frag);
+
+      // Preserve the selection
+      if (lastNode) {
+        range = range.cloneRange();
+        range.setStartAfter(lastNode);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  }
 }
 
 /**
@@ -59,6 +98,7 @@ export function handlePaste(event) {
  * @property {number} maxLength
  * @property {HTMLDivElement} inputEl
  * @property {React.MutableRefObject<string>} cleanedTextRef
+ * @property {React.MutableRefObject<HTMLDivElement>} textInputRef
  * @property {boolean} cleanOnEnter
  * @property {function(): void} emitChange
  * @property {(function(string): void)=} onEnter
@@ -76,6 +116,7 @@ export function handleKeydown({
   maxLength,
   inputEl,
   cleanedTextRef,
+  textInputRef,
   emitChange,
   onEnter,
   onKeyDown,
@@ -98,12 +139,11 @@ export function handleKeydown({
     if (event.keyCode === 13) {
       event.preventDefault();
 
-      replaceAllTextEmojiToString(
-        inputEl,
-        cleanedTextRef,
-        placeholderEl,
-        emitChange
-      );
+      const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
+
+      cleanedTextRef.current = text;
+
+      emitChange();
 
       const cleanedText = cleanedTextRef.current;
 
@@ -131,6 +171,58 @@ export function handleKeydown({
 
     return true;
   };
+}
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @typedef {Object} HandleSelectEmojiProps
+ * @property {import("../types/types").EmojiMartItem} emoji
+ * @property {React.MutableRefObject<HTMLDivElement>} placeholderRef
+ * @property {React.MutableRefObject<HTMLDivElement>} textInputRef
+ * @property {React.MutableRefObject<string>} cleanedTextRef
+ * @property {boolean} keepOpenend
+ * @property {() => void} toggleShowPicker
+ * @property {() => void} emitChange
+ * @property {number=} maxLength
+ */
+
+/**
+ *
+ * @param {HandleSelectEmojiProps} props
+ */
+export function handleSelectEmoji({
+  emoji,
+  placeholderRef,
+  textInputRef,
+  cleanedTextRef,
+  emitChange,
+  keepOpenend,
+  toggleShowPicker,
+  maxLength
+}) {
+  if (
+    typeof maxLength !== "undefined" &&
+    totalCharacters(textInputRef.current) >= maxLength
+  ) {
+    return;
+  }
+
+  placeholderRef.current.style.visibility = "hidden";
+
+  textInputRef.current.focus();
+
+  handlePasteHtmlAtCaret(getImageEmoji(emoji));
+
+  textInputRef.current.focus();
+
+  const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
+
+  cleanedTextRef.current = text;
+  emitChange();
+
+  if (!keepOpenend) {
+    toggleShowPicker();
+  }
 }
 
 /**
@@ -163,14 +255,19 @@ function totalCharacters(inputEl) {
   return textCount + emojisCount;
 }
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * Handle keyup event
- * @param {function(): void} replaceAllTextEmojiToStringDebounced
- * @return {function(KeyboardEvent): void}
+ * @param {() => void} emitChange
+ * @param {React.MutableRefObject<string>} cleanedTextRef
+ * @param {React.MutableRefObject<HTMLDivElement>} textInputRef
+ * @return {() => void}
  */
-export function handleKeyup(replaceAllTextEmojiToStringDebounced) {
+export function handleKeyup(emitChange, cleanedTextRef, textInputRef) {
   return () => {
-    replaceAllTextEmojiToStringDebounced();
+    const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
+    cleanedTextRef.current = text;
+    emitChange();
   };
 }
 

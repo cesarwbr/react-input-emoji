@@ -120,15 +120,11 @@
   width: 100%;
 }
 
-.react-emoji-picker--wrapper.react-emoji-picker--wrapper__show {
-  height: 357px;
-}
-
 .react-emoji-picker--wrapper {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 0;
+  height: 357px;
   width: 338px;
   overflow: hidden;
   z-index: 10;
@@ -136,11 +132,21 @@
 
 .react-emoji-picker {
   position: absolute;
-  top: 357px;
+  top: 0;
   left: 0;
-  transition: top 0.1s ease-in-out;
+  animation: slidein 0.1s ease-in-out;
 }
 
 .react-emoji-picker__show {
   top: 0;
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

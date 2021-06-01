@@ -1,9 +1,9 @@
 // @ts-check
 
-import React, { useState } from "react";
+import React from "react";
 
-import InputEmoji from "react-input-emoji";
 import ExampleCode from "./ExampleCode";
+import ExampleInput from "./ExampleInput";
 
 // style
 import {
@@ -33,16 +33,6 @@ import {
  * @return {JSX.Element}
  */
 export default function App() {
-  const [text, setText] = useState("");
-
-  /**
-   * Handle text change
-   * @param {string} text
-   */
-  function handleTextChange(text) {
-    setText(text);
-  }
-
   return (
     <React.Fragment>
       <GlobalStyle />
@@ -109,18 +99,7 @@ export default function App() {
           input with emoji support like so:
         </Description>
         <Example>
-          <InputEmoji
-            value={text}
-            onChange={handleTextChange}
-            cleanOnEnter
-            onEnter={text => {
-              console.log("enter", text);
-            }}
-            placeholder="Type a message"
-            keepOpenend
-            disableRecent
-            maxLength={1200}
-          />
+          <ExampleInput />
         </Example>
         <Snippet>
           <Code>
