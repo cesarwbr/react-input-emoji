@@ -49,8 +49,19 @@ const EmojiPickerWrapper = ({
   }, [addPolluteFn]);
 
   useEffect(() => {
-    /** */
-    function checkClickOutside() {
+    /**
+     * 
+     * @param {MouseEvent} event 
+     */
+    function checkClickOutside(event) {
+      /** @type {HTMLElement} */
+      // @ts-ignore
+      const element = event.target
+
+      if (element.classList.contains('react-input-emoji--button') || element.classList.contains('react-input-emoji--button--icon')) {
+        return
+      }
+
       setShowPicker(false);
     }
 
@@ -113,6 +124,7 @@ const EmojiPickerWrapper = ({
           viewBox="0 0 24 24"
           width="24"
           height="24"
+          className="react-input-emoji--button--icon"
         >
           {/* eslint-disable-next-line max-len */}
           <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10" />
