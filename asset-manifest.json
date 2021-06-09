@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/react-input-emoji/static/js/main.ddf816a8.chunk.js",
-    "main.js.map": "/react-input-emoji/static/js/main.ddf816a8.chunk.js.map",
+    "main.js": "/react-input-emoji/static/js/main.00f0aa7e.chunk.js",
+    "main.js.map": "/react-input-emoji/static/js/main.00f0aa7e.chunk.js.map",
     "runtime-main.js": "/react-input-emoji/static/js/runtime-main.a957786a.js",
     "runtime-main.js.map": "/react-input-emoji/static/js/runtime-main.a957786a.js.map",
-    "static/js/2.0e26b2c5.chunk.js": "/react-input-emoji/static/js/2.0e26b2c5.chunk.js",
-    "static/js/2.0e26b2c5.chunk.js.map": "/react-input-emoji/static/js/2.0e26b2c5.chunk.js.map",
+    "static/js/2.ded765ec.chunk.js": "/react-input-emoji/static/js/2.ded765ec.chunk.js",
+    "static/js/2.ded765ec.chunk.js.map": "/react-input-emoji/static/js/2.ded765ec.chunk.js.map",
     "index.html": "/react-input-emoji/index.html",
-    "static/js/2.0e26b2c5.chunk.js.LICENSE.txt": "/react-input-emoji/static/js/2.0e26b2c5.chunk.js.LICENSE.txt"
+    "static/js/2.ded765ec.chunk.js.LICENSE.txt": "/react-input-emoji/static/js/2.ded765ec.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a957786a.js",
-    "static/js/2.0e26b2c5.chunk.js",
-    "static/js/main.ddf816a8.chunk.js"
+    "static/js/2.ded765ec.chunk.js",
+    "static/js/main.00f0aa7e.chunk.js"
   ]
 }
