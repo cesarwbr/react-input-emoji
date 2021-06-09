@@ -50,16 +50,19 @@ const EmojiPickerWrapper = ({
 
   useEffect(() => {
     /**
-     * 
-     * @param {MouseEvent} event 
+     *
+     * @param {MouseEvent} event
      */
     function checkClickOutside(event) {
       /** @type {HTMLElement} */
       // @ts-ignore
-      const element = event.target
+      const element = event.target;
 
-      if (element.classList.contains('react-input-emoji--button') || element.classList.contains('react-input-emoji--button--icon')) {
-        return
+      if (
+        element.classList.contains("react-input-emoji--button") ||
+        element.classList.contains("react-input-emoji--button--icon")
+      ) {
+        return;
       }
 
       setShowPicker(false);
@@ -73,12 +76,12 @@ const EmojiPickerWrapper = ({
   }, []);
 
   /**
-   * 
-   * @param {React.MouseEvent} event 
+   *
+   * @param {React.MouseEvent} event
    */
   function toggleShowPicker(event) {
     event.stopPropagation();
-    event.preventDefault()
+    event.preventDefault();
 
     setShowPicker(currentShowPicker => !currentShowPicker);
   }

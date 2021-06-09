@@ -41,11 +41,11 @@ const TextInput = (
 ) => {
   useImperativeHandle(ref, () => ({
     appendContent: html => {
-      // textInputRef.current.focus();
+      textInputRef.current.focus();
 
       handlePasteHtmlAtCaret(html);
 
-      // textInputRef.current.focus();
+      textInputRef.current.focus();
 
       if (textInputRef.current.innerHTML.trim() === "") {
         placeholderRef.current.style.visibility = "visible";
@@ -143,9 +143,8 @@ const TextInput = (
           onKeyUp={handleKeyUp}
           tabIndex={tabIndex}
           contentEditable
-          className={`react-input-emoji--input${
-            className ? ` ${className}` : ""
-          }`}
+          className={`react-input-emoji--input${className ? ` ${className}` : ""
+            }`}
           onBlur={props.onBlur}
           onCopy={props.onCopy}
           onPaste={props.onPaste}
