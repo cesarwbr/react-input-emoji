@@ -8,7 +8,7 @@ import {
 
 /**
  * Handle copy of current selected text
- * @param {ClipboardEvent} event
+ * @param {React.ClipboardEvent} event
  */
 export function handleCopy(event) {
   const selectedText = window.getSelection();
@@ -80,7 +80,7 @@ function replaceEmojiToString(container) {
 
 /**
  * Handle past on input
- * @param {ClipboardEvent} event
+ * @param {React.ClipboardEvent} event
  */
 export function handlePaste(event) {
   event.preventDefault();
@@ -106,83 +106,13 @@ export function handlePaste(event) {
  * @property {(function(string): void)} updateHTML
  */
 
-/**
- * Handle keydown event
- * @param {HandleKeyDownOptions} options
- * @return {function(KeyboardEvent): void}
- */
-export function handleKeydown({
-  placeholderEl,
-  maxLength,
-  inputEl,
-  cleanedTextRef,
-  textInputRef,
-  emitChange,
-  onEnter,
-  onKeyDown,
-  updateHTML,
-  cleanOnEnter
-}) {
-  return event => {
-    if (event.key.length === 1) {
-      placeholderEl.style.visibility = "hidden";
-    }
-
-    if (
-      typeof maxLength !== "undefined" &&
-      event.keyCode !== 8 &&
-      totalCharacters(inputEl) >= maxLength
-    ) {
-      event.preventDefault();
-    }
-
-    if (event.keyCode === 13) {
-      event.preventDefault();
-
-      const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
-
-      cleanedTextRef.current = text;
-
-      emitChange();
-
-      const cleanedText = cleanedTextRef.current;
-
-      if (typeof onEnter === "function") {
-        onEnter(cleanedText);
-      }
-
-      if (cleanOnEnter) {
-        updateHTML("");
-        placeholderEl.style.visibility = "visible";
-      }
-
-      if (typeof onKeyDown === "function") {
-        onKeyDown(event);
-      }
-
-      return false;
-    }
-
-    if (typeof onKeyDown === "function") {
-      onKeyDown(event);
-    }
-
-    checkPlaceholder(cleanedTextRef, placeholderEl);
-
-    return true;
-  };
-}
-
 // eslint-disable-next-line valid-jsdoc
 /**
  * @typedef {Object} HandleSelectEmojiProps
  * @property {import("../types/types").EmojiMartItem} emoji
- * @property {React.MutableRefObject<HTMLDivElement>} placeholderRef
- * @property {React.MutableRefObject<HTMLDivElement>} textInputRef
- * @property {React.MutableRefObject<string>} cleanedTextRef
+ * @property {React.MutableRefObject<import('../text-input').Ref>} textInputRef
  * @property {boolean} keepOpenend
  * @property {() => void} toggleShowPicker
- * @property {() => void} emitChange
  * @property {number=} maxLength
  */
 
@@ -192,10 +122,7 @@ export function handleKeydown({
  */
 export function handleSelectEmoji({
   emoji,
-  placeholderRef,
   textInputRef,
-  cleanedTextRef,
-  emitChange,
   keepOpenend,
   toggleShowPicker,
   maxLength
@@ -207,18 +134,7 @@ export function handleSelectEmoji({
     return;
   }
 
-  placeholderRef.current.style.visibility = "hidden";
-
-  textInputRef.current.focus();
-
-  handlePasteHtmlAtCaret(getImageEmoji(emoji));
-
-  textInputRef.current.focus();
-
-  const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
-
-  cleanedTextRef.current = text;
-  emitChange();
+  textInputRef.current.appendContent(getImageEmoji(emoji));
 
   if (!keepOpenend) {
     toggleShowPicker();
@@ -227,28 +143,10 @@ export function handleSelectEmoji({
 
 /**
  *
- * @param {React.MutableRefObject<string>} cleanedTextRef
- * @param {HTMLDivElement} placeholderEl
- */
-function checkPlaceholder(cleanedTextRef, placeholderEl) {
-  const text = cleanedTextRef.current;
-
-  if (text !== "") {
-    placeholderEl.style.visibility = "hidden";
-  } else {
-    placeholderEl.style.visibility = "visible";
-  }
-}
-
-/**
- *
- * @param {HTMLDivElement} inputEl
+ * @param {{text: string, html: string}} props
  * @return {number}
  */
-function totalCharacters(inputEl) {
-  const text = inputEl.innerText;
-  const html = inputEl.innerHTML;
-
+export function totalCharacters({ text, html }) {
   const textCount = text.length;
   const emojisCount = (html.match(/<img/g) || []).length;
 
@@ -259,15 +157,22 @@ function totalCharacters(inputEl) {
 /**
  * Handle keyup event
  * @param {() => void} emitChange
+ * @param {(event: KeyboardEvent) => void} onKeyDownMention
  * @param {React.MutableRefObject<string>} cleanedTextRef
  * @param {React.MutableRefObject<HTMLDivElement>} textInputRef
- * @return {() => void}
+ * @return {(event: KeyboardEvent) => void}
  */
-export function handleKeyup(emitChange, cleanedTextRef, textInputRef) {
-  return () => {
+export function handleKeyup(
+  emitChange,
+  onKeyDownMention,
+  cleanedTextRef,
+  textInputRef
+) {
+  return event => {
     const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
     cleanedTextRef.current = text;
     emitChange();
+    onKeyDownMention(event);
   };
 }
 

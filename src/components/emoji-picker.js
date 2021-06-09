@@ -6,7 +6,7 @@ import "emoji-mart/css/emoji-mart.css";
 
 /**
  * @typedef {object} Props
- * @property {function(import("./types/types").EmojiMartItem): void} onSelectEmoji
+ * @property {function(import("../types/types").EmojiMartItem): void} onSelectEmoji
  * @property {boolean} disableRecent
  * @property {object[]} customEmojis
  */
@@ -14,7 +14,7 @@ import "emoji-mart/css/emoji-mart.css";
 /**
  * Emoji Picker Component
  * @param {Props} props
- * @return {JSX.Element}
+ * @return {React.FC}
  */
 function EmojiPicker({ onSelectEmoji, disableRecent, customEmojis }) {
   const excluePicker = useMemo(() => {

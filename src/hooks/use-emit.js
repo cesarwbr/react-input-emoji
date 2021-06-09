@@ -1,27 +1,25 @@
 // @ts-check
 
 import { useCallback, useEffect, useRef } from "react";
+import { useSanitize } from "./use-sanitize";
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * useEmit
- * @param {React.MutableRefObject<HTMLDivElement>} textInputRef
+ * @param {React.MutableRefObject<import('../text-input').Ref>} textInputRef
  * @param {(size: {width: number, height: number}) => void} onResize
  * @param {(text: string) => void} onChange
- * @param {React.MutableRefObject<string>} cleanedTextRef
  */
-export function useEmit(textInputRef, onResize, onChange, cleanedTextRef) {
+export function useEmit(textInputRef, onResize, onChange) {
   const currentSizeRef = useRef(null);
   const onChangeFn = useRef(onChange);
+  const { sanitizedTextRef } = useSanitize();
 
   const checkAndEmitResize = useCallback(() => {
     if (textInputRef.current) {
       const currentSize = currentSizeRef.current;
 
-      const nextSize = {
-        width: textInputRef.current.offsetWidth,
-        height: textInputRef.current.offsetHeight
-      };
+      const nextSize = textInputRef.current.size;
 
       if (
         (!currentSize ||
@@ -38,13 +36,13 @@ export function useEmit(textInputRef, onResize, onChange, cleanedTextRef) {
 
   const emitChange = useCallback(() => {
     if (typeof onChangeFn.current === "function") {
-      onChangeFn.current(cleanedTextRef.current);
+      onChangeFn.current(sanitizedTextRef.current);
     }
 
     if (typeof onResize === "function") {
       checkAndEmitResize();
     }
-  }, [checkAndEmitResize, cleanedTextRef, onResize]);
+  }, [checkAndEmitResize, sanitizedTextRef, onResize]);
 
   useEffect(() => {
     if (textInputRef.current) {

@@ -1,5 +1,7 @@
 // @ts-check
 
+import allEmojiMap from "./all-emojis-utils";
+
 export const TRANSPARENT_GIF =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
@@ -10,7 +12,7 @@ export const TRANSPARENT_GIF =
  */
 export function replaceAllTextEmojis(text) {
   let allEmojis = getAllEmojisFromText(text);
-  const allEmojiStyle = getAllEmojiStyle();
+  const allEmojiStyle = allEmojiMap;
 
   if (allEmojis) {
     allEmojis = [...new Set(allEmojis)]; // remove duplicates
@@ -57,32 +59,32 @@ function getAllEmojisFromText(text) {
   );
 }
 
-/**
- * Get all emoji stlye from emoji mart
- * @return {Object.<string, string>}
- */
-function getAllEmojiStyle() {
-  /** @type {NodeListOf<Element>} */
-  const allEmojiButton = Array.prototype.slice.call(
-    document.querySelectorAll(".emoji-mart-category-list > li > button")
-  );
+// /**
+//  * Get all emoji stlye from emoji mart
+//  * @return {Object.<string, string>}
+//  */
+// function getAllEmojiStyle() {
+//   /** @type {NodeListOf<Element>} */
+//   const allEmojiButton = Array.prototype.slice.call(
+//     document.querySelectorAll(".emoji-mart-category-list > li > button")
+//   );
 
-  /** @type {Object.<string, string>} */
-  const allEmojiStyle = {};
+//   /** @type {Object.<string, string>} */
+//   const allEmojiStyle = {};
 
-  allEmojiButton.forEach(emojiButton => {
-    const label = emojiButton.getAttribute("aria-label");
-    const [emoji] = label.split(",");
+//   allEmojiButton.forEach(emojiButton => {
+//     const label = emojiButton.getAttribute("aria-label");
+//     const [emoji] = label.split(",");
 
-    const emojiSpanEl = emojiButton.querySelector("span");
+//     const emojiSpanEl = emojiButton.querySelector("span");
 
-    const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
+//     const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
 
-    allEmojiStyle[emoji] = style;
-  });
+//     allEmojiStyle[emoji] = style;
+//   });
 
-  return allEmojiStyle;
-}
+//   return allEmojiStyle;
+// }
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -132,10 +134,5 @@ export function replaceAllTextEmojiToString(html) {
     );
   });
 
-  let text = container.innerText;
-
-  // remove all ↵ for safari
-  text = text.replace(/\n/gi, "");
-
-  return text;
+  return container.innerHTML;
 }

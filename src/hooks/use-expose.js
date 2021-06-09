@@ -1,13 +1,12 @@
 // @ts-check
 
 import { useImperativeHandle } from "react";
-import { replaceAllTextEmojiToString } from "../utils/emoji-utils";
+import { useSanitize } from "./use-sanitize";
 
 /**
  * @typedef {Object} Props
  * @property {React.Ref<any>} ref
- * @property {React.MutableRefObject<string>} cleanedTextRef
- * @property {React.MutableRefObject<HTMLDivElement>} textInputRef
+ * @property {React.MutableRefObject<import('../text-input').Ref>} textInputRef
  * @property {(value: string) => void} setValue
  * @property {() => void} emitChange
  */
@@ -16,16 +15,12 @@ import { replaceAllTextEmojiToString } from "../utils/emoji-utils";
  *
  * @param {Props} props
  */
-export function useExpose({
-  ref,
-  cleanedTextRef,
-  textInputRef,
-  setValue,
-  emitChange
-}) {
+export function useExpose({ ref, textInputRef, setValue, emitChange }) {
+  const { sanitize, sanitizedTextRef } = useSanitize();
+
   useImperativeHandle(ref, () => ({
     get value() {
-      return cleanedTextRef.current;
+      return sanitizedTextRef.current;
     },
     set value(value) {
       setValue(value);
@@ -34,9 +29,7 @@ export function useExpose({
       textInputRef.current.focus();
     },
     blur: () => {
-      const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
-
-      cleanedTextRef.current = text;
+      sanitize(textInputRef.current.html);
 
       emitChange();
     }

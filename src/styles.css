@@ -141,6 +141,98 @@
   top: 0;
 }
 
+.react-input-emoji--mention--container {
+  position: absolute;
+  bottom: 56px;
+  width: 100%;
+  z-index: 10;
+}
+
+.react-input-emoji--mention--list {
+  background-color: #fafafa;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.react-input-emoji--mention--item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  background-color: transparent;
+  width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+.react-input-emoji--mention--item__selected {
+  background-color: #eeeeee;
+}
+
+.react-input-emoji--mention--item--img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+.react-input-emoji--mention--item--name {
+  font-size: 16px;
+  color: #333;
+}
+
+.react-input-emoji--mention--item--name__selected {
+  color: green;
+}
+
+.react-input-emoji--mention--text {
+  color: #039be5;
+}
+
+.react-input-emoji--mention--loading {
+  background-color: #fafafa;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.react-input-emoji--mention--loading--spinner,
+.react-input-emoji--mention--loading--spinner::after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+.react-input-emoji--mention--loading--spinner {
+  margin: 1px auto;
+  font-size: 2px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(0, 0, 0, 0.1);
+  border-right: 1.1em solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1.1em solid rgba(0, 0, 0, 0.1);
+  border-left: 1.1em solid rgba(0, 0, 0, 0.4);
+  transform: translateZ(0);
+  animation: load8 1.1s infinite linear;
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes slidein {
   from {
     opacity: 0;
