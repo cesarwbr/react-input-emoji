@@ -64,6 +64,7 @@ const EmojiPickerWrapper = ({
   const toggleShowPicker = useCallback(event => {
     if (event) {
       event.stopPropagation();
+      event.preventDefault()
     }
 
     setShowPicker(currentShowPicker => !currentShowPicker);
@@ -101,9 +102,8 @@ const EmojiPickerWrapper = ({
         )}
       </div>
       <button
-        className={`react-input-emoji--button${
-          showPicker ? " react-input-emoji--button__show" : ""
-        }`}
+        className={`react-input-emoji--button${showPicker ? " react-input-emoji--button__show" : ""
+          }`}
         onClick={toggleShowPicker}
       >
         <svg
