@@ -1,7 +1,7 @@
 // @ts-check
 /* eslint-disable react/prop-types */
 // vendors
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   getImageEmoji,
   replaceAllTextEmojis,
@@ -61,14 +61,16 @@ const EmojiPickerWrapper = ({
     };
   }, []);
 
-  const toggleShowPicker = useCallback(event => {
-    if (event) {
-      event.stopPropagation();
-      event.preventDefault()
-    }
+  /**
+   * 
+   * @param {React.MouseEvent} event 
+   */
+  function toggleShowPicker(event) {
+    event.stopPropagation();
+    event.preventDefault()
 
     setShowPicker(currentShowPicker => !currentShowPicker);
-  }, []);
+  }
 
   // eslint-disable-next-line valid-jsdoc
   /**
@@ -79,7 +81,7 @@ const EmojiPickerWrapper = ({
     appendContent(getImageEmoji(emoji));
 
     if (!keepOpenend) {
-      toggleShowPicker();
+      setShowPicker(currentShowPicker => !currentShowPicker);
     }
   }
 
