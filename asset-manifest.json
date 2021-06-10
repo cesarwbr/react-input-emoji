@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/react-input-emoji/static/js/main.fa6823ff.chunk.js",
-    "main.js.map": "/react-input-emoji/static/js/main.fa6823ff.chunk.js.map",
+    "main.js": "/react-input-emoji/static/js/main.8b890d1e.chunk.js",
+    "main.js.map": "/react-input-emoji/static/js/main.8b890d1e.chunk.js.map",
     "runtime-main.js": "/react-input-emoji/static/js/runtime-main.a957786a.js",
     "runtime-main.js.map": "/react-input-emoji/static/js/runtime-main.a957786a.js.map",
     "static/js/2.ded765ec.chunk.js": "/react-input-emoji/static/js/2.ded765ec.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.a957786a.js",
     "static/js/2.ded765ec.chunk.js",
-    "static/js/main.fa6823ff.chunk.js"
+    "static/js/main.8b890d1e.chunk.js"
   ]
 }
