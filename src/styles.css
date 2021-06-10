@@ -207,6 +207,10 @@
   align-items: center;
   justify-content: center;
   padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .react-input-emoji--mention--loading--spinner,
