@@ -1,7 +1,6 @@
 // @ts-check
 
 import { useCallback, useEffect, useRef } from "react";
-import { useSanitize } from "./use-sanitize";
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -13,7 +12,6 @@ import { useSanitize } from "./use-sanitize";
 export function useEmit(textInputRef, onResize, onChange) {
   const currentSizeRef = useRef(null);
   const onChangeFn = useRef(onChange);
-  const { sanitizedTextRef } = useSanitize();
 
   const checkAndEmitResize = useCallback(() => {
     if (textInputRef.current) {
@@ -34,15 +32,15 @@ export function useEmit(textInputRef, onResize, onChange) {
     }
   }, [onResize, textInputRef]);
 
-  const emitChange = useCallback(() => {
+  const emitChange = useCallback((sanitizedText) => {
     if (typeof onChangeFn.current === "function") {
-      onChangeFn.current(sanitizedTextRef.current);
+      onChangeFn.current(sanitizedText);
     }
 
     if (typeof onResize === "function") {
       checkAndEmitResize();
     }
-  }, [checkAndEmitResize, sanitizedTextRef, onResize]);
+  }, [checkAndEmitResize, onResize]);
 
   useEffect(() => {
     if (textInputRef.current) {

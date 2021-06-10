@@ -154,7 +154,7 @@ function InputEmoji(
 
         const text = sanitize(textInputRef.current.html);
 
-        emitChange();
+        emitChange(sanitizedTextRef.current);
 
         if (
           typeof onEnter === "function" &&
@@ -223,7 +223,7 @@ function InputEmoji(
    */
   function handleTextInputChange(html) {
     sanitize(html);
-    emitChange();
+    emitChange(sanitizedTextRef.current);
   }
 
   /**
