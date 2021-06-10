@@ -143,7 +143,8 @@
 
 .react-input-emoji--mention--container {
   position: absolute;
-  bottom: 56px;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 10;
 }
@@ -158,6 +159,10 @@
   display: flex;
   gap: 5px;
   flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
 }
 
 .react-input-emoji--mention--item {

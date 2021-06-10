@@ -62,7 +62,6 @@ const ExampleInput = () => {
     });
   }
 
-  console.log({text})
   return (
     <InputEmoji
       value={text}

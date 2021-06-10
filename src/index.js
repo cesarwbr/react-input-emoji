@@ -186,17 +186,7 @@ function InputEmoji(
     return () => {
       unsubscribe();
     };
-  }, [
-    addEventListener,
-    cleanOnEnter,
-    emitChange,
-    listeners.enter.currentListerners.length,
-    maxLength,
-    onEnter,
-    onKeyDown,
-    sanitize,
-    updateHTML
-  ]);
+  }, [addEventListener, cleanOnEnter, emitChange, listeners.enter.currentListerners.length, maxLength, onEnter, onKeyDown, sanitize, sanitizedTextRef, updateHTML]);
 
   useEffect(() => {
     /** */
