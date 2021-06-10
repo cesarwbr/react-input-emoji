@@ -1,7 +1,5 @@
 // @ts-check
 
-import allEmojiMap from "./all-emojis-utils";
-
 export const TRANSPARENT_GIF =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
@@ -12,7 +10,9 @@ export const TRANSPARENT_GIF =
  */
 export function replaceAllTextEmojis(text) {
   let allEmojis = getAllEmojisFromText(text);
-  const allEmojiStyle = allEmojiMap;
+
+  // TODO: get all emoji style
+  const allEmojiStyle = {};
 
   if (allEmojis) {
     allEmojis = [...new Set(allEmojis)]; // remove duplicates
