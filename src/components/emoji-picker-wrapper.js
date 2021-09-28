@@ -118,6 +118,7 @@ const EmojiPickerWrapper = ({
         )}
       </div>
       <button
+        type="button"
         className={`react-input-emoji--button${showPicker ? " react-input-emoji--button__show" : ""
           }`}
         onClick={toggleShowPicker}
