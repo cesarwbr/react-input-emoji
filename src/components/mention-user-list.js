@@ -146,6 +146,7 @@ const MentionUserList = (
       {usersFiltered.map((user, index) => (
         <li key={user.id}>
           <button
+            type="button"
             onClick={handleClick(user)}
             className={`react-input-emoji--mention--item${
               selectedUser === index
