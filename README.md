@@ -46,7 +46,7 @@ export default function Example() {
 ## Props
 
 | Prop           | Type     | Default          | Description                                                                                                              |
-| -------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+|----------------|----------|------------------|--------------------------------------------------------------------------------------------------------------------------|
 | `value`        | string   | ""               | The input value.                                                                                                         |
 | `onChange`     | function | -                | This function is called when the value of the input changes. The first argument is the current value.                    |
 | `onResize`     | function | -                | This function is called when the width or the height of the input changes. The first argument is the current size value. |
@@ -57,6 +57,7 @@ export default function Example() {
 | `placeholder`  | string   | "Type a message" | Set the placeholder of the input.                                                                                        |
 | `height`       | number   | 40               | The total height of the area in which the element is rendered.                                                           |
 | `maxLength`    | number   | -                | The maximum number of characters allowed in the element.                                                                 |
+| `theme`        | string   | -                | Set theme for emoji popup. Available values "light", "dark", "auto"                                                      |
 | `borderRadius` | number   | 21               | The border radius of the input container.                                                                                |
 | `borderColor`  | string   | "#EAEAEA"        | The border color of the input container.                                                                                 |
 | `fontSize`     | number   | 15               | The font size of the placeholder and input container.                                                                    |

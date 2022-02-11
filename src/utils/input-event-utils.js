@@ -111,7 +111,7 @@ export function handlePaste(event) {
  * @typedef {Object} HandleSelectEmojiProps
  * @property {import("../types/types").EmojiMartItem} emoji
  * @property {React.MutableRefObject<import('../text-input').Ref>} textInputRef
- * @property {boolean} keepOpenend
+ * @property {boolean} keepOpened
  * @property {() => void} toggleShowPicker
  * @property {number=} maxLength
  */
@@ -123,7 +123,7 @@ export function handlePaste(event) {
 export function handleSelectEmoji({
   emoji,
   textInputRef,
-  keepOpenend,
+  keepOpened,
   toggleShowPicker,
   maxLength
 }) {
@@ -136,7 +136,7 @@ export function handleSelectEmoji({
 
   textInputRef.current.appendContent(getImageEmoji(emoji));
 
-  if (!keepOpenend) {
+  if (!keepOpened) {
     toggleShowPicker();
   }
 }
