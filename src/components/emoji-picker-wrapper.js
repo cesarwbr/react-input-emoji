@@ -20,6 +20,7 @@ import EmojiPicker from "./emoji-picker";
 
 /**
  * @typedef {Object} Props
+ * @property {'light' | 'dark' | 'auto'} theme
  * @property {boolean} keepOpened
  * @property {boolean} disableRecent
  * @property {object[]=} customEmojis

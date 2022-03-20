@@ -38,7 +38,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @typedef {object} Props
  * @property {string} value
  * @property {(value: string) => void} onChange
- * @property {'light' | 'dark' | 'auto'} theme
+ * @property {"light" | "dark" | "auto"} theme
  * @property {boolean} cleanOnEnter
  * @property {(text: string) => void} onEnter
  * @property {string} placeholder
@@ -300,7 +300,7 @@ function InputEmoji(props, ref) {
 const InputEmojiWithRef = forwardRef(InputEmoji);
 
 InputEmojiWithRef.defaultProps = {
-  theme: 'auto',
+  theme: /** @type {const} */ ("auto"),
   height: 30,
   placeholder: "Type a message",
   borderRadius: 21,

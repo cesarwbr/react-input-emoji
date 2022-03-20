@@ -6,6 +6,7 @@ import "emoji-mart/css/emoji-mart.css";
 
 /**
  * @typedef {object} Props
+ * @property {'light' | 'dark' | 'auto'} theme
  * @property {function(import("../types/types").EmojiMartItem): void} onSelectEmoji
  * @property {boolean} disableRecent
  * @property {object[]} customEmojis

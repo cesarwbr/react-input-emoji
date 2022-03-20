@@ -64,6 +64,7 @@ const ExampleInput = () => {
 
   return (
     <InputEmoji
+      // @ts-ignore
       value={text}
       onChange={handleTextChange}
       cleanOnEnter
