@@ -16,8 +16,15 @@ import "emoji-mart/css/emoji-mart.css";
  * @param {Props} props
  * @return {React.FC}
  */
-function EmojiPicker({ onSelectEmoji, disableRecent, customEmojis }) {
-  const excluePicker = useMemo(() => {
+function EmojiPicker(props) {
+  const {
+    theme,
+    onSelectEmoji,
+    disableRecent,
+    customEmojis
+  } = props;
+
+  const excludePicker = useMemo(() => {
     /** @type import("emoji-mart").CategoryName[] */
     const exclude = [];
 
@@ -30,17 +37,19 @@ function EmojiPicker({ onSelectEmoji, disableRecent, customEmojis }) {
 
   return (
     <Picker
+      theme={theme}
+      set="apple"
       showPreview={false}
       showSkinTones={false}
-      set="apple"
       onSelect={onSelectEmoji}
-      exclude={excluePicker}
+      exclude={excludePicker}
       custom={customEmojis}
     />
   );
 }
 
 EmojiPicker.propTypes = {
+  theme: t.oneOf(['light', 'dark', 'auto']),
   onSelectEmoji: t.func,
   disableRecent: t.bool,
   customEmojis: t.array

@@ -38,6 +38,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @typedef {object} Props
  * @property {string} value
  * @property {(value: string) => void} onChange
+ * @property {'light' | 'dark' | 'auto'} theme
  * @property {boolean} cleanOnEnter
  * @property {(text: string) => void} onEnter
  * @property {string} placeholder
@@ -45,7 +46,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {() => void} onClick
  * @property {() => void} onFocus
  * @property {number} maxLength
- * @property {boolean} keepOpenend
+ * @property {boolean} keepOpened
  * @property {(event: KeyboardEvent) => void} onKeyDown
  * @property {string} inputClass
  * @property {boolean} disableRecent
@@ -65,18 +66,19 @@ import { usePollute } from "./hooks/user-pollute";
  * @param {React.Ref<any>} ref
  * @return {JSX.Element}
  */
-function InputEmoji(
-  {
+function InputEmoji(props, ref) {
+  const {
     onChange,
     onEnter,
     onResize,
     onClick,
     onFocus,
     onKeyDown,
+    theme,
     cleanOnEnter,
     placeholder,
     maxLength,
-    keepOpenend,
+    keepOpened,
     inputClass,
     disableRecent,
     tabIndex,
@@ -88,9 +90,8 @@ function InputEmoji(
     borderColor,
     fontSize,
     fontFamily
-  },
-  ref
-) {
+  } = props;
+
   /** @type {React.MutableRefObject<import('./text-input').Ref>} */
   const textInputRef = useRef(null);
 
@@ -284,7 +285,8 @@ function InputEmoji(
         onChange={handleTextInputChange}
       />
       <EmojiPickerWrapper
-        keepOpenend={keepOpenend}
+        theme={theme}
+        keepOpened={keepOpened}
         disableRecent={disableRecent}
         customEmojis={customEmojis}
         addSanitizeFn={addSanitizeFn}
@@ -298,6 +300,7 @@ function InputEmoji(
 const InputEmojiWithRef = forwardRef(InputEmoji);
 
 InputEmojiWithRef.defaultProps = {
+  theme: 'auto',
   height: 30,
   placeholder: "Type a message",
   borderRadius: 21,

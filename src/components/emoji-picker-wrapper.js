@@ -20,7 +20,7 @@ import EmojiPicker from "./emoji-picker";
 
 /**
  * @typedef {Object} Props
- * @property {boolean} keepOpenend
+ * @property {boolean} keepOpened
  * @property {boolean} disableRecent
  * @property {object[]=} customEmojis
  * @property {(fn: SanitizeFn) => void} addSanitizeFn
@@ -30,14 +30,17 @@ import EmojiPicker from "./emoji-picker";
 
 // eslint-disable-next-line valid-jsdoc
 /** @type {React.FC<Props>} */
-const EmojiPickerWrapper = ({
-  keepOpenend,
-  disableRecent,
-  customEmojis,
-  addSanitizeFn,
-  addPolluteFn,
-  appendContent
-}) => {
+const EmojiPickerWrapper = (props) => {
+  const {
+    theme,
+    keepOpened,
+    disableRecent,
+    customEmojis,
+    addSanitizeFn,
+    addPolluteFn,
+    appendContent,
+  } = props;
+
   const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
@@ -94,7 +97,7 @@ const EmojiPickerWrapper = ({
   function handleSelectEmoji(emoji) {
     appendContent(getImageEmoji(emoji));
 
-    if (!keepOpenend) {
+    if (!keepOpened) {
       setShowPicker(currentShowPicker => !currentShowPicker);
     }
   }
@@ -109,6 +112,7 @@ const EmojiPickerWrapper = ({
           >
             <div className="react-emoji-picker">
               <EmojiPicker
+                theme={theme}
                 onSelectEmoji={handleSelectEmoji}
                 disableRecent={disableRecent}
                 customEmojis={customEmojis}

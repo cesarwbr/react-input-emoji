@@ -71,7 +71,7 @@ const ExampleInput = () => {
         console.log("enter", text);
       }}
       placeholder="Type a message"
-      keepOpenend
+      keepOpened
       disableRecent
       maxLength={1200}
       searchMention={searchMention}
