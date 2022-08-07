@@ -13,6 +13,10 @@ import {
 export function handleCopy(event) {
   const selectedText = window.getSelection();
 
+  if (selectedText === null) {
+    return
+  }
+
   let container = document.createElement("div");
 
   for (let i = 0, len = selectedText.rangeCount; i < len; ++i) {
@@ -35,6 +39,9 @@ export function handlePasteHtmlAtCaret(html) {
   if (window.getSelection) {
     // IE9 and non-IE
     sel = window.getSelection();
+
+    if (sel === null) return
+
     if (sel.getRangeAt && sel.rangeCount) {
       range = sel.getRangeAt(0);
       range.deleteContents();

@@ -6,7 +6,7 @@ import { useSanitize } from "./use-sanitize";
 /**
  * @typedef {Object} Props
  * @property {React.Ref<any>} ref
- * @property {React.MutableRefObject<import('../text-input').Ref>} textInputRef
+ * @property {React.MutableRefObject<import('../text-input').Ref | null>} textInputRef
  * @property {(value: string) => void} setValue
  * @property {() => void} emitChange
  */
@@ -26,10 +26,14 @@ export function useExpose({ ref, textInputRef, setValue, emitChange }) {
       setValue(value);
     },
     focus: () => {
+      if (textInputRef.current === null) return
       textInputRef.current.focus();
     },
     blur: () => {
-      sanitize(textInputRef.current.html);
+      if (textInputRef.current !== null) {
+        sanitize(textInputRef.current.html);
+
+      }
 
       emitChange();
     }

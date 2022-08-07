@@ -9,8 +9,6 @@ import "./styles.css";
 // utils
 import { replaceAllTextEmojis } from "./utils/emoji-utils";
 import {
-  // handleCopy,
-  // handlePaste,
   totalCharacters
 } from "./utils/input-event-utils";
 
@@ -92,7 +90,7 @@ function InputEmoji(props, ref) {
     fontFamily
   } = props;
 
-  /** @type {React.MutableRefObject<import('./text-input').Ref>} */
+  /** @type {React.MutableRefObject<import('./text-input').Ref | null>} */
   const textInputRef = useRef(null);
 
   const { addEventListener, listeners } = useEventListeners();
@@ -103,6 +101,8 @@ function InputEmoji(props, ref) {
 
   const updateHTML = useCallback(
     (nextValue = "") => {
+      if (textInputRef.current === null) return
+
       textInputRef.current.html = replaceAllTextEmojis(nextValue);
       sanitizedTextRef.current = nextValue;
     },
@@ -145,12 +145,13 @@ function InputEmoji(props, ref) {
       if (
         typeof maxLength !== "undefined" &&
         event.key !== "Backspace" &&
+        textInputRef.current !== null &&
         totalCharacters(textInputRef.current) >= maxLength
       ) {
         event.preventDefault();
       }
 
-      if (event.key === "Enter") {
+      if (event.key === "Enter" && textInputRef.current) {
         event.preventDefault();
 
         const text = sanitize(textInputRef.current.html);
@@ -224,12 +225,15 @@ function InputEmoji(props, ref) {
   function appendContent(html) {
     if (
       typeof maxLength !== "undefined" &&
+      textInputRef.current !== null &&
       totalCharacters(textInputRef.current) >= maxLength
     ) {
       return;
     }
 
-    textInputRef.current.appendContent(html);
+    if (textInputRef.current !== null) {
+      textInputRef.current.appendContent(html);
+    }
   }
 
   /**

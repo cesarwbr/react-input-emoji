@@ -5,16 +5,17 @@ import { useCallback, useEffect, useRef } from "react";
 // eslint-disable-next-line valid-jsdoc
 /**
  * useEmit
- * @param {React.MutableRefObject<import('../text-input').Ref>} textInputRef
+ * @param {React.MutableRefObject<import('../text-input').Ref | null>} textInputRef
  * @param {(size: {width: number, height: number}) => void} onResize
  * @param {(text: string) => void} onChange
  */
 export function useEmit(textInputRef, onResize, onChange) {
+  /** @type {React.MutableRefObject<{width: number; height: number} | null>} */
   const currentSizeRef = useRef(null);
   const onChangeFn = useRef(onChange);
 
   const checkAndEmitResize = useCallback(() => {
-    if (textInputRef.current) {
+    if (textInputRef.current !== null) {
       const currentSize = currentSizeRef.current;
 
       const nextSize = textInputRef.current.size;
