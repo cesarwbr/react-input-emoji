@@ -1,6 +1,6 @@
 {
   "name": "react-input-emoji",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "A React input with an option to add an emoji",
   "author": "cesarwbr",
   "license": "MIT",
@@ -56,7 +56,6 @@
     "eslint": "^7.23.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^1.2.0",
     "jest": "^27.0.4",
