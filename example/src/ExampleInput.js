@@ -76,6 +76,12 @@ const ExampleInput = () => {
       disableRecent
       maxLength={1200}
       searchMention={searchMention}
+      onBlur={() => {
+        console.log('on blur')
+      }}
+      onFocus={() => {
+        console.log('on focus')
+      }}
     />
   );
 };

@@ -43,6 +43,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {(size: {width: number, height: number}) => void} onResize
  * @property {() => void} onClick
  * @property {() => void} onFocus
+ * @property {() => void=} onBlur
  * @property {number} maxLength
  * @property {boolean} keepOpened
  * @property {(event: KeyboardEvent) => void} onKeyDown
@@ -71,6 +72,7 @@ function InputEmoji(props, ref) {
     onResize,
     onClick,
     onFocus,
+    onBlur,
     onKeyDown,
     theme,
     cleanOnEnter,
@@ -209,6 +211,21 @@ function InputEmoji(props, ref) {
     };
   }, [addEventListener, onClick, onFocus]);
 
+  useEffect(() => {
+    /** */
+    function handleBlur() {
+      if (typeof onBlur === 'function') {
+        onBlur()
+      }
+    }
+
+    const unsubscribe = addEventListener('blur', handleBlur);
+
+    return () => {
+      unsubscribe()
+    }
+  }, [addEventListener, onBlur])
+
   /**
    *
    * @param {string} html
@@ -271,6 +288,7 @@ function InputEmoji(props, ref) {
         ref={textInputRef}
         onCopy={handleCopy}
         onPaste={handlePaste}
+        onBlur={listeners.blur.publish}
         onFocus={listeners.focus.publish}
         onArrowUp={listeners.arrowUp.publish}
         onArrowDown={listeners.arrowDown.publish}

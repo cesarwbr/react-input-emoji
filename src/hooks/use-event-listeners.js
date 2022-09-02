@@ -18,7 +18,8 @@ export function useEventListeners() {
       arrowUp: createObserver(),
       arrowDown: createObserver(),
       enter: createObserver(),
-      focus: createObserver()
+      focus: createObserver(),
+      blur: createObserver()
     }),
     []
   );

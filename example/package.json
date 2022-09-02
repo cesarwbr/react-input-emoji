@@ -10,7 +10,7 @@
     "react-dom": "link:../node_modules/react-dom",
     "react-highlight.js": "^1.0.7",
     "react-input-emoji": "link:..",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "styled-components": "^5.2.1"
   },
   "scripts": {

@@ -9,7 +9,7 @@ import { handlePasteHtmlAtCaret } from "./utils/input-event-utils";
  * @property {(event: React.KeyboardEvent) => void} onKeyDown
  * @property {(event: React.KeyboardEvent) => void} onKeyUp
  * @property {() => void} onFocus
- * @property {() => void=} onBlur
+ * @property {() => void} onBlur
  * @property {(sanitizedText: string) => void=} onChange
  * @property {(event: React.KeyboardEvent) => void} onArrowUp
  * @property {(event: React.KeyboardEvent) => void} onArrowDown
@@ -41,51 +41,76 @@ const TextInput = (
 ) => {
   useImperativeHandle(ref, () => ({
     appendContent: html => {
-      textInputRef.current.focus();
+      if (textInputRef.current) {
+        textInputRef.current.focus();
+      }
 
       handlePasteHtmlAtCaret(html);
 
-      textInputRef.current.focus();
+      if (textInputRef.current) {
+        textInputRef.current.focus();
+      }
 
-      if (textInputRef.current.innerHTML.trim() === "") {
+      if (textInputRef.current && placeholderRef.current && textInputRef.current.innerHTML.trim() === "") {
         placeholderRef.current.style.visibility = "visible";
-      } else {
+      } else if (placeholderRef.current) {
         placeholderRef.current.style.visibility = "hidden";
       }
 
-      onChange(textInputRef.current.innerHTML);
+      if (textInputRef.current && typeof onChange === 'function') {
+        onChange(textInputRef.current.innerHTML);
+      }
     },
     set html(value) {
-      textInputRef.current.innerHTML = value;
-
-      if (value.trim() === "") {
-        placeholderRef.current.style.visibility = "visible";
-      } else {
-        placeholderRef.current.style.visibility = "hidden";
+      if (textInputRef.current) {
+        textInputRef.current.innerHTML = value;
+      }
+      
+      if (placeholderRef.current) {
+        if (value.trim() === "") {
+          placeholderRef.current.style.visibility = "visible";
+        } else {
+          placeholderRef.current.style.visibility = "hidden";
+        }
       }
 
-      onChange(textInputRef.current.innerHTML);
+      if (typeof onChange === 'function' && textInputRef.current) {
+        onChange(textInputRef.current.innerHTML);
+      }
     },
     get html() {
+      if (!textInputRef.current) return ''
+
       return textInputRef.current.innerHTML;
     },
     get text() {
+      if (!textInputRef.current) return ''
+
       return textInputRef.current.innerText;
     },
     get size() {
+      if (!textInputRef.current) {
+        return {
+          width: 0,
+          height: 0
+        }
+      }
+
       return {
         width: textInputRef.current.offsetWidth,
         height: textInputRef.current.offsetHeight
       };
     },
     focus() {
+      if (!textInputRef.current) return
+
       textInputRef.current.focus();
     }
   }));
 
-  /** @type {React.MutableRefObject<HTMLDivElement>} */
+  /** @type {React.MutableRefObject<HTMLDivElement | null>} */
   const placeholderRef = useRef(null);
-  /** @type {React.MutableRefObject<HTMLDivElement>} */
+  /** @type {React.MutableRefObject<HTMLDivElement | null>} */
   const textInputRef = useRef(null);
 
   /**
@@ -100,7 +125,7 @@ const TextInput = (
     } else if (event.key === "ArrowDown") {
       props.onArrowDown(event);
     } else {
-      if (event.key.length === 1) {
+      if (event.key.length === 1 && placeholderRef.current) {
         placeholderRef.current.style.visibility = "hidden";
       }
     }
@@ -122,13 +147,17 @@ const TextInput = (
 
     const input = textInputRef.current;
 
-    if (input.innerText?.trim() === "") {
-      placeholderRef.current.style.visibility = "visible";
-    } else {
-      placeholderRef.current.style.visibility = "hidden";
+    if (placeholderRef.current) {
+      if (input?.innerText?.trim() === "") {
+        placeholderRef.current.style.visibility = "visible";
+      } else {
+        placeholderRef.current.style.visibility = "hidden";
+      }
     }
 
-    onChange(textInputRef.current.innerHTML);
+    if (typeof onChange === 'function' && textInputRef.current) {
+      onChange(textInputRef.current.innerHTML);
+    }
   }
 
   return (

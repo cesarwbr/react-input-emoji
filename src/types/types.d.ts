@@ -27,6 +27,7 @@ export type TextInputListeners = {
   arrowDown: ListenerObj<any>;
   enter: ListenerObj<any>;
   focus: ListenerObj<any>;
+  blur: ListenerObj<any>;
 }
 
 export type SanitizeFn = (html: string) => string
