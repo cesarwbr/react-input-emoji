@@ -130,6 +130,10 @@
   z-index: 10;
 }
 
+.react-emoji-picker--wrapper__left {
+  left: 0;
+}
+
 .react-emoji-picker {
   position: absolute;
   top: 0;

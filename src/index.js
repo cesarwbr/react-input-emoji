@@ -57,6 +57,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {string} fontFamily
  * @property {object[]=} customEmojis
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
+ * @property {string} emojiPickerPosition
  */
 
 /**
@@ -85,6 +86,7 @@ function InputEmoji(props, ref) {
     value,
     customEmojis,
     searchMention,
+    emojiPickerPosition,
     // style
     borderRadius,
     borderColor,
@@ -278,6 +280,18 @@ function InputEmoji(props, ref) {
 
   return (
     <div className="react-emoji">
+      {emojiPickerPosition === 'left' &&
+        <EmojiPickerWrapper
+          theme={theme}
+          keepOpened={keepOpened}
+          disableRecent={disableRecent}
+          customEmojis={customEmojis}
+          addSanitizeFn={addSanitizeFn}
+          addPolluteFn={addPolluteFn}
+          appendContent={appendContent}
+          openPickerOnLeftSide
+        />
+      }
       <MentionWrapper
         searchMention={searchMention}
         addEventListener={addEventListener}
@@ -306,15 +320,17 @@ function InputEmoji(props, ref) {
         className={inputClass}
         onChange={handleTextInputChange}
       />
-      <EmojiPickerWrapper
-        theme={theme}
-        keepOpened={keepOpened}
-        disableRecent={disableRecent}
-        customEmojis={customEmojis}
-        addSanitizeFn={addSanitizeFn}
-        addPolluteFn={addPolluteFn}
-        appendContent={appendContent}
-      />
+      {emojiPickerPosition === 'right' &&
+        <EmojiPickerWrapper
+          theme={theme}
+          keepOpened={keepOpened}
+          disableRecent={disableRecent}
+          customEmojis={customEmojis}
+          addSanitizeFn={addSanitizeFn}
+          addPolluteFn={addPolluteFn}
+          appendContent={appendContent}
+        />
+      }
     </div>
   );
 }
@@ -330,7 +346,8 @@ InputEmojiWithRef.defaultProps = {
   fontSize: 15,
   fontFamily: "sans-serif",
   tabIndex: 0,
-  customEmojis: []
+  customEmojis: [],
+  emojiPickerPosition: 'right'
 };
 
 export default InputEmojiWithRef;

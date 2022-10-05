@@ -27,6 +27,7 @@ import EmojiPicker from "./emoji-picker";
  * @property {(fn: SanitizeFn) => void} addSanitizeFn
  * @property {(fn: PolluteFn) => void} addPolluteFn
  * @property {(html: string) => void} appendContent
+ * @property {boolean} openPickerOnLeftSide
  */
 
 // eslint-disable-next-line valid-jsdoc
@@ -40,6 +41,7 @@ const EmojiPickerWrapper = (props) => {
     addSanitizeFn,
     addPolluteFn,
     appendContent,
+    openPickerOnLeftSide,
   } = props;
 
   const [showPicker, setShowPicker] = useState(false);
@@ -108,7 +110,7 @@ const EmojiPickerWrapper = (props) => {
       <div className="react-emoji-picker--container">
         {showPicker && (
           <div
-            className="react-emoji-picker--wrapper"
+            className={`react-emoji-picker--wrapper ${openPickerOnLeftSide && 'react-emoji-picker--wrapper__left'}`}
             onClick={evt => evt.stopPropagation()}
           >
             <div className="react-emoji-picker">
