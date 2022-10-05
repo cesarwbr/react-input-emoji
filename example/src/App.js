@@ -181,6 +181,15 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
+                <Code>emojiPickerPosition</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to &quot;right&quot;. Sets the position of
+                the emoji picker icon.
+              </TableTd>
+            </TableTr>            
+            <TableTr>
+              <TableTd>
                 <Code>height</Code>
               </TableTd>
               <TableTd>
