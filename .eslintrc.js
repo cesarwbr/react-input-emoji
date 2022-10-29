@@ -5,6 +5,7 @@ module.exports = {
   extends: [
     "google",
     "prettier",
+    "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
   parser: "babel-eslint",
