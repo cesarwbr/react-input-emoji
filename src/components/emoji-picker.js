@@ -9,7 +9,7 @@ import "emoji-mart/css/emoji-mart.css";
  * @property {'light' | 'dark' | 'auto'} theme
  * @property {function(import("../types/types").EmojiMartItem): void} onSelectEmoji
  * @property {boolean} disableRecent
- * @property {object[]} customEmojis
+ * @property {import("emoji-mart").CustomEmoji[]=} customEmojis
  */
 
 /**

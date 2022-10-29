@@ -23,7 +23,7 @@ import EmojiPicker from "./emoji-picker";
  * @property {'light' | 'dark' | 'auto'} theme
  * @property {boolean} keepOpened
  * @property {boolean} disableRecent
- * @property {object[]=} customEmojis
+ * @property {import("emoji-mart").CustomEmoji[]=} customEmojis
  * @property {(fn: SanitizeFn) => void} addSanitizeFn
  * @property {(fn: PolluteFn) => void} addPolluteFn
  * @property {(html: string) => void} appendContent
