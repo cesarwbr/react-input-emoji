@@ -8,9 +8,7 @@ import "./styles.css";
 
 // utils
 import { replaceAllTextEmojis } from "./utils/emoji-utils";
-import {
-  totalCharacters
-} from "./utils/input-event-utils";
+import { totalCharacters } from "./utils/input-event-utils";
 
 // hooks
 import { useExpose } from "./hooks/use-expose";
@@ -57,6 +55,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {string} fontFamily
  * @property {object[]=} customEmojis
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
+ * @property {HTMLDivElement=} buttonElement
  */
 
 /**
@@ -85,6 +84,7 @@ function InputEmoji(props, ref) {
     value,
     customEmojis,
     searchMention,
+    buttonElement,
     // style
     borderRadius,
     borderColor,
@@ -103,7 +103,7 @@ function InputEmoji(props, ref) {
 
   const updateHTML = useCallback(
     (nextValue = "") => {
-      if (textInputRef.current === null) return
+      if (textInputRef.current === null) return;
 
       textInputRef.current.html = replaceAllTextEmojis(nextValue);
       sanitizedTextRef.current = nextValue;
@@ -190,7 +190,18 @@ function InputEmoji(props, ref) {
     return () => {
       unsubscribe();
     };
-  }, [addEventListener, cleanOnEnter, emitChange, listeners.enter.currentListerners.length, maxLength, onEnter, onKeyDown, sanitize, sanitizedTextRef, updateHTML]);
+  }, [
+    addEventListener,
+    cleanOnEnter,
+    emitChange,
+    listeners.enter.currentListerners.length,
+    maxLength,
+    onEnter,
+    onKeyDown,
+    sanitize,
+    sanitizedTextRef,
+    updateHTML
+  ]);
 
   useEffect(() => {
     /** */
@@ -214,17 +225,17 @@ function InputEmoji(props, ref) {
   useEffect(() => {
     /** */
     function handleBlur() {
-      if (typeof onBlur === 'function') {
-        onBlur()
+      if (typeof onBlur === "function") {
+        onBlur();
       }
     }
 
-    const unsubscribe = addEventListener('blur', handleBlur);
+    const unsubscribe = addEventListener("blur", handleBlur);
 
     return () => {
-      unsubscribe()
-    }
-  }, [addEventListener, onBlur])
+      unsubscribe();
+    };
+  }, [addEventListener, onBlur]);
 
   /**
    *
@@ -314,6 +325,7 @@ function InputEmoji(props, ref) {
         addSanitizeFn={addSanitizeFn}
         addPolluteFn={addPolluteFn}
         appendContent={appendContent}
+        buttonElement={buttonElement}
       />
     </div>
   );
