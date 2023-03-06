@@ -53,7 +53,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {string} borderColor
  * @property {number} fontSize
  * @property {string} fontFamily
- * @property {object[]=} customEmojis
+ * @property {{id: string; name: string; emojis: {id: string; name: string; keywords: string[], skins: {src: string}[]}}[]=} customEmojis
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
  * @property {HTMLDivElement=} buttonElement
  */

@@ -1,6 +1,6 @@
 {
   "name": "react-input-emoji",
-  "version": "4.3.0",
+  "version": "5.0.0",
   "description": "A React input with an option to add an emoji",
   "author": "cesarwbr",
   "license": "MIT",
@@ -75,6 +75,8 @@
     "dist"
   ],
   "dependencies": {
-    "emoji-mart": "3.0.1"
+    "@emoji-mart/data": "1.1.2",
+    "@emoji-mart/react": "1.1.1",
+    "emoji-mart": "5.5.2"
   }
 }

@@ -1,9 +1,13 @@
 import { CustomEmoji, BaseEmoji } from "emoji-mart";
 
-export interface EmojiMartItem extends CustomEmoji, BaseEmoji {
-  emoticons: string[];
-  colons: string;
+export interface EmojiMartItem {
   id: string;
+  name: string;
+  native: string;
+  unified: string;
+  keywords: string[];
+  shortcodes: string;
+  emoticons: string[];
 }
 
 export interface MentionUser {
@@ -15,10 +19,10 @@ export interface MentionUser {
 export type Listerner<T> = (event: T) => void;
 
 export type ListenerObj<T> = {
-  subscribe: (listerner: Listerner<T>) => () => void,
-  publish: (event?: T) => void,
-  currentListerners: Listerner<T>[]
-}
+  subscribe: (listerner: Listerner<T>) => () => void;
+  publish: (event?: T) => void;
+  currentListerners: Listerner<T>[];
+};
 
 export type TextInputListeners = {
   keyDown: ListenerObj<any>;
@@ -28,8 +32,8 @@ export type TextInputListeners = {
   enter: ListenerObj<any>;
   focus: ListenerObj<any>;
   blur: ListenerObj<any>;
-}
+};
 
-export type SanitizeFn = (html: string) => string
+export type SanitizeFn = (html: string) => string;
 
-export type PolluteFn = (text: string) => string
+export type PolluteFn = (text: string) => string;

@@ -1,8 +1,8 @@
 // vendors
 import React, { memo, useMemo } from "react";
-import { Picker } from "emoji-mart";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 import t from "prop-types";
-import "emoji-mart/css/emoji-mart.css";
 
 /**
  * @typedef {object} Props
@@ -18,39 +18,46 @@ import "emoji-mart/css/emoji-mart.css";
  * @return {React.FC}
  */
 function EmojiPicker(props) {
-  const {
-    theme,
-    onSelectEmoji,
-    disableRecent,
-    customEmojis
-  } = props;
+  const { theme, onSelectEmoji, disableRecent, customEmojis } = props;
 
-  const excludePicker = useMemo(() => {
-    /** @type import("emoji-mart").CategoryName[] */
-    const exclude = [];
+  /** @type {string[]} */
+  const categories = useMemo(() => {
+    /** @type {string[]} */
+    let categoryies = [];
 
-    if (disableRecent) {
-      exclude.push("recent");
+    if (!disableRecent) {
+      categoryies.push("frequent");
     }
 
-    return exclude;
+    categoryies = [
+      ...categoryies,
+      "people",
+      "nature",
+      "foods",
+      "activity",
+      "places",
+      "objects",
+      "symbols",
+      "flags"
+    ];
+
+    return categoryies;
   }, [disableRecent]);
 
   return (
     <Picker
+      data={data}
       theme={theme}
-      set="apple"
-      showPreview={false}
-      showSkinTones={false}
-      onSelect={onSelectEmoji}
-      exclude={excludePicker}
+      previewPosition="none"
+      onEmojiSelect={onSelectEmoji}
       custom={customEmojis}
+      categories={categories}
     />
   );
 }
 
 EmojiPicker.propTypes = {
-  theme: t.oneOf(['light', 'dark', 'auto']),
+  theme: t.oneOf(["light", "dark", "auto"]),
   onSelectEmoji: t.func,
   disableRecent: t.bool,
   customEmojis: t.array

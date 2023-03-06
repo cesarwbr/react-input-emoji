@@ -3,6 +3,8 @@
 export const TRANSPARENT_GIF =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
+export const EMOJI_STYLE = "";
+
 /**
  * Replace all text with emoji with an image html tag
  * @param {string} text
@@ -11,26 +13,11 @@ export const TRANSPARENT_GIF =
 export function replaceAllTextEmojis(text) {
   let allEmojis = getAllEmojisFromText(text);
 
-  // TODO: get all emoji style
-  const allEmojiStyle = {};
-
   if (allEmojis) {
     allEmojis = [...new Set(allEmojis)]; // remove duplicates
 
     allEmojis.forEach(emoji => {
-      const style = allEmojiStyle[emoji];
-
-      if (!style) return;
-
-      text = replaceAll(
-        text,
-        emoji,
-        `<img
-            style="${style}"
-            data-emoji="${emoji}"
-            src="${TRANSPARENT_GIF}"
-          />`
-      );
+      text = replaceAll(text, emoji, getInputEmojiHTML(emoji));
     });
   }
 
@@ -59,33 +46,6 @@ function getAllEmojisFromText(text) {
   );
 }
 
-// /**
-//  * Get all emoji stlye from emoji mart
-//  * @return {Object.<string, string>}
-//  */
-// function getAllEmojiStyle() {
-//   /** @type {NodeListOf<Element>} */
-//   const allEmojiButton = Array.prototype.slice.call(
-//     document.querySelectorAll(".emoji-mart-category-list > li > button")
-//   );
-
-//   /** @type {Object.<string, string>} */
-//   const allEmojiStyle = {};
-
-//   allEmojiButton.forEach(emojiButton => {
-//     const label = emojiButton.getAttribute("aria-label");
-//     const [emoji] = label.split(",");
-
-//     const emojiSpanEl = emojiButton.querySelector("span");
-
-//     const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
-
-//     allEmojiStyle[emoji] = style;
-//   });
-
-//   return allEmojiStyle;
-// }
-
 // eslint-disable-next-line valid-jsdoc
 /**
  *
@@ -93,27 +53,17 @@ function getAllEmojisFromText(text) {
  * @return {string}
  */
 export function getImageEmoji(emoji) {
-  let shortNames = `${emoji.short_names}`;
+  return getInputEmojiHTML(emoji.native);
+}
 
-  shortNames = replaceAll(shortNames, ",", ", ");
-
-  /** @type {HTMLSpanElement} */
-  const emojiSpanEl =
-    document.querySelector(
-      `[aria-label="${emoji.native}, ${shortNames}"] > span`
-    ) || document.querySelector(`[aria-label="${emoji.id}"] > span`);
-
-  if (!emojiSpanEl) return "";
-
-  const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
-
-  let dataEmoji = emoji.native;
-
-  if (!dataEmoji && emoji.emoticons && emoji.emoticons.length > 0) {
-    dataEmoji = emoji.emoticons[0];
-  }
-
-  return `<img style="${style}" data-emoji="${dataEmoji}" src="${TRANSPARENT_GIF}" />`;
+// eslint-disable-next-line valid-jsdoc
+/**
+ *
+ * @param {string} emoji
+ * @returns
+ */
+function getInputEmojiHTML(emoji) {
+  return `<span class="width: 18px; height: 18px; display: inline-block; margin: 0 1px;">${emoji}</span>`;
 }
 
 /**
