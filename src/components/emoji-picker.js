@@ -46,12 +46,13 @@ function EmojiPicker(props) {
 
   return (
     <Picker
-      data={data}
+      data={undefined}
       theme={theme}
       previewPosition="none"
       onEmojiSelect={onSelectEmoji}
       custom={customEmojis}
       categories={categories}
+      set="apple"
     />
   );
 }

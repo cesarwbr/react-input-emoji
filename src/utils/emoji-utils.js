@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 // @ts-check
 
 export const TRANSPARENT_GIF =
@@ -53,16 +54,42 @@ function getAllEmojisFromText(text) {
  * @return {string}
  */
 export function getImageEmoji(emoji) {
-  return getInputEmojiHTML(emoji.native);
+  /** @type {HTMLElement | null} */
+  const emojiPickerEl = document.querySelector('em-emoji-picker')
+
+  if (!emojiPickerEl) {
+    return getInputEmojiNativeHTML(emoji.native)
+  }
+
+  /** @type {HTMLSpanElement | null=} */
+  const emojiSpanEl = emojiPickerEl?.shadowRoot?.querySelector(`[title="${emoji.name}"] > span > span`)
+
+  if (!emojiSpanEl) {
+    return getInputEmojiNativeHTML(emoji.native)
+  }
+
+  const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
+
+  return getInputEmojiHTML(style, emoji.native);
 }
 
 // eslint-disable-next-line valid-jsdoc
 /**
  *
+ * @param {string} style
  * @param {string} emoji
  * @returns
  */
-function getInputEmojiHTML(emoji) {
+function getInputEmojiHTML(style, emoji) {
+  return `<img style="${style}; display: inline-block" data-emoji="${emoji}" src="${TRANSPARENT_GIF}" />`;
+}
+
+/**
+ * 
+ * @param {string} emoji 
+ * @returns 
+ */
+function getInputEmojiNativeHTML(emoji) {
   return `<span class="width: 18px; height: 18px; display: inline-block; margin: 0 1px;">${emoji}</span>`;
 }
 
