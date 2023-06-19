@@ -42,6 +42,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {() => void} onClick
  * @property {() => void} onFocus
  * @property {() => void=} onBlur
+ * @property {boolean} shouldReturn
  * @property {number} maxLength
  * @property {boolean} keepOpened
  * @property {(event: KeyboardEvent) => void} onKeyDown
@@ -68,6 +69,7 @@ function InputEmoji(props, ref) {
   const {
     onChange,
     onEnter,
+    shouldReturn,
     onResize,
     onClick,
     onFocus,
@@ -97,7 +99,7 @@ function InputEmoji(props, ref) {
 
   const { addEventListener, listeners } = useEventListeners();
 
-  const { addSanitizeFn, sanitize, sanitizedTextRef } = useSanitize();
+  const { addSanitizeFn, sanitize, sanitizedTextRef } = useSanitize(props.shouldReturn);
 
   const { addPolluteFn, pollute } = usePollute();
 
@@ -299,6 +301,7 @@ function InputEmoji(props, ref) {
         ref={textInputRef}
         onCopy={handleCopy}
         onPaste={handlePaste}
+        shouldReturn={shouldReturn}
         onBlur={listeners.blur.publish}
         onFocus={listeners.focus.publish}
         onArrowUp={listeners.arrowUp.publish}
@@ -342,6 +345,7 @@ InputEmojiWithRef.defaultProps = {
   fontSize: 15,
   fontFamily: "sans-serif",
   tabIndex: 0,
+  shouldReturn: false,
   customEmojis: []
 };
 

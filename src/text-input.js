@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 // vendors
 import React, { useImperativeHandle, forwardRef, useRef } from "react";
-import { handlePasteHtmlAtCaret } from "./utils/input-event-utils";
+import { handlePasteHtmlAtCaret, moveCaretToEnd } from "./utils/input-event-utils";
 
 /**
  * @typedef {Object} Props
@@ -14,6 +14,7 @@ import { handlePasteHtmlAtCaret } from "./utils/input-event-utils";
  * @property {(event: React.KeyboardEvent) => void} onArrowUp
  * @property {(event: React.KeyboardEvent) => void} onArrowDown
  * @property {(event: React.KeyboardEvent) => void} onEnter
+ * @property {boolean} shouldReturn
  * @property {(event: React.ClipboardEvent) => void} onCopy
  * @property {(event: React.ClipboardEvent) => void} onPaste
  * @property {string} placeholder
@@ -118,6 +119,14 @@ const TextInput = (
    * @param {React.KeyboardEvent} event
    */
   function handleKeyDown(event) {
+    if (event.key === "Enter" && (event.shiftKey === true || event.ctrlKey === true) && props.shouldReturn) {
+      if(!event.shiftKey && event.ctrlKey && textInputRef.current) {
+        textInputRef.current.innerHTML = `${textInputRef.current.innerHTML}<br><br>`
+        console.log('asjda', textInputRef.current.innerHTML)
+        moveCaretToEnd(textInputRef)
+      }
+      return;
+    } 
     if (event.key === "Enter") {
       props.onEnter(event);
     } else if (event.key === "ArrowUp") {

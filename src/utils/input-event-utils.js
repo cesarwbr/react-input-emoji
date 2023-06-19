@@ -193,3 +193,33 @@ export function handleFocus(onFocus) {
     onFocus(event);
   };
 }
+
+/**
+ * Set caret to the end of text value
+ * @param {React.MutableRefObject<HTMLDivElement| null>} input
+ */
+export function moveCaretToEnd(input) {
+  let range
+  let selection
+  if(document.createRange && input.current) {
+      range = document.createRange()
+      range.selectNodeContents(input.current)
+      range.collapse(false)
+      selection = window.getSelection()
+      if(selection) {
+        selection.removeAllRanges()
+        selection.addRange(range)
+      }
+  }
+}
+/**
+ * 
+ * @param {HTMLDivElement} inputDiv 
+ * @return {string}
+ */
+export function removeHtmlExceptBr(inputDiv) {
+  const temp = inputDiv.innerHTML.replace(/<br\s*\/?>/gi, '[BR]'); // temporarily replace <br> with placeholder
+  const stripped = temp.replace(/<[^>]+>/g, ''); // strip all html tags
+  const final = stripped.replace(/\[BR\]/gi, '<br>'); // replace placeholders with <br>
+  return final;
+}

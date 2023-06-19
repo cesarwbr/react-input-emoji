@@ -1,14 +1,17 @@
 // @ts-check
 
 import { useCallback, useRef } from "react";
+import { removeHtmlExceptBr } from "../utils/input-event-utils";
 
 /**
  * @typedef {import('../types/types').SanitizeFn} SanitizeFn
  */
 
 // eslint-disable-next-line valid-jsdoc
-/** */
-export function useSanitize() {
+/**
+ * @param {boolean} shouldReturn
+ */
+export function useSanitize(shouldReturn) {
   /** @type {React.MutableRefObject<SanitizeFn[]>} */
   const sanitizeFnsRef = useRef([]);
 
@@ -25,7 +28,7 @@ export function useSanitize() {
       return fn(acc);
     }, html);
 
-    result = replaceAllHtmlToString(result);
+    result = replaceAllHtmlToString(result, shouldReturn);
 
     sanitizedTextRef.current = result;
 
@@ -38,13 +41,18 @@ export function useSanitize() {
 /**
  *
  * @param {string} html
+ * @param {boolean} shouldReturn
  * @return {string}
  */
-export function replaceAllHtmlToString(html) {
+export function replaceAllHtmlToString(html, shouldReturn) {
   const container = document.createElement("div");
   container.innerHTML = html;
-
-  let text = container.innerText || "";
+  let text
+  if(shouldReturn) {
+    text = removeHtmlExceptBr(container)
+  } else {
+    text = container.innerText || "";
+  }
 
   // remove all ↵ for safari
   text = text.replace(/\n/gi, "");

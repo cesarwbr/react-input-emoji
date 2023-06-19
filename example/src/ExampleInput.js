@@ -68,6 +68,7 @@ const ExampleInput = () => {
       value={text}
       onChange={handleTextChange}
       cleanOnEnter
+      shouldReturn
       onEnter={text => {
         console.log("enter", text);
       }}
