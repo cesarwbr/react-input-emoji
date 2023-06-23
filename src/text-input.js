@@ -120,12 +120,12 @@ const TextInput = (
    */
   function handleKeyDown(event) {
     if (event.key === "Enter" && (event.shiftKey === true || event.ctrlKey === true) && props.shouldReturn) {
-      if(!event.shiftKey && event.ctrlKey && textInputRef.current) {
-        textInputRef.current.innerHTML = `${textInputRef.current.innerHTML}<br><br>`
-        console.log('asjda', textInputRef.current.innerHTML)
+      event.preventDefault();
+      if(textInputRef.current) {
+        textInputRef.current.innerHTML = `${textInputRef.current.innerHTML}</br></br>`
         moveCaretToEnd(textInputRef)
+        return;
       }
-      return;
     } 
     if (event.key === "Enter") {
       props.onEnter(event);

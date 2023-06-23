@@ -46,7 +46,7 @@ export default function Example() {
 ## Props
 
 | Prop           | Type     | Default          | Description                                                                                                              |
-|----------------|----------|------------------|--------------------------------------------------------------------------------------------------------------------------|
+| -------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `value`        | string   | ""               | The input value.                                                                                                         |
 | `onChange`     | function | -                | This function is called when the value of the input changes. The first argument is the current value.                    |
 | `onResize`     | function | -                | This function is called when the width or the height of the input changes. The first argument is the current size value. |
@@ -62,6 +62,7 @@ export default function Example() {
 | `borderColor`  | string   | "#EAEAEA"        | The border color of the input container.                                                                                 |
 | `fontSize`     | number   | 15               | The font size of the placeholder and input container.                                                                    |
 | `fontFamily`   | string   | "sans-serif"     | The font family of the placeholder and input container.                                                                  |
+| `shouldReturn` | boolean  | -                | Allows the user to use the `Shift + Enter` or `Ctrl + Enter` keyboard shortcut to create a new line.                     |
 
 ## License
 

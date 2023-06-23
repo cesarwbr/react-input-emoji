@@ -231,6 +231,14 @@ export default function App() {
                 placeholder and input container.
               </TableTd>
             </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>shouldReturn</Code>
+              </TableTd>
+              <TableTd>
+                Allows the user to use the <Code inline>Shift + Enter</Code> or <Code inline>Ctrl + Enter</Code> keyboard shortcut to create a new line.
+              </TableTd>
+            </TableTr>
           </tbody>
         </Table>
       </Main>
