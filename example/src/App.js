@@ -239,6 +239,14 @@ export default function App() {
                 Allows the user to use the <Code inline>Shift + Enter</Code> or <Code inline>Ctrl + Enter</Code> keyboard shortcut to create a new line.
               </TableTd>
             </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>buttonElement</Code>
+              </TableTd>
+              <TableTd>
+              An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
+              </TableTd>
+            </TableTr>
           </tbody>
         </Table>
       </Main>

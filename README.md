@@ -62,7 +62,8 @@ export default function Example() {
 | `borderColor`  | string   | "#EAEAEA"        | The border color of the input container.                                                                                 |
 | `fontSize`     | number   | 15               | The font size of the placeholder and input container.                                                                    |
 | `fontFamily`   | string   | "sans-serif"     | The font family of the placeholder and input container.                                                                  |
-| `shouldReturn` | boolean  | -                | Allows the user to use the `Shift + Enter` or `Ctrl + Enter` keyboard shortcut to create a new line.                     |
+| `shouldReturn` | boolean  | -                | Allows the user to use the `Shift + Enter` or `Ctrl + Enter` keyboard shortcut to create a new line.    |                 |
+| `buttonElement` | HTMLElement | -   | An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
 
 ## License
 
