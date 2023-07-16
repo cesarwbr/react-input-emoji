@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/react-input-emoji/static/js/main.b513024c.js",
+    "main.js": "/react-input-emoji/static/js/main.745f457f.js",
     "index.html": "/react-input-emoji/index.html",
-    "main.b513024c.js.map": "/react-input-emoji/static/js/main.b513024c.js.map"
+    "main.745f457f.js.map": "/react-input-emoji/static/js/main.745f457f.js.map"
   },
   "entrypoints": [
-    "static/js/main.b513024c.js"
+    "static/js/main.745f457f.js"
   ]
 }
