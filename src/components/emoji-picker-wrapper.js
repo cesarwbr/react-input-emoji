@@ -12,6 +12,8 @@ import {
 import EmojiPickerButton from "./emoji-picker-button";
 import EmojiPickerContainer from "./emoji-picker-container";
 
+const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
+
 /**
  * @typedef {import('../types/types').SanitizeFn} SanitizeFn
  */
@@ -49,6 +51,8 @@ const EmojiPickerWrapper = props => {
   const [showPicker, setShowPicker] = useState(false);
   /** @type {[HTMLDivElement | undefined, React.Dispatch<React.SetStateAction<HTMLDivElement | undefined>>]} */
   const [customButton, setCustomButton] = useState();
+  /** @type {['above' | 'below' | undefined, React.Dispatch<React.SetStateAction<'above' | 'below' | undefined>>]} */
+  const [emojiPickerPosition, setEmojiPickerPosition] = useState()
 
   useEffect(() => {
     addSanitizeFn(replaceAllTextEmojiToString);
@@ -93,7 +97,30 @@ const EmojiPickerWrapper = props => {
     event.stopPropagation();
     event.preventDefault();
 
+    setEmojiPickerPosition(calcTopPosition(event))
+
     setShowPicker(currentShowPicker => !currentShowPicker);
+  }
+
+  /**
+   * 
+   * @param {React.MouseEvent} event
+   * @return {'above' | 'below'}
+   */
+  function calcTopPosition(event) {
+    const btn = event.currentTarget
+    const btnRect = btn.getBoundingClientRect();
+
+    const popoverHeight = EMOJI_PICKER_CONTAINER_HEIGHT;
+
+    // Decide to display above or below based on available space
+    if (btnRect.top >= popoverHeight) {
+        // Display above
+        return 'above'
+    } else {
+        // Display below
+        return 'below'
+    }
   }
 
   // eslint-disable-next-line valid-jsdoc
@@ -125,6 +152,7 @@ const EmojiPickerWrapper = props => {
           handleSelectEmoji={handleSelectEmoji}
           disableRecent={disableRecent}
           customEmojis={customEmojis}
+          position={emojiPickerPosition}
         />
         <EmojiPickerButton
           showPicker={showPicker}
@@ -142,6 +170,7 @@ const EmojiPickerWrapper = props => {
         handleSelectEmoji={handleSelectEmoji}
         disableRecent={disableRecent}
         customEmojis={customEmojis}
+        position={emojiPickerPosition}
       />
       <EmojiPickerButton
         showPicker={showPicker}
