@@ -32,6 +32,7 @@ const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
  * @property {(fn: PolluteFn) => void} addPolluteFn
  * @property {(html: string) => void} appendContent
  * @property {HTMLDivElement=} buttonElement
+ * @property {import('../types/types').Languages=} language
  */
 
 // eslint-disable-next-line valid-jsdoc
@@ -45,7 +46,8 @@ const EmojiPickerWrapper = props => {
     addSanitizeFn,
     addPolluteFn,
     appendContent,
-    buttonElement
+    buttonElement,
+    language
   } = props;
 
   const [showPicker, setShowPicker] = useState(false);
@@ -153,6 +155,7 @@ const EmojiPickerWrapper = props => {
           disableRecent={disableRecent}
           customEmojis={customEmojis}
           position={emojiPickerPosition}
+          language={language}
         />
         <EmojiPickerButton
           showPicker={showPicker}
@@ -171,6 +174,7 @@ const EmojiPickerWrapper = props => {
         disableRecent={disableRecent}
         customEmojis={customEmojis}
         position={emojiPickerPosition}
+        language={language}
       />
       <EmojiPickerButton
         showPicker={showPicker}

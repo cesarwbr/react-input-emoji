@@ -106,6 +106,34 @@ export default function App() {
             <ExampleCode />
           </Code>
         </Snippet>
+        <h1>Internationalization</h1>
+        <Description>
+        The <code>react-input-emoji</code> library is dedicated to enhancing the global user experience, catering to a broad spectrum of users from various linguistic backgrounds. As of the latest update, this library proudly supports the following languages:
+
+        <ul>
+          <li><strong>Arabic</strong> (<code>ar</code>)</li>
+          <li><strong>Belarusian</strong> (<code>be</code>)</li>
+          <li><strong>Czech</strong> (<code>cs</code>)</li>
+          <li><strong>German</strong> (<code>de</code>)</li>
+          <li><strong>English</strong> (<code>en</code>)</li>
+          <li><strong>Spanish</strong> (<code>es</code>)</li>
+          <li><strong>Persian</strong> (<code>fa</code>)</li>
+          <li><strong>Finnish</strong> (<code>fi</code>)</li>
+          <li><strong>French</strong> (<code>fr</code>)</li>
+          <li><strong>Hindi</strong> (<code>hi</code>)</li>
+          <li><strong>Italian</strong> (<code>it</code>)</li>
+          <li><strong>Japanese</strong> (<code>ja</code>)</li>
+          <li><strong>Korean</strong> (<code>kr</code>)</li>
+          <li><strong>Polish</strong> (<code>pl</code>)</li>
+          <li><strong>Portuguese</strong> (<code>pt</code>)</li>
+          <li><strong>Russian</strong> (<code>ru</code>)</li>
+          <li><strong>Sanskrit</strong> (<code>sa</code>)</li>
+          <li><strong>Turkish</strong> (<code>tr</code>)</li>
+          <li><strong>Ukrainian</strong> (<code>uk</code>)</li>
+          <li><strong>Vietnamese</strong> (<code>vi</code>)</li>
+          <li><strong>Chinese</strong> (<code>zh</code>)</li>
+        </ul>
+        </Description>
         <h1>Props</h1>
         <Table>
           <thead>
@@ -168,6 +196,19 @@ export default function App() {
               <TableTd>
                 This function is called after the keydown event is fired with
                 the <Code inline>keyCode === 13</Code> returning the last value.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>language</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to &quot;en&quot;. Set the language of
+                the emoji picker. <br />
+                <Code>'ar'|'be'|'cs'|'de'|'en'|'es'|<br/>
+                  'fa'|'fi'|'fr'|'hi'|'it'|'ja'|<br/>
+                  'kr'|'pl'|'pt'|'ru'|'sa'|'tr'|<br/>
+                  'uk'|'vi'|'zh'</Code>
               </TableTd>
             </TableTr>
             <TableTr>

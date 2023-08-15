@@ -37,3 +37,5 @@ export type TextInputListeners = {
 export type SanitizeFn = (html: string) => string;
 
 export type PolluteFn = (text: string) => string;
+
+export type Languages = 'ar'|'be'|'cs'|'de'|'en'|'es'|'fa'|'fi'|'fr'|'hi'|'it'|'ja'|'kr'|'pl'|'pt'|'ru'|'sa'|'tr'|'uk'|'vi'|'zh'

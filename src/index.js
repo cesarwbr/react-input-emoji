@@ -55,6 +55,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {number} fontSize
  * @property {string} fontFamily
  * @property {{id: string; name: string; emojis: {id: string; name: string; keywords: string[], skins: {src: string}[]}}[]=} customEmojis
+ * @property {import('./types/types').Languages=} language
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
  * @property {HTMLDivElement=} buttonElement
  */
@@ -85,6 +86,7 @@ function InputEmoji(props, ref) {
     tabIndex,
     value,
     customEmojis,
+    language,
     searchMention,
     buttonElement,
     // style
@@ -329,6 +331,7 @@ function InputEmoji(props, ref) {
         addPolluteFn={addPolluteFn}
         appendContent={appendContent}
         buttonElement={buttonElement}
+        language={language}
       />
     </div>
   );
@@ -346,7 +349,8 @@ InputEmojiWithRef.defaultProps = {
   fontFamily: "sans-serif",
   tabIndex: 0,
   shouldReturn: false,
-  customEmojis: []
+  customEmojis: [],
+  language: undefined,
 };
 
 export default InputEmojiWithRef;

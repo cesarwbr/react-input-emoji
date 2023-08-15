@@ -1,8 +1,6 @@
 // vendors
 import React, { memo, useMemo } from "react";
-import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import t from "prop-types";
 
 /**
  * @typedef {object} Props
@@ -10,6 +8,7 @@ import t from "prop-types";
  * @property {function(import("../types/types").EmojiMartItem): void} onSelectEmoji
  * @property {boolean} disableRecent
  * @property {import("emoji-mart").CustomEmoji[]=} customEmojis
+ * @property {import('../types/types').Languages=} language
  */
 
 /**
@@ -18,7 +17,7 @@ import t from "prop-types";
  * @return {React.FC}
  */
 function EmojiPicker(props) {
-  const { theme, onSelectEmoji, disableRecent, customEmojis } = props;
+  const { theme, onSelectEmoji, disableRecent, customEmojis, language } = props;
 
   /** @type {string[]} */
   const categories = useMemo(() => {
@@ -44,6 +43,14 @@ function EmojiPicker(props) {
     return categoryies;
   }, [disableRecent]);
 
+  const i18n = useMemo(() => {
+    if (!language) {
+      return undefined
+    }
+
+    return require(`@emoji-mart/data/i18n/${language ?? 'en'}.json`)
+  }, [language])
+
   return (
     <Picker
       data={undefined}
@@ -53,15 +60,10 @@ function EmojiPicker(props) {
       custom={customEmojis}
       categories={categories}
       set="apple"
+      i18n={i18n}
     />
   );
 }
 
-EmojiPicker.propTypes = {
-  theme: t.oneOf(["light", "dark", "auto"]),
-  onSelectEmoji: t.func,
-  disableRecent: t.bool,
-  customEmojis: t.array
-};
 
 export default memo(EmojiPicker);
