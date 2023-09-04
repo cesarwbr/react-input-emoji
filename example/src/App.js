@@ -288,6 +288,14 @@ export default function App() {
               An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
               </TableTd>
             </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>keepOpened</Code>
+              </TableTd>
+              <TableTd>
+              If set to true, the emoji picker will remain open after selecting an emoji. Defaults to false.
+              </TableTd>
+            </TableTr>
           </tbody>
         </Table>
       </Main>

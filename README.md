@@ -64,6 +64,7 @@ export default function Example() {
 | `fontFamily`   | string   | "sans-serif"     | The font family of the placeholder and input container.                                                                  |
 | `shouldReturn` | boolean  | -                | Allows the user to use the `Shift + Enter` or `Ctrl + Enter` keyboard shortcut to create a new line.    |                 |
 | `buttonElement` | HTMLElement | -   | An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
+| `keepOpened` | boolean  | false | If set to true, the emoji picker will remain open after selecting an emoji. Defaults to false. | 
 
 ## License
 
