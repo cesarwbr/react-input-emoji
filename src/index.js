@@ -7,7 +7,7 @@ import React, { useEffect, useRef, forwardRef, useCallback } from "react";
 import "./styles.css";
 
 // utils
-import { replaceAllTextEmojis } from "./utils/emoji-utils";
+import { replaceAllTextEmojiToString, replaceAllTextEmojis } from "./utils/emoji-utils";
 import { totalCharacters } from "./utils/input-event-utils";
 
 // hooks
@@ -273,8 +273,20 @@ function InputEmoji(props, ref) {
    * @param {React.ClipboardEvent} event
    */
   function handleCopy(event) {
-    event.clipboardData.setData("text", sanitizedTextRef.current);
-    event.preventDefault();
+    const selection = window.getSelection()
+    if (selection !== null) {
+      let selectedText = ''
+      if (selection.anchorNode && selection.anchorNode.nodeType === Node.ELEMENT_NODE) {
+        // @ts-ignore
+        selectedText = selection.anchorNode.innerHTML
+      } else if (selection.anchorNode && selection.anchorNode.nodeType === Node.TEXT_NODE) {
+        selectedText = selection.anchorNode.textContent ?? ''
+      }
+
+      const text = replaceAllTextEmojiToString(selectedText);
+      event.clipboardData.setData("text", text);
+      event.preventDefault();
+    }
   }
 
   /**
