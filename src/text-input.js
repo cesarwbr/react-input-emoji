@@ -3,6 +3,7 @@
 // vendors
 import React, { useImperativeHandle, forwardRef, useRef } from "react";
 import { handlePasteHtmlAtCaret, moveCaretToEnd } from "./utils/input-event-utils";
+import { replaceAllTextEmojiToString } from "./utils/emoji-utils";
 
 /**
  * @typedef {Object} Props
@@ -52,7 +53,7 @@ const TextInput = (
         textInputRef.current.focus();
       }
 
-      if (textInputRef.current && placeholderRef.current && textInputRef.current.innerHTML.trim() === "") {
+      if (textInputRef.current && placeholderRef.current && replaceAllTextEmojiToString(textInputRef.current.innerHTML) === "") {
         placeholderRef.current.style.visibility = "visible";
       } else if (placeholderRef.current) {
         placeholderRef.current.style.visibility = "hidden";
@@ -68,7 +69,8 @@ const TextInput = (
       }
       
       if (placeholderRef.current) {
-        if (value.trim() === "") {
+        const text = replaceAllTextEmojiToString(value)
+        if (text === "") {
           placeholderRef.current.style.visibility = "visible";
         } else {
           placeholderRef.current.style.visibility = "hidden";
@@ -156,8 +158,9 @@ const TextInput = (
 
     const input = textInputRef.current;
 
-    if (placeholderRef.current) {
-      if (input?.innerText?.trim() === "") {
+    if (placeholderRef.current && input) {
+      const text = replaceAllTextEmojiToString(input.innerHTML)
+      if (text === "") {
         placeholderRef.current.style.visibility = "visible";
       } else {
         placeholderRef.current.style.visibility = "hidden";
