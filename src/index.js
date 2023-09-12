@@ -116,7 +116,11 @@ function InputEmoji(props, ref) {
   );
 
   const setValue = useCallback(
-    value => {
+    /**
+     * 
+     * @param {string} value
+     */
+    (value) => {
       updateHTML(value);
     },
     [updateHTML]
@@ -137,9 +141,9 @@ function InputEmoji(props, ref) {
     }
   }, [sanitizedTextRef, setValue, value]);
 
-  useEffect(() => {
-    updateHTML();
-  }, [updateHTML]);
+  // useEffect(() => {
+  //   updateHTML();
+  // }, [updateHTML]);
 
   useEffect(() => {
     /**
@@ -247,7 +251,10 @@ function InputEmoji(props, ref) {
    */
   function handleTextInputChange(html) {
     sanitize(html);
-    emitChange(sanitizedTextRef.current);
+
+    if (value !== sanitizedTextRef.current) {
+      emitChange(sanitizedTextRef.current);
+    }
   }
 
   /**

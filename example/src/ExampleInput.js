@@ -34,6 +34,7 @@ const ExampleInput = () => {
    * @param {string} text
    */
   function handleTextChange(text) {
+    console.log('on change', text)
     setText(text);
   }
 
