@@ -45,27 +45,27 @@ export default function Example() {
 
 ## Props
 
-| Prop           | Type     | Default          | Description                                                                                                              |
-| -------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `value`        | string   | ""               | The input value.                                                                                                         |
-| `onChange`     | function | -                | This function is called when the value of the input changes. The first argument is the current value.                    |
-| `onResize`     | function | -                | This function is called when the width or the height of the input changes. The first argument is the current size value. |
-| `onClick`      | function | -                | This function is called when the input is clicked.                                                                       |
-| `onFocus`      | function | -                | This function is called when the input has received focus.                                                               |
-| `cleanOnEnter` | boolean  | false            | Clean the input value after the keydown event.                                                                           |
-| `onEnter`      | function | -                | This function is called after the keydown event is fired with the `keyCode === 13` returning the last value.             |
-| `placeholder`  | string   | "Type a message" | Set the placeholder of the input.                                                                                        |
-| `height`       | number   | 40               | The total height of the area in which the element is rendered.                                                           |
-| `maxLength`    | number   | -                | The maximum number of characters allowed in the element.                                                                 |
-| `theme`        | string   | -                | Set theme for emoji popup. Available values "light", "dark", "auto"                                                      |
-| `borderRadius` | number   | 21               | The border radius of the input container.                                                                                |
-| `borderColor`  | string   | "#EAEAEA"        | The border color of the input container.                                                                                 |
-| `fontSize`     | number   | 15               | The font size of the placeholder and input container.                                                                    |
-| `fontFamily`   | string   | "sans-serif"     | The font family of the placeholder and input container.                                                                  |
-| `shouldReturn` | boolean  | -                | Allows the user to use the `Shift + Enter` or `Ctrl + Enter` keyboard shortcut to create a new line.    |                 |
-| `buttonElement` | HTMLElement | -   | An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
-| `buttonRef` | React.MutableRefObject | -   | A React mutable ref object that, when referenced, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
-| `keepOpened` | boolean  | false | If set to true, the emoji picker will remain open after selecting an emoji. Defaults to false. | 
+| Prop               | Type                     | Default          | Description                                                                                                              |
+| ------------------ | ------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `borderColor`      | string                   | "#EAEAEA"        | The border color of the input container.                                                                                 |
+| `borderRadius`     | number                   | 21               | The border radius of the input container.                                                                                |
+| `buttonElement`    | HTMLElement              | -                | An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
+| `buttonRef`        | React.MutableRefObject   | -                | A React mutable ref object that, when referenced, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
+| `cleanOnEnter`     | boolean                  | false            | Clean the input value after the keydown event.                                                                           |
+| `fontSize`         | number                   | 15               | The font size of the placeholder and input container.                                                                    |
+| `fontFamily`       | string                   | "sans-serif"     | The font family of the placeholder and input container.                                                                  |
+| `height`           | number                   | 40               | The total height of the area in which the element is rendered.                                                           |
+| `keepOpened`       | boolean                  | false            | If set to true, the emoji picker will remain open after selecting an emoji. Defaults to false.                            |
+| `maxLength`        | number                   | -                | The maximum number of characters allowed in the element.                                                                 |
+| `onChange`         | function                 | -                | This function is called when the value of the input changes. The first argument is the current value.                    |
+| `onClick`          | function                 | -                | This function is called when the input is clicked.                                                                       |
+| `onEnter`          | function                 | -                | This function is called after the keydown event is fired with the `keyCode === 13` returning the last value.             |
+| `onFocus`          | function                 | -                | This function is called when the input has received focus.                                                               |
+| `onResize`         | function                 | -                | This function is called when the width or the height of the input changes. The first argument is the current size value. |
+| `placeholder`      | string                   | "Type a message" | Set the placeholder of the input.                                                                                        |
+| `shouldReturn`     | boolean                  | -                | Allows the user to use the `Shift + Enter` or `Ctrl + Enter` keyboard shortcut to create a new line.                      |
+| `theme`            | string                   | -                | Set theme for emoji popup. Available values "light", "dark", "auto"                                                      |
+| `value`            | string                   | ""               | The input value.                                                                                                         |
 
 ## License
 

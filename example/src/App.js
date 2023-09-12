@@ -145,96 +145,11 @@ export default function App() {
           <tbody>
             <TableTr>
               <TableTd>
-                <Code>value</Code>
-              </TableTd>
-              <TableTd>The input value.</TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>onChange</Code>
+                <Code>borderColor</Code>
               </TableTd>
               <TableTd>
-                This function is called when the value of the input changes. The
-                first argument is the current value.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>onResize</Code>
-              </TableTd>
-              <TableTd>
-                This function is called when the width or the height of the
-                input changes. The first argument is the current size value.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>onClick</Code>
-              </TableTd>
-              <TableTd>
-                This function is called when the input is clicked.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>onFocus</Code>
-              </TableTd>
-              <TableTd>
-                This function is called when the input has received focus.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>cleanOnEnter</Code>
-              </TableTd>
-              <TableTd>Clean the input value after the keydown event.</TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>onEnter</Code>
-              </TableTd>
-              <TableTd>
-                This function is called after the keydown event is fired with
-                the <Code inline>keyCode === 13</Code> returning the last value.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>language</Code>
-              </TableTd>
-              <TableTd>
-                Defaults to &quot;en&quot;. Set the language of
-                the emoji picker. <br />
-                <Code>'ar'|'be'|'cs'|'de'|'en'|'es'|<br/>
-                  'fa'|'fi'|'fr'|'hi'|'it'|'ja'|<br/>
-                  'kr'|'pl'|'pt'|'ru'|'sa'|'tr'|<br/>
-                  'uk'|'vi'|'zh'</Code>
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>placeholder</Code>
-              </TableTd>
-              <TableTd>
-                Defaults to &quot;Type a message&quot;. Set the placeholder of
-                the input.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>height</Code>
-              </TableTd>
-              <TableTd>
-                Defaults to 40. The total height of the area in which the
-                element is rendered.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>maxLength</Code>
-              </TableTd>
-              <TableTd>
-                The maximum number of characters allowed in the element.
+                Defaults to <Code inline>#EAEAEA</Code>. The border color of the
+                input container.
               </TableTd>
             </TableTr>
             <TableTr>
@@ -247,12 +162,25 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
-                <Code>borderColor</Code>
+                <Code>buttonElement</Code>
               </TableTd>
               <TableTd>
-                Defaults to <Code inline>#EAEAEA</Code>. The border color of the
-                input container.
+                An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
               </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>buttonRef</Code>
+              </TableTd>
+              <TableTd>
+                A React mutable ref object that, when referenced, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>cleanOnEnter</Code>
+              </TableTd>
+              <TableTd>Clean the input value after the keydown event.</TableTd>
             </TableTr>
             <TableTr>
               <TableTd>
@@ -274,6 +202,96 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
+                <Code>height</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to 40. The total height of the area in which the
+                element is rendered.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>keepOpened</Code>
+              </TableTd>
+              <TableTd>
+                If set to true, the emoji picker will remain open after selecting an emoji. Defaults to false.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>language</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to &quot;en&quot;. Set the language of
+                the emoji picker. <br />
+                <Code>'ar'|'be'|'cs'|'de'|'en'|'es'|<br/>
+                  'fa'|'fi'|'fr'|'hi'|'it'|'ja'|<br/>
+                  'kr'|'pl'|'pt'|'ru'|'sa'|'tr'|<br/>
+                  'uk'|'vi'|'zh'</Code>
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>maxLength</Code>
+              </TableTd>
+              <TableTd>
+                The maximum number of characters allowed in the element.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>onChange</Code>
+              </TableTd>
+              <TableTd>
+                This function is called when the value of the input changes. The
+                first argument is the current value.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>onClick</Code>
+              </TableTd>
+              <TableTd>
+                This function is called when the input is clicked.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>onEnter</Code>
+              </TableTd>
+              <TableTd>
+                This function is called after the keydown event is fired with
+                the <Code inline>keyCode === 13</Code> returning the last value.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>onFocus</Code>
+              </TableTd>
+              <TableTd>
+                This function is called when the input has received focus.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>onResize</Code>
+              </TableTd>
+              <TableTd>
+                This function is called when the width or the height of the
+                input changes. The first argument is the current size value.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>placeholder</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to &quot;Type a message&quot;. Set the placeholder of
+                the input.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
                 <Code>shouldReturn</Code>
               </TableTd>
               <TableTd>
@@ -282,27 +300,9 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
-                <Code>buttonElement</Code>
+                <Code>value</Code>
               </TableTd>
-              <TableTd>
-              An HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>buttonRef</Code>
-              </TableTd>
-              <TableTd>
-              A React mutable ref object that, when referenced, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
-              </TableTd>
-            </TableTr>
-            <TableTr>
-              <TableTd>
-                <Code>keepOpened</Code>
-              </TableTd>
-              <TableTd>
-              If set to true, the emoji picker will remain open after selecting an emoji. Defaults to false.
-              </TableTd>
+              <TableTd>The input value.</TableTd>
             </TableTr>
           </tbody>
         </Table>
