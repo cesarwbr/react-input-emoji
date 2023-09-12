@@ -58,6 +58,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {import('./types/types').Languages=} language
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
  * @property {HTMLDivElement=} buttonElement
+ * @property {React.MutableRefObject=} buttonRef
  */
 
 /**
@@ -89,11 +90,12 @@ function InputEmoji(props, ref) {
     language,
     searchMention,
     buttonElement,
+    buttonRef,
     // style
     borderRadius,
     borderColor,
     fontSize,
-    fontFamily
+    fontFamily,
   } = props;
 
   /** @type {React.MutableRefObject<import('./text-input').Ref | null>} */
@@ -350,6 +352,7 @@ function InputEmoji(props, ref) {
         addPolluteFn={addPolluteFn}
         appendContent={appendContent}
         buttonElement={buttonElement}
+        buttonRef={buttonRef}
         language={language}
       />
     </div>

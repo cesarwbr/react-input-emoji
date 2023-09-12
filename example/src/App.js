@@ -290,6 +290,14 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
+                <Code>buttonRef</Code>
+              </TableTd>
+              <TableTd>
+              A React mutable ref object that, when referenced, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
                 <Code>keepOpened</Code>
               </TableTd>
               <TableTd>

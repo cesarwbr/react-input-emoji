@@ -32,6 +32,7 @@ const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
  * @property {(fn: PolluteFn) => void} addPolluteFn
  * @property {(html: string) => void} appendContent
  * @property {HTMLDivElement=} buttonElement
+ * @property {React.MutableRefObject=} buttonRef
  * @property {import('../types/types').Languages=} language
  */
 
@@ -47,6 +48,7 @@ const EmojiPickerWrapper = props => {
     addPolluteFn,
     appendContent,
     buttonElement,
+    buttonRef,
     language
   } = props;
 
@@ -139,11 +141,14 @@ const EmojiPickerWrapper = props => {
   }
 
   useEffect(() => {
-    if (buttonElement?.style) {
+    if (buttonRef?.current?.style) {
+      buttonRef.current.style.position = "relative";
+      setCustomButton(buttonRef.current);
+    }  else if (buttonElement?.style) {
       buttonElement.style.position = "relative";
       setCustomButton(buttonElement);
     }
-  }, [buttonElement]);
+  }, [buttonRef, buttonElement]);
 
   return customButton ? (
     (ReactDOM.createPortal(
@@ -161,6 +166,7 @@ const EmojiPickerWrapper = props => {
           showPicker={showPicker}
           toggleShowPicker={toggleShowPicker}
           buttonElement={customButton}
+          buttonRef={buttonRef}
         />
       </>,
       customButton

@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
  * @property {boolean} showPicker
  * @property {(event: React.MouseEvent) => void} toggleShowPicker
  * @property {HTMLDivElement=} buttonElement
+ * @property {React.MutableRefObject=} buttonRef
  */
 
 /**
@@ -14,20 +15,24 @@ import React, { useEffect, useRef, useState } from "react";
  * @param {Props} props
  * @return {JSX.Element}
  */
-function EmojiPickerButton({ showPicker, toggleShowPicker, buttonElement }) {
-  const buttonRef = useRef(null);
+function EmojiPickerButton({ showPicker, toggleShowPicker, buttonElement, buttonRef }) {
+  
+  const localButtonRef = useRef(null);
   const [showCustomButtonContent, setShowCustomButtonContent] = useState(false);
 
   useEffect(() => {
-    if ((buttonElement?.childNodes?.length ?? 0) > 2) {
-      buttonRef.current.appendChild(buttonElement?.childNodes[0]);
+    if ((buttonRef?.current?.childNodes?.length ?? 0) > 2) {
+      localButtonRef.current.appendChild(buttonRef.current.childNodes[0]);
+      setShowCustomButtonContent(true);
+    } else if ((buttonElement?.childNodes?.length ?? 0) > 2) {
+      localButtonRef.current.appendChild(buttonElement?.childNodes[0]);
       setShowCustomButtonContent(true);
     }
   }, [buttonElement?.childNodes]);
 
   return (
     <button
-      ref={buttonRef}
+      ref={localButtonRef}
       type="button"
       className={`react-input-emoji--button${
         showPicker ? " react-input-emoji--button__show" : ""
