@@ -7,14 +7,13 @@ import Picker from "@emoji-mart/react";
  * @property {'light' | 'dark' | 'auto'} theme
  * @property {function(import("../types/types").EmojiMartItem): void} onSelectEmoji
  * @property {boolean} disableRecent
- * @property {import("emoji-mart").CustomEmoji[]=} customEmojis
+ * @property {any[]=} customEmojis
  * @property {import('../types/types').Languages=} language
  */
 
 /**
  * Emoji Picker Component
  * @param {Props} props
- * @return {React.FC}
  */
 function EmojiPicker(props) {
   const { theme, onSelectEmoji, disableRecent, customEmojis, language } = props;

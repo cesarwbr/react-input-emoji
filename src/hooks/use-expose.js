@@ -16,7 +16,7 @@ import { useSanitize } from "./use-sanitize";
  * @param {Props} props
  */
 export function useExpose({ ref, textInputRef, setValue, emitChange }) {
-  const { sanitize, sanitizedTextRef } = useSanitize();
+  const { sanitize, sanitizedTextRef } = useSanitize(false);
 
   useImperativeHandle(ref, () => ({
     get value() {

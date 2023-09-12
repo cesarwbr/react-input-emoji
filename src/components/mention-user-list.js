@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-disable react/prop-types */
 // vendors
 import React, {
   useImperativeHandle,
@@ -8,7 +7,6 @@ import React, {
   useMemo,
   useEffect
 } from "react";
-import t from "prop-types";
 
 /**
  * @typedef {import('../types/types').MentionUser} MentionUser
@@ -171,9 +169,5 @@ const MentionUserList = (
 };
 
 const MentionUserListWithRef = forwardRef(MentionUserList);
-
-MentionUserListWithRef.propTypes = {
-  users: t.array.isRequired
-};
 
 export default MentionUserListWithRef;

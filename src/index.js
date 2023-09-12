@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-disable react/prop-types */
 // vendors
 import React, { useEffect, useRef, forwardRef, useCallback } from "react";
 

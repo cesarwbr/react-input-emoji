@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-disable react/prop-types */
 // vendors
 import React, { useImperativeHandle, forwardRef, useRef } from "react";
 import { handlePasteHtmlAtCaret, moveCaretToEnd } from "./utils/input-event-utils";

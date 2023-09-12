@@ -7,7 +7,7 @@ import EmojiPicker from "./emoji-picker";
  * @property {'light' | 'dark' | 'auto'} theme
  * @property {(emoji: import("../types/types").EmojiMartItem) => void} handleSelectEmoji
  * @property {boolean} disableRecent
- * @property {import("emoji-mart").CustomEmoji[]=} customEmojis
+ * @property {any[]=} customEmojis
  * @property {('above' | 'below')=} position
  * @property {import('../types/types').Languages=} language
  */

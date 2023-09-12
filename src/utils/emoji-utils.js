@@ -18,7 +18,7 @@ export function replaceAllTextEmojis(text) {
     allEmojis = [...new Set(allEmojis)]; // remove duplicates
 
     allEmojis.forEach(emoji => {
-      text = replaceAll(text, emoji, getInputEmojiHTML(emoji));
+      text = replaceAll(text, emoji, getInputEmojiHTML('', emoji));
     });
   }
 

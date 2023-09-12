@@ -1,15 +1,17 @@
 {
-    "compilerOptions": {
-        "lib": [
-            "ESNext",
-        ],
-        "declaration": true
-    },
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
-    ],
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["ESNext", "dom", "dom.iterable", "scripthost"],
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "target": "ES6"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules", "**/*.spec.ts", "__mocks__"]
 }

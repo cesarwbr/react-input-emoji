@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-disable react/prop-types */
 // vendors
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
@@ -27,7 +26,7 @@ const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
  * @property {'light' | 'dark' | 'auto'} theme
  * @property {boolean} keepOpened
  * @property {boolean} disableRecent
- * @property {import("emoji-mart").CustomEmoji[]=} customEmojis
+ * @property {any[]=} customEmojis
  * @property {(fn: SanitizeFn) => void} addSanitizeFn
  * @property {(fn: PolluteFn) => void} addPolluteFn
  * @property {(html: string) => void} appendContent

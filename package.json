@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": "cesarwbr/react-input-emoji",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "keywords": [
     "emoji",
     "react",
@@ -23,14 +23,14 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "rollup -c",
+    "build": "tsc && rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "gen:types": "tsc"
   },
   "peerDependencies": {
-    "prop-types": ">=15.7.2",
     "react": ">=17.0.x",
     "react-dom": ">=17.0.x"
   },
