@@ -33,26 +33,26 @@ import { usePollute } from "./hooks/user-pollute";
  * @typedef {object} Props
  * @property {string} value
  * @property {(value: string) => void} onChange
- * @property {"light" | "dark" | "auto"} theme
- * @property {boolean} cleanOnEnter
- * @property {(text: string) => void} onEnter
- * @property {string} placeholder
- * @property {(size: {width: number, height: number}) => void} onResize
- * @property {() => void} onClick
- * @property {() => void} onFocus
+ * @property {"light" | "dark" | "auto"=} theme
+ * @property {boolean=} cleanOnEnter
+ * @property {(text: string) => void=} onEnter
+ * @property {string=} placeholder
+ * @property {(size: {width: number, height: number}) => void=} onResize
+ * @property {() => void=} onClick
+ * @property {() => void=} onFocus
  * @property {() => void=} onBlur
- * @property {boolean} shouldReturn
- * @property {number} maxLength
- * @property {boolean} keepOpened
- * @property {(event: KeyboardEvent) => void} onKeyDown
- * @property {string} inputClass
- * @property {boolean} disableRecent
- * @property {number} tabIndex
- * @property {number} height
- * @property {number} borderRadius
- * @property {string} borderColor
- * @property {number} fontSize
- * @property {string} fontFamily
+ * @property {boolean=} shouldReturn
+ * @property {number=} maxLength
+ * @property {boolean=} keepOpened
+ * @property {(event: KeyboardEvent) => void=} onKeyDown
+ * @property {string=} inputClass
+ * @property {boolean=} disableRecent
+ * @property {number=} tabIndex
+ * @property {number=} height
+ * @property {number=} borderRadius
+ * @property {string=} borderColor
+ * @property {number=} fontSize
+ * @property {string=} fontFamily
  * @property {{id: string; name: string; emojis: {id: string; name: string; keywords: string[], skins: {src: string}[]}}[]=} customEmojis
  * @property {import('./types/types').Languages=} language
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
