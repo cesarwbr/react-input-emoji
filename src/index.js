@@ -6,8 +6,8 @@ import React, { useEffect, useRef, forwardRef, useCallback } from "react";
 import "./styles.css";
 
 // utils
-import { replaceAllTextEmojiToString, replaceAllTextEmojis } from "./utils/emoji-utils";
-import { totalCharacters } from "./utils/input-event-utils";
+import { replaceAllTextEmojis } from "./utils/emoji-utils";
+import { handleCopy, totalCharacters } from "./utils/input-event-utils";
 
 // hooks
 import { useExpose } from "./hooks/use-expose";
@@ -273,27 +273,6 @@ function InputEmoji(props, ref) {
 
     if (textInputRef.current !== null) {
       textInputRef.current.appendContent(html);
-    }
-  }
-
-  /**
-   * Handle copy of current selected text
-   * @param {React.ClipboardEvent} event
-   */
-  function handleCopy(event) {
-    const selection = window.getSelection()
-    if (selection !== null) {
-      let selectedText = ''
-      if (selection.anchorNode && selection.anchorNode.nodeType === Node.ELEMENT_NODE) {
-        // @ts-ignore
-        selectedText = selection.anchorNode.innerHTML
-      } else if (selection.anchorNode && selection.anchorNode.nodeType === Node.TEXT_NODE) {
-        selectedText = selection.anchorNode.textContent ?? ''
-      }
-
-      const text = replaceAllTextEmojiToString(selectedText);
-      event.clipboardData.setData("text", text);
-      event.preventDefault();
     }
   }
 
