@@ -24,6 +24,7 @@ const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
 /**
  * @typedef {Object} Props
  * @property {'light' | 'dark' | 'auto'} theme
+ * @property {'native' | 'apple' | 'facebook' | 'google' | 'twitter'} set
  * @property {boolean} keepOpened
  * @property {boolean} disableRecent
  * @property {any[]=} customEmojis
@@ -40,6 +41,7 @@ const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
 const EmojiPickerWrapper = props => {
   const {
     theme,
+    set,
     keepOpened,
     disableRecent,
     customEmojis,
@@ -106,7 +108,7 @@ const EmojiPickerWrapper = props => {
   }
 
   /**
-   * 
+   *
    * @param {React.MouseEvent} event
    * @return {'above' | 'below'}
    */
@@ -160,6 +162,7 @@ const EmojiPickerWrapper = props => {
           customEmojis={customEmojis}
           position={emojiPickerPosition}
           language={language}
+          set={set}
         />
         <EmojiPickerButton
           showPicker={showPicker}
@@ -180,6 +183,7 @@ const EmojiPickerWrapper = props => {
         customEmojis={customEmojis}
         position={emojiPickerPosition}
         language={language}
+        set={set}
       />
       <EmojiPickerButton
         showPicker={showPicker}
