@@ -27,7 +27,10 @@ function EmojiPickerButton({ showPicker, toggleShowPicker, buttonElement, button
     if (buttonRef && buttonRef.current) {
       buttonRef.current.addEventListener("click", toggleShowPicker);
       setTypeButton("REF");
-      return () => buttonRef.current.removeEventListener("click", toggleShowPicker);
+      return () => {
+        if (!buttonRef.current) return;
+        return buttonRef.current.removeEventListener("click", toggleShowPicker);
+      }
     }
     else if ((buttonElement?.childNodes?.length ?? 0) >= 2) {
       localButtonRef.current.appendChild(buttonElement?.childNodes[0]);
