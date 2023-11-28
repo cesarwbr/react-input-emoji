@@ -83,6 +83,7 @@ const ExampleInput = () => {
       onFocus={() => {
         console.log('on focus')
       }}
+      spriteSheetURL={'/assets/images/64.png'}
     />
   );
 };

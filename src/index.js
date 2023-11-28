@@ -55,6 +55,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {string=} fontFamily
  * @property {{id: string; name: string; emojis: {id: string; name: string; keywords: string[], skins: {src: string}[]}}[]=} customEmojis
  * @property {import('./types/types').Languages=} language
+ * @property {string} spriteSheetURL
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
  * @property {HTMLDivElement=} buttonElement
  * @property {React.MutableRefObject=} buttonRef
@@ -87,6 +88,7 @@ function InputEmoji(props, ref) {
     value,
     customEmojis,
     language,
+    spriteSheetURL,
     searchMention,
     buttonElement,
     buttonRef,
@@ -118,7 +120,7 @@ function InputEmoji(props, ref) {
 
   const setValue = useCallback(
     /**
-     * 
+     *
      * @param {string} value
      */
     (value) => {
@@ -332,6 +334,7 @@ function InputEmoji(props, ref) {
         buttonElement={buttonElement}
         buttonRef={buttonRef}
         language={language}
+        spriteSheetURL={spriteSheetURL}
       />
     </div>
   );

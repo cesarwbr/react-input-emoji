@@ -9,6 +9,7 @@ import Picker from "@emoji-mart/react";
  * @property {boolean} disableRecent
  * @property {any[]=} customEmojis
  * @property {import('../types/types').Languages=} language
+ * @property {string} spriteSheetURL
  */
 
 /**
@@ -16,7 +17,7 @@ import Picker from "@emoji-mart/react";
  * @param {Props} props
  */
 function EmojiPicker(props) {
-  const { theme, onSelectEmoji, disableRecent, customEmojis, language } = props;
+  const { theme, onSelectEmoji, disableRecent, customEmojis, language,spriteSheetURL } = props;
 
   /** @type {string[]} */
   const categories = useMemo(() => {
@@ -60,6 +61,11 @@ function EmojiPicker(props) {
       categories={categories}
       set="apple"
       i18n={i18n}
+      getSpritesheetURL={
+        spriteSheetURL ? () => {
+          return process.env.PUBLIC_URL+ spriteSheetURL;
+        } : null
+      }
     />
   );
 }
