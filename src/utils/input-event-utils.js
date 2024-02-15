@@ -3,7 +3,7 @@
 import {
   getImageEmoji,
   replaceAllTextEmojis,
-  replaceAllTextEmojiToString
+  replaceAllTextEmojiToString,
 } from "./emoji-utils";
 
 /**
@@ -14,7 +14,7 @@ export function handleCopy(event) {
   const selectedText = window.getSelection();
 
   if (selectedText === null) {
-    return
+    return;
   }
 
   let container = document.createElement("div");
@@ -40,7 +40,7 @@ export function handlePasteHtmlAtCaret(html) {
     // IE9 and non-IE
     sel = window.getSelection();
 
-    if (sel === null) return
+    if (sel === null) return;
 
     if (sel.getRangeAt && sel.rangeCount) {
       range = sel.getRangeAt(0);
@@ -78,7 +78,7 @@ export function handlePasteHtmlAtCaret(html) {
 function replaceEmojiToString(container) {
   const images = Array.prototype.slice.call(container.querySelectorAll("img"));
 
-  images.forEach(image => {
+  images.forEach((image) => {
     image.outerHTML = image.dataset.emoji;
   });
 
@@ -132,7 +132,7 @@ export function handleSelectEmoji({
   textInputRef,
   keepOpened,
   toggleShowPicker,
-  maxLength
+  maxLength,
 }) {
   if (
     typeof maxLength !== "undefined" &&
@@ -173,9 +173,9 @@ export function handleKeyup(
   emitChange,
   onKeyDownMention,
   cleanedTextRef,
-  textInputRef
+  textInputRef,
 ) {
-  return event => {
+  return (event) => {
     const text = replaceAllTextEmojiToString(textInputRef.current.innerHTML);
     cleanedTextRef.current = text;
     emitChange();
@@ -189,7 +189,7 @@ export function handleKeyup(
  * @return {function(FocusEvent): void}
  */
 export function handleFocus(onFocus) {
-  return event => {
+  return (event) => {
     onFocus(event);
   };
 }
@@ -199,41 +199,110 @@ export function handleFocus(onFocus) {
  * @param {React.MutableRefObject<HTMLDivElement| null>} input
  */
 export function moveCaretToEnd(input) {
-  let range
-  let selection
-  if(document.createRange && input.current) {
-      range = document.createRange()
-      range.selectNodeContents(input.current)
-      range.collapse(false)
-      selection = window.getSelection()
-      if(selection) {
-        selection.removeAllRanges()
-        selection.addRange(range)
-      }
+  let range;
+  let selection;
+  if (document.createRange && input.current) {
+    range = document.createRange();
+    range.selectNodeContents(input.current);
+    range.collapse(false);
+    selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   }
 }
 /**
- * 
- * @param {HTMLDivElement} inputDiv 
+ *
+ * @param {HTMLDivElement} inputDiv
  * @return {string}
  */
 export function removeHtmlExceptBr(inputDiv) {
-  const temp = inputDiv.innerHTML.replace(/<br\s*\/?>/gi, '[BR]'); // temporarily replace <br> with placeholder
-  const stripped = temp.replace(/<[^>]+>/g, ''); // strip all html tags
-  const final = stripped.replace(/\[BR\]/gi, '</br>'); // replace placeholders with <br>
+  const temp = inputDiv.innerHTML.replace(/<br\s*\/?>/gi, "[BR]"); // temporarily replace <br> with placeholder
+  const stripped = temp.replace(/<[^>]+>/g, ""); // strip all html tags
+  const final = stripped.replace(/\[BR\]/gi, "</br>"); // replace placeholders with <br>
   return final;
 }
 
 /**
  * 
+ * @param {*} range 
+ * @returns 
  */
-export function addLineBreak() {
+export function getSelectionStart(range) {
+  let node = range.startContainer;
+  let offset = range.startOffset;
+
+  // Handle cases where the selection start node is not a text node
+  if (node.nodeType !== Node.TEXT_NODE) {
+    while (node.nodeType !== Node.TEXT_NODE) {
+      node = node.nextSibling;
+      if (!node) break;
+    }
+    if (!node) {
+      node = range.commonAncestorContainer;
+      while (node.nodeType !== Node.TEXT_NODE) {
+        node = node.firstChild;
+      }
+    }
+    offset = 0;
+  }
+
+  return { node, offset };
+}
+
+/**
+ * 
+ * @returns {Object} cursor
+ */
+export function getCursor() {
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
-  const br = document.createElement('br');
-  range.insertNode(br);
-  range.setStartAfter(br);
-  range.setEndAfter(br);
-  selection.removeAllRanges();
-  selection.addRange(range);
+  const selectionStart = getSelectionStart(range);
+
+  return  {selection, range, selectionStart}
+}
+
+/**
+ *
+ */
+export function addLineBreak() {
+  const { selection, range, selectionStart } = getCursor()
+
+  // If cursor is at the end of the text content, add one more line break
+  if (
+    selection.isCollapsed &&
+    selectionStart.offset === selectionStart.node.textContent.length
+  ) {
+    const br = document.createElement("br");
+    range.insertNode(br);
+    range.setStartAfter(br);
+    range.setEndAfter(br);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    const br2 = document.createElement("br");
+    range.insertNode(br2);
+    range.setStartAfter(br2);
+    range.setEndAfter(br2);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  } else {
+    const br = document.createElement("br");
+    range.insertNode(br);
+    range.setStartAfter(br);
+    range.setEndAfter(br);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    // Set cursor position right before the first letter after the line break
+    if (
+      selectionStart.node.nextSibling &&
+      selectionStart.node.nextSibling.nodeType === Node.TEXT_NODE
+    ) {
+      range.setStart(selectionStart.node.nextSibling, 1);
+      range.setEnd(selectionStart.node.nextSibling, 1);
+    }
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
 }
