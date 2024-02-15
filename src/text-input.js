@@ -1,7 +1,7 @@
 // @ts-check
 // vendors
 import React, { useImperativeHandle, forwardRef, useRef } from "react";
-import { handlePasteHtmlAtCaret, moveCaretToEnd } from "./utils/input-event-utils";
+import { addLineBreak, handlePasteHtmlAtCaret, moveCaretToEnd } from "./utils/input-event-utils";
 import { replaceAllTextEmojiToString } from "./utils/emoji-utils";
 
 /**
@@ -123,7 +123,7 @@ const TextInput = (
     if (event.key === "Enter" && (event.shiftKey === true || event.ctrlKey === true) && props.shouldReturn) {
       event.preventDefault();
       if(textInputRef.current) {
-        textInputRef.current.innerHTML = `${textInputRef.current.innerHTML}</br></br>`
+        addLineBreak()
         moveCaretToEnd(textInputRef)
         return;
       }

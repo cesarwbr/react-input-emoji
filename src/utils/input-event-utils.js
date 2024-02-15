@@ -223,3 +223,17 @@ export function removeHtmlExceptBr(inputDiv) {
   const final = stripped.replace(/\[BR\]/gi, '</br>'); // replace placeholders with <br>
   return final;
 }
+
+/**
+ * 
+ */
+export function addLineBreak() {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const br = document.createElement('br');
+  range.insertNode(br);
+  range.setStartAfter(br);
+  range.setEndAfter(br);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
