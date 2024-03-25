@@ -1,10 +1,32 @@
 {
   "files": {
-    "main.js": "/react-input-emoji/static/js/main.0630d9ae.js",
+    "main.js": "/react-input-emoji/static/js/main.a2ef1bfd.js",
+    "static/js/572.a332f1ce.chunk.js": "/react-input-emoji/static/js/572.a332f1ce.chunk.js",
+    "static/js/659.5c640d43.chunk.js": "/react-input-emoji/static/js/659.5c640d43.chunk.js",
+    "static/js/267.7e3645bf.chunk.js": "/react-input-emoji/static/js/267.7e3645bf.chunk.js",
+    "static/js/192.4db8547f.chunk.js": "/react-input-emoji/static/js/192.4db8547f.chunk.js",
+    "static/js/825.d97df63f.chunk.js": "/react-input-emoji/static/js/825.d97df63f.chunk.js",
+    "static/js/902.837d672d.chunk.js": "/react-input-emoji/static/js/902.837d672d.chunk.js",
+    "static/js/39.b0bd9081.chunk.js": "/react-input-emoji/static/js/39.b0bd9081.chunk.js",
+    "static/js/89.0b9c9a7e.chunk.js": "/react-input-emoji/static/js/89.0b9c9a7e.chunk.js",
+    "static/js/877.d6b331c6.chunk.js": "/react-input-emoji/static/js/877.d6b331c6.chunk.js",
+    "static/js/622.4de9b32f.chunk.js": "/react-input-emoji/static/js/622.4de9b32f.chunk.js",
+    "static/js/858.2bd0749b.chunk.js": "/react-input-emoji/static/js/858.2bd0749b.chunk.js",
+    "static/js/275.dbac9b87.chunk.js": "/react-input-emoji/static/js/275.dbac9b87.chunk.js",
+    "static/js/323.fae2d630.chunk.js": "/react-input-emoji/static/js/323.fae2d630.chunk.js",
+    "static/js/284.cd8bd01e.chunk.js": "/react-input-emoji/static/js/284.cd8bd01e.chunk.js",
+    "static/js/194.c8fa4208.chunk.js": "/react-input-emoji/static/js/194.c8fa4208.chunk.js",
+    "static/js/787.f6ebf380.chunk.js": "/react-input-emoji/static/js/787.f6ebf380.chunk.js",
+    "static/js/395.c13fad74.chunk.js": "/react-input-emoji/static/js/395.c13fad74.chunk.js",
+    "static/js/157.a25f3cf4.chunk.js": "/react-input-emoji/static/js/157.a25f3cf4.chunk.js",
+    "static/js/413.c70b5894.chunk.js": "/react-input-emoji/static/js/413.c70b5894.chunk.js",
+    "static/js/143.acae5ff0.chunk.js": "/react-input-emoji/static/js/143.acae5ff0.chunk.js",
+    "static/js/493.fb63d149.chunk.js": "/react-input-emoji/static/js/493.fb63d149.chunk.js",
+    "static/js/417.da9fc980.chunk.js": "/react-input-emoji/static/js/417.da9fc980.chunk.js",
     "index.html": "/react-input-emoji/index.html",
-    "main.0630d9ae.js.map": "/react-input-emoji/static/js/main.0630d9ae.js.map"
+    "main.a2ef1bfd.js.map": "/react-input-emoji/static/js/main.a2ef1bfd.js.map"
   },
   "entrypoints": [
-    "static/js/main.0630d9ae.js"
+    "static/js/main.a2ef1bfd.js"
   ]
 }
