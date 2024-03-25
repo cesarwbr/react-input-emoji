@@ -57,8 +57,5 @@ export function replaceAllHtmlToString(html, shouldReturn) {
   // remove all ↵ for safari
   text = text.replace(/\n/gi, "");
 
-  const tempContainer = document.createElement("div");
-  tempContainer.innerHTML = text;
-
-  return tempContainer.innerText || "";
+  return text;
 }

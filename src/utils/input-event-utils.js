@@ -218,9 +218,11 @@ export function moveCaretToEnd(input) {
  * @return {string}
  */
 export function removeHtmlExceptBr(inputDiv) {
-  const temp = inputDiv.innerHTML.replace(/<br\s*\/?>/gi, "[BR]"); // temporarily replace <br> with placeholder
-  const stripped = temp.replace(/<[^>]+>/g, ""); // strip all html tags
-  const final = stripped.replace(/\[BR\]/gi, "</br>"); // replace placeholders with <br>
+  const temp = inputDiv.innerHTML.replaceAll(/<br\s*\/?>/gi, "[BR]"); // temporarily replace <br> with placeholder
+  const tempContainer = document.createElement("div");
+  tempContainer.innerHTML = temp;
+  const stripped = tempContainer.innerText; // strip all html tags
+  const final = stripped.replaceAll(/\[BR\]/gi, "</br>"); // replace placeholders with <br>
   return final;
 }
 
@@ -253,7 +255,7 @@ export function getSelectionStart(range) {
 
 /**
  * 
- * @returns {Object} cursor
+ * @return {Object} cursor
  */
 export function getCursor() {
   const selection = window.getSelection();
