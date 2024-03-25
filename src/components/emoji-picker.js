@@ -67,6 +67,11 @@ function EmojiPicker(props) {
       return;
     }
 
+    if (cacheI18n[language]) {
+      setI18n(cacheI18n[language]);
+      return;
+    }
+
     // @ts-ignore
     fetch(`${EMOJI_MART_DATA_URL}/i18n/${language}.json`)
       .then(async data => {
