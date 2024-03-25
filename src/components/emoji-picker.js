@@ -2,6 +2,9 @@
 import React, { memo, useEffect, useMemo, useState } from "react";
 import Picker from "@emoji-mart/react";
 
+const EMOJI_MART_DATA_URL = "https://cdn.jsdelivr.net/npm/@emoji-mart/data";
+const cacheI18n = {};
+
 /**
  * @typedef {object} Props
  * @property {'light' | 'dark' | 'auto'} theme
@@ -46,11 +49,17 @@ function EmojiPicker(props) {
 
   useEffect(() => {
     if (!language) {
+      if (cacheI18n.en) {
+        setI18n(cacheI18n.en);
+        return;
+      }
+
       // @ts-ignore
-      fetch(`https://cdn.jsdelivr.net/npm/@emoji-mart/data/i18n/en.json`)
+      fetch(`${EMOJI_MART_DATA_URL}/i18n/en.json`)
       .then(async data => {
         const translations = await data.json();
         setI18n(translations);
+        cacheI18n.en = translations;
       })
       .catch(error => {
         console.error("Failed to load translations:", error);
@@ -59,10 +68,11 @@ function EmojiPicker(props) {
     }
 
     // @ts-ignore
-    fetch(`https://cdn.jsdelivr.net/npm/@emoji-mart/data/i18n/${language}.json`)
+    fetch(`${EMOJI_MART_DATA_URL}/i18n/${language}.json`)
       .then(async data => {
         const translations = await data.json();
         setI18n(translations);
+        cacheI18n[language] = translations;
       })
       .catch(error => {
         console.error("Failed to load translations:", error);

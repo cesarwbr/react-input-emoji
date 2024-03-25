@@ -72,7 +72,6 @@ const ExampleInput = () => {
       onEnter={text => {
         console.log("enter", text);
       }}
-      language="fr"
       placeholder="Type a message"
       keepOpened
       disableRecent
