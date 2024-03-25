@@ -47,8 +47,9 @@ function EmojiPicker(props) {
   useEffect(() => {
     if (!language) {
       // @ts-ignore
-      import(`@emoji-mart/data/i18n/en.json`)
-      .then(translations => {
+      fetch(`https://cdn.jsdelivr.net/npm/@emoji-mart/data/i18n/en.json`)
+      .then(async data => {
+        const translations = await data.json();
         setI18n(translations);
       })
       .catch(error => {
@@ -58,8 +59,9 @@ function EmojiPicker(props) {
     }
 
     // @ts-ignore
-    import(`@emoji-mart/data/i18n/${language}.json`)
-      .then(translations => {
+    fetch(`https://cdn.jsdelivr.net/npm/@emoji-mart/data/i18n/${language}.json`)
+      .then(async data => {
+        const translations = await data.json();
         setI18n(translations);
       })
       .catch(error => {
