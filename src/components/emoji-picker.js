@@ -1,5 +1,5 @@
 // vendors
-import React, { memo, useMemo } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import Picker from "@emoji-mart/react";
 
 /**
@@ -42,13 +42,34 @@ function EmojiPicker(props) {
     return categoryies;
   }, [disableRecent]);
 
-  const i18n = useMemo(() => {
+  const [i18n, setI18n] = useState(undefined);
+
+  useEffect(() => {
     if (!language) {
-      return undefined
+      // @ts-ignore
+      import(`@emoji-mart/data/i18n/en.json`)
+      .then(translations => {
+        setI18n(translations);
+      })
+      .catch(error => {
+        console.error("Failed to load translations:", error);
+      });
+      return;
     }
 
-    return require(`@emoji-mart/data/i18n/${language ?? 'en'}.json`)
-  }, [language])
+    // @ts-ignore
+    import(`@emoji-mart/data/i18n/${language}.json`)
+      .then(translations => {
+        setI18n(translations);
+      })
+      .catch(error => {
+        console.error("Failed to load translations:", error);
+      });
+  }, [language]);
+
+  if (!i18n) {
+    return null;
+  }
 
   return (
     <Picker
