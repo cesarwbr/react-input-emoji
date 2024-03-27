@@ -15,21 +15,30 @@ import React, { useEffect, useRef, useState } from "react";
  * @return {JSX.Element}
  */
 function EmojiPickerButton({ showPicker, toggleShowPicker, buttonElement, buttonRef }) {
-  
+  const [typeButton, setTypeButton] = useState(/** @type {"OWN" | "REF" | "CUSTOM_CONTENT" | "IDLE"} */ "IDLE");
   const localButtonRef = useRef(null);
-  const [showCustomButtonContent, setShowCustomButtonContent] = useState(false);
 
   useEffect(() => {
-    if ((buttonRef?.current?.childNodes?.length ?? 0) > 2) {
-      localButtonRef.current.appendChild(buttonRef.current.childNodes[0]);
-      setShowCustomButtonContent(true);
-    } else if ((buttonElement?.childNodes?.length ?? 0) > 2) {
-      localButtonRef.current.appendChild(buttonElement?.childNodes[0]);
-      setShowCustomButtonContent(true);
+    if (!buttonRef && !buttonElement) {
+      setTypeButton("OWN");
+      return;
     }
-  }, [buttonElement?.childNodes]);
 
-  return (
+    if (buttonRef && buttonRef.current) {
+      buttonRef.current.addEventListener("click", toggleShowPicker);
+      setTypeButton("REF");
+      return () => {
+        if (!buttonRef.current) return;
+        return buttonRef.current.removeEventListener("click", toggleShowPicker);
+      }
+    }
+    else if ((buttonElement?.childNodes?.length ?? 0) >= 2) {
+      localButtonRef.current.appendChild(buttonElement?.childNodes[0]);
+      setTypeButton("CUSTOM_CONTENT");
+    }
+  }, [buttonRef, buttonElement, buttonElement?.childNodes])
+
+  return ( typeButton !== "IDLE" && typeButton !== "REF" &&
     <button
       ref={localButtonRef}
       type="button"
@@ -38,7 +47,7 @@ function EmojiPickerButton({ showPicker, toggleShowPicker, buttonElement, button
       }`}
       onClick={toggleShowPicker}
     >
-      {!showCustomButtonContent && (
+      {typeButton === "OWN" && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
