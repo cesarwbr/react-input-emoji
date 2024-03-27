@@ -14,7 +14,7 @@
   min-height: 20px;
   min-width: 0;
   outline: none;
-  width: inherit;
+  width: 100%;
   will-change: width;
   vertical-align: baseline;
   border: 1px solid #eaeaea;
