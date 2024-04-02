@@ -1,6 +1,6 @@
 {
   "name": "react-input-emoji",
-  "version": "5.6.11",
+  "version": "5.7.0",
   "description": "A React input with an option to add an emoji with language support.",
   "homepage": "https://cesarwbr.github.io/react-input-emoji/",
   "author": "cesarwbr",

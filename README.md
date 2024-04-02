@@ -60,6 +60,7 @@ export default function Example() {
 
 | Prop               | Type                     | Default          | Description                                                                                                              |
 | ------------------ | ------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `background`       | string                   | "white"          | Specifies the background color of the input element. Accepts any valid CSS color value.                                  |
 | `borderColor`      | string                   | "#EAEAEA"        | Specifies the border color of the input container. Accepts any valid CSS color value.                                    |
 | `borderRadius`     | number                   | 21               | Determines the border radius of the input container in pixels. Higher values result in more rounded corners.             |
 | `buttonElement`    | HTMLElement              | -                | Allows you to provide a custom HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
@@ -77,6 +78,7 @@ export default function Example() {
 | `onFocus`          | function                 | -                | A callback function that is invoked when the input element receives focus.                                               |
 | `onResize`         | function                 | -                | A callback function that is invoked when the width or height of the input element changes. It receives the current size value as its argument. |
 | `placeholder`      | string                   | "Type a message" | Specifies the placeholder text to be displayed when the input is empty.                                                  |
+| `placeholderColor` | string                   | "#C4C4C4"        | Specifies the color of the placeholder text. Accepts any valid CSS color value.                                          |
 | `shouldReturn`     | boolean                  | -                | When set to true, allows the user to create a new line using the `Shift + Enter` or `Ctrl + Enter` keyboard shortcuts.   |
 | `theme`            | string                   | -                | Specifies the theme for the emoji picker popup. Available values: "light", "dark", "auto".                               |
 | `value`            | string                   | ""               | The current value of the input element.                                                                                  |

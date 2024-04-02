@@ -1,6 +1,6 @@
 // @ts-check
 // vendors
-import React, { useImperativeHandle, forwardRef, useRef } from "react";
+import React, { useImperativeHandle, forwardRef, useRef, useMemo } from "react";
 import { addLineBreak, handlePasteHtmlAtCaret } from "./utils/input-event-utils";
 import { replaceAllTextEmojiToString } from "./utils/emoji-utils";
 
@@ -18,7 +18,7 @@ import { replaceAllTextEmojiToString } from "./utils/emoji-utils";
  * @property {(event: React.ClipboardEvent) => void} onCopy
  * @property {(event: React.ClipboardEvent) => void} onPaste
  * @property {string} placeholder
- * @property {React.CSSProperties} style
+ * @property {{borderRadius?: number; borderColor?: string; fontSize?: number; fontFamily?: string; background: string; placeholderColor?: string;}} style
  * @property {number} tabIndex
  * @property {string} className
  * @property {(html: string) => void} onChange
@@ -110,6 +110,17 @@ const TextInput = (
     }
   }));
 
+  /** @type {React.CSSProperties} */
+  const placeholderStyle = useMemo(() => {
+    const placeholderStyle = {}
+
+    if (style.placeholderColor) {
+      placeholderStyle.color = style.placeholderColor
+    }
+
+    return placeholderStyle
+  }, [style.placeholderColor])
+
   /** @type {React.MutableRefObject<HTMLDivElement | null>} */
   const placeholderRef = useRef(null);
   /** @type {React.MutableRefObject<HTMLDivElement | null>} */
@@ -173,7 +184,7 @@ const TextInput = (
   return (
     <div className="react-input-emoji--container" style={style}>
       <div className="react-input-emoji--wrapper" onClick={handleClick}>
-        <div ref={placeholderRef} className="react-input-emoji--placeholder">
+        <div ref={placeholderRef} className="react-input-emoji--placeholder" style={placeholderStyle}>
           {placeholder}
         </div>
         <div

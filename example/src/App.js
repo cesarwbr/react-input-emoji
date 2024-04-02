@@ -149,6 +149,15 @@ export default function App() {
           <tbody>
             <TableTr>
               <TableTd>
+                <Code>background</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to <Code inline>white</Code>. The background color of the
+                input element.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
                 <Code>borderColor</Code>
               </TableTd>
               <TableTd>
@@ -292,6 +301,14 @@ export default function App() {
               <TableTd>
                 Defaults to &quot;Type a message&quot;. Set the placeholder of
                 the input.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
+                <Code>placeholderColor</Code>
+              </TableTd>
+              <TableTd>
+                Set the color of the placeholder text.
               </TableTd>
             </TableTr>
             <TableTr>

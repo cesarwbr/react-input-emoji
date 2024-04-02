@@ -37,6 +37,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {boolean=} cleanOnEnter
  * @property {(text: string) => void=} onEnter
  * @property {string=} placeholder
+ * @property {string=} placeholderColor
  * @property {(size: {width: number, height: number}) => void=} onResize
  * @property {() => void=} onClick
  * @property {() => void=} onFocus
@@ -53,6 +54,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {string=} borderColor
  * @property {number=} fontSize
  * @property {string=} fontFamily
+ * @property {string=} background
  * @property {{id: string; name: string; emojis: {id: string; name: string; keywords: string[], skins: {src: string}[]}}[]=} customEmojis
  * @property {import('./types/types').Languages=} language
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
@@ -95,6 +97,8 @@ function InputEmoji(props, ref) {
     borderColor,
     fontSize,
     fontFamily,
+    background,
+    placeholderColor,
   } = props;
 
   /** @type {React.MutableRefObject<import('./text-input').Ref | null>} */
@@ -315,7 +319,9 @@ function InputEmoji(props, ref) {
           borderRadius,
           borderColor,
           fontSize,
-          fontFamily
+          fontFamily,
+          background,
+          placeholderColor
         }}
         tabIndex={tabIndex}
         className={inputClass}
@@ -347,6 +353,7 @@ InputEmojiWithRef.defaultProps = {
   borderColor: "#EAEAEA",
   fontSize: 15,
   fontFamily: "sans-serif",
+  background: "white",
   tabIndex: 0,
   shouldReturn: false,
   customEmojis: [],
