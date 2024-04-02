@@ -197,6 +197,14 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
+                <Code>color</Code>
+              </TableTd>
+              <TableTd>
+                Set the color of the input text.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
                 <Code>fontSize</Code>
               </TableTd>
               <TableTd>

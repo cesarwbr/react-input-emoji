@@ -38,6 +38,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {(text: string) => void=} onEnter
  * @property {string=} placeholder
  * @property {string=} placeholderColor
+ * @property {string=} color
  * @property {(size: {width: number, height: number}) => void=} onResize
  * @property {() => void=} onClick
  * @property {() => void=} onFocus
@@ -99,6 +100,7 @@ function InputEmoji(props, ref) {
     fontFamily,
     background,
     placeholderColor,
+    color,
   } = props;
 
   /** @type {React.MutableRefObject<import('./text-input').Ref | null>} */
@@ -321,7 +323,8 @@ function InputEmoji(props, ref) {
           fontSize,
           fontFamily,
           background,
-          placeholderColor
+          placeholderColor,
+          color
         }}
         tabIndex={tabIndex}
         className={inputClass}
@@ -351,6 +354,7 @@ InputEmojiWithRef.defaultProps = {
   placeholder: "Type a message",
   borderRadius: 21,
   borderColor: "#EAEAEA",
+  color: "black",
   fontSize: 15,
   fontFamily: "sans-serif",
   background: "white",

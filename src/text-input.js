@@ -18,7 +18,7 @@ import { replaceAllTextEmojiToString } from "./utils/emoji-utils";
  * @property {(event: React.ClipboardEvent) => void} onCopy
  * @property {(event: React.ClipboardEvent) => void} onPaste
  * @property {string} placeholder
- * @property {{borderRadius?: number; borderColor?: string; fontSize?: number; fontFamily?: string; background: string; placeholderColor?: string;}} style
+ * @property {{borderRadius?: number; color?: string; borderColor?: string; fontSize?: number; fontFamily?: string; background: string; placeholderColor?: string;}} style
  * @property {number} tabIndex
  * @property {string} className
  * @property {(html: string) => void} onChange
@@ -119,7 +119,18 @@ const TextInput = (
     }
 
     return placeholderStyle
-  }, [style.placeholderColor])
+  }, [style?.placeholderColor])
+
+  /** @type {React.CSSProperties} */
+  const inputStyle = useMemo(() => {
+    const inputStyle = {}
+
+    if (style.color) {
+      inputStyle.color = style.color
+    }
+
+    return inputStyle
+  }, [style?.color])
 
   /** @type {React.MutableRefObject<HTMLDivElement | null>} */
   const placeholderRef = useRef(null);
@@ -199,6 +210,7 @@ const TextInput = (
           onCopy={props.onCopy}
           onPaste={props.onPaste}
           data-testid="react-input-emoji--input"
+          style={inputStyle}
         />
       </div>
     </div>

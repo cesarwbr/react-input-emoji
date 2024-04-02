@@ -66,6 +66,7 @@ export default function Example() {
 | `buttonElement`    | HTMLElement              | -                | Allows you to provide a custom HTMLElement that, when clicked, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
 | `buttonRef`        | React.MutableRefObject   | -                | Accepts a React mutable ref object that, when referenced, triggers the emoji picker. If this prop is provided, the default emoji picker button is removed. |
 | `cleanOnEnter`     | boolean                  | false            | When set to true, the input value will be cleared after the user presses the Enter key.                                  |
+| `color`            | string                   | "black"          | Specifies the color of the input text. Accepts any valid CSS color value.                                                |
 | `fontSize`         | number                   | 15               | Controls the font size (in pixels) of the placeholder text and input value.                                              |
 | `fontFamily`       | string                   | "sans-serif"     | Specifies the font family for the placeholder text and input value. Accepts any valid CSS font-family value.             |
 | `height`           | number                   | 40               | Sets the total height (in pixels) of the area in which the input element is rendered.                                    |
