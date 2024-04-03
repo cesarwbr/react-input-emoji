@@ -9,14 +9,15 @@ import { useSanitize } from "./use-sanitize";
  * @property {React.MutableRefObject<import('../text-input').Ref | null>} textInputRef
  * @property {(value: string) => void} setValue
  * @property {() => void} emitChange
+ * @property {boolean=} shouldConvertEmojiToImage
  */
 
 /**
  *
  * @param {Props} props
  */
-export function useExpose({ ref, textInputRef, setValue, emitChange }) {
-  const { sanitize, sanitizedTextRef } = useSanitize(false);
+export function useExpose({ ref, textInputRef, setValue, emitChange, shouldConvertEmojiToImage }) {
+  const { sanitize, sanitizedTextRef } = useSanitize(false, shouldConvertEmojiToImage);
 
   useImperativeHandle(ref, () => ({
     get value() {

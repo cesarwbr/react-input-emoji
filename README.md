@@ -80,6 +80,7 @@ export default function Example() {
 | `onResize`         | function                 | -                | A callback function that is invoked when the width or height of the input element changes. It receives the current size value as its argument. |
 | `placeholder`      | string                   | "Type a message" | Specifies the placeholder text to be displayed when the input is empty.                                                  |
 | `placeholderColor` | string                   | "#C4C4C4"        | Specifies the color of the placeholder text. Accepts any valid CSS color value.                                          |
+| `shouldConvertEmojiToImage` | boolean        | false            | When set to true, emojis in the input value will be converted to images.                                                  |
 | `shouldReturn`     | boolean                  | -                | When set to true, allows the user to create a new line using the `Shift + Enter` or `Ctrl + Enter` keyboard shortcuts.   |
 | `theme`            | string                   | -                | Specifies the theme for the emoji picker popup. Available values: "light", "dark", "auto".                               |
 | `value`            | string                   | ""               | The current value of the input element.                                                                                  |

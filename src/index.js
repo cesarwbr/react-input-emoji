@@ -43,7 +43,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {() => void=} onClick
  * @property {() => void=} onFocus
  * @property {() => void=} onBlur
- * @property {boolean=} shouldReturn
+ * @property {boolean} shouldReturn
  * @property {number=} maxLength
  * @property {boolean=} keepOpened
  * @property {(event: KeyboardEvent) => void=} onKeyDown
@@ -61,6 +61,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {(text: string) => Promise<MetionUser[]>=} searchMention
  * @property {HTMLDivElement=} buttonElement
  * @property {React.MutableRefObject=} buttonRef
+ * @property {boolean} shouldConvertEmojiToImage
  */
 
 /**
@@ -73,7 +74,6 @@ function InputEmoji(props, ref) {
   const {
     onChange,
     onEnter,
-    shouldReturn,
     onResize,
     onClick,
     onFocus,
@@ -93,6 +93,8 @@ function InputEmoji(props, ref) {
     searchMention,
     buttonElement,
     buttonRef,
+    shouldReturn,
+    shouldConvertEmojiToImage,
     // style
     borderRadius,
     borderColor,
@@ -108,7 +110,7 @@ function InputEmoji(props, ref) {
 
   const { addEventListener, listeners } = useEventListeners();
 
-  const { addSanitizeFn, sanitize, sanitizedTextRef } = useSanitize(props.shouldReturn);
+  const { addSanitizeFn, sanitize, sanitizedTextRef } = useSanitize(shouldReturn, shouldConvertEmojiToImage);
 
   const { addPolluteFn, pollute } = usePollute();
 
@@ -139,7 +141,8 @@ function InputEmoji(props, ref) {
     ref,
     setValue,
     textInputRef,
-    emitChange
+    emitChange,
+    shouldConvertEmojiToImage
   });
 
   useEffect(() => {
@@ -360,6 +363,7 @@ InputEmojiWithRef.defaultProps = {
   background: "white",
   tabIndex: 0,
   shouldReturn: false,
+  shouldConvertEmojiToImage: false,
   customEmojis: [],
   language: undefined,
 };

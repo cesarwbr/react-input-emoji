@@ -329,6 +329,14 @@ export default function App() {
             </TableTr>
             <TableTr>
               <TableTd>
+                <Code>shouldConvertEmojiToImage</Code>
+              </TableTd>
+              <TableTd>
+                Defaults to false. If set to true, emojis will be converted to images in the result.
+              </TableTd>
+            </TableTr>
+            <TableTr>
+              <TableTd>
                 <Code>value</Code>
               </TableTd>
               <TableTd>The input value.</TableTd>

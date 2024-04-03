@@ -78,6 +78,7 @@
   "dependencies": {
     "@emoji-mart/data": "1.1.2",
     "@emoji-mart/react": "1.1.1",
-    "emoji-mart": "5.5.2"
+    "emoji-mart": "5.5.2",
+    "react-easy-emoji": "^1.8.1"
   }
 }
