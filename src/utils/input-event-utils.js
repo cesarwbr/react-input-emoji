@@ -29,9 +29,30 @@ export function handleCopy(event) {
   event.preventDefault();
 }
 
+/** @type {Range|undefined} */
+/** @type {Range|undefined} */
+let currentRangeCached;
+
 /**
- *
- * @param {string} html
+ * Caches the current text selection range
+ */
+export function cacheCurrentRange() {
+  const selection = window.getSelection();
+  if (!selection.rangeCount || (selection?.anchorNode['className'] !== 'react-input-emoji--input' && selection.anchorNode.parentNode['className'] !== 'react-input-emoji--input')) return;
+  const range = selection.getRangeAt(0);
+
+  currentRangeCached = range.cloneRange();
+}
+
+/**
+ * Clears the cached text selection range
+ */
+export function cleanCurrentRange() {
+  currentRangeCached = undefined;
+}
+
+/**
+ * @param {string} html - HTML string to be pasted at the caret position
  */
 export function handlePasteHtmlAtCaret(html) {
   let sel;
@@ -43,7 +64,7 @@ export function handlePasteHtmlAtCaret(html) {
     if (sel === null) return;
 
     if (sel.getRangeAt && sel.rangeCount) {
-      range = sel.getRangeAt(0);
+      range = currentRangeCached ?? sel.getRangeAt(0);
       range.deleteContents();
 
       // Range.createContextualFragment() would be useful here but is
@@ -61,6 +82,7 @@ export function handlePasteHtmlAtCaret(html) {
       // Preserve the selection
       if (lastNode) {
         range = range.cloneRange();
+        currentRangeCached = range
         range.setStartAfter(lastNode);
         range.collapse(true);
         sel.removeAllRanges();

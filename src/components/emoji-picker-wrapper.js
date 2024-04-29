@@ -10,6 +10,7 @@ import {
 
 import EmojiPickerButton from "./emoji-picker-button";
 import EmojiPickerContainer from "./emoji-picker-container";
+import { cacheCurrentRange } from "../utils/input-event-utils";
 
 const EMOJI_PICKER_CONTAINER_HEIGHT = 435;
 
@@ -56,6 +57,12 @@ const EmojiPickerWrapper = props => {
   const [customButton, setCustomButton] = useState();
   /** @type {['above' | 'below' | undefined, React.Dispatch<React.SetStateAction<'above' | 'below' | undefined>>]} */
   const [emojiPickerPosition, setEmojiPickerPosition] = useState()
+
+  useEffect(() => {
+    if (showPicker) {
+      cacheCurrentRange()
+    }
+  }, [showPicker])
 
   useEffect(() => {
     addSanitizeFn(replaceAllTextEmojiToString);
