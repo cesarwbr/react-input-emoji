@@ -5,6 +5,7 @@ import EmojiPicker from "./emoji-picker";
  * @typedef {object} Props
  * @property {boolean} showPicker
  * @property {'light' | 'dark' | 'auto'} theme
+ * @property {'native' | 'apple' | 'facebook' | 'google' | 'twitter'} set
  * @property {(emoji: import("../types/types").EmojiMartItem) => void} handleSelectEmoji
  * @property {boolean} disableRecent
  * @property {any[]=} customEmojis
@@ -20,6 +21,7 @@ import EmojiPicker from "./emoji-picker";
 function EmojiPickerContainer({
   showPicker,
   theme,
+  set,
   handleSelectEmoji,
   disableRecent,
   customEmojis,
@@ -41,6 +43,7 @@ function EmojiPickerContainer({
               disableRecent={disableRecent}
               customEmojis={customEmojis}
               language={language}
+              set={set}
             />
           </div>
         </div>

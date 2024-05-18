@@ -34,6 +34,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {string} value
  * @property {(value: string) => void} onChange
  * @property {"light" | "dark" | "auto"=} theme
+ * @property {'native' | 'apple' | 'facebook' | 'google' | 'twitter'=} set
  * @property {boolean=} cleanOnEnter
  * @property {(text: string) => void=} onEnter
  * @property {string=} placeholder
@@ -80,6 +81,7 @@ function InputEmoji(props, ref) {
     onBlur,
     onKeyDown,
     theme,
+    set,
     cleanOnEnter,
     placeholder,
     maxLength,
@@ -126,7 +128,7 @@ function InputEmoji(props, ref) {
 
   const setValue = useCallback(
     /**
-     * 
+     *
      * @param {string} value
      */
     (value) => {
@@ -335,6 +337,7 @@ function InputEmoji(props, ref) {
       />
       <EmojiPickerWrapper
         theme={theme}
+        set={set}
         keepOpened={keepOpened}
         disableRecent={disableRecent}
         customEmojis={customEmojis}
@@ -352,7 +355,8 @@ function InputEmoji(props, ref) {
 const InputEmojiWithRef = forwardRef(InputEmoji);
 
 InputEmojiWithRef.defaultProps = {
-  theme: /** @type {const} */ ("auto"),
+  theme: /** @type {'light' | 'dark' | 'auto'} */ ("auto"),
+  set: /** @type {'native' | 'apple' | 'facebook' | 'google' | 'twitter'} */ ("apple"),
   height: 30,
   placeholder: "Type a message",
   borderRadius: 21,
