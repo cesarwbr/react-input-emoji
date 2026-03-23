@@ -54,23 +54,7 @@ function getAllEmojisFromText(text) {
  * @return {string}
  */
 export function getImageEmoji(emoji) {
-  /** @type {HTMLElement | null} */
-  const emojiPickerEl = document.querySelector('em-emoji-picker')
-
-  if (!emojiPickerEl) {
-    return getInputEmojiNativeHTML(emoji.native)
-  }
-
-  /** @type {HTMLSpanElement | null=} */
-  const emojiSpanEl = emojiPickerEl?.shadowRoot?.querySelector(`[title="${emoji.name}"] > span > span`)
-
-  if (!emojiSpanEl) {
-    return getInputEmojiNativeHTML(emoji.native)
-  }
-
-  const style = replaceAll(emojiSpanEl.style.cssText, '"', "'");
-
-  return getInputEmojiHTML(style, emoji.native);
+  return getInputEmojiNativeHTML(emoji.native);
 }
 
 // eslint-disable-next-line valid-jsdoc
