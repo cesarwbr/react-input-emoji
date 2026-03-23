@@ -29,26 +29,36 @@ export function handleCopy(event) {
   event.preventDefault();
 }
 
-/** @type {Range|undefined} */
-/** @type {Range|undefined} */
-let currentRangeCached;
+/** @type {Map<HTMLElement, Range>} */
+const rangeCache = new Map();
+
+/**
+ * Find the input element from a selection anchor node
+ * @param {Node} node
+ * @return {HTMLElement|null}
+ */
+function findInputElement(node) {
+  if (node instanceof HTMLElement && node.classList.contains('react-input-emoji--input')) return node;
+  if (node.parentNode instanceof HTMLElement && node.parentNode.classList.contains('react-input-emoji--input')) return node.parentNode;
+  return null;
+}
 
 /**
  * Caches the current text selection range
  */
 export function cacheCurrentRange() {
   const selection = window.getSelection();
-  if (!selection.rangeCount || (selection?.anchorNode['className'] !== 'react-input-emoji--input' && selection.anchorNode.parentNode['className'] !== 'react-input-emoji--input')) return;
-  const range = selection.getRangeAt(0);
-
-  currentRangeCached = range.cloneRange();
+  if (!selection.rangeCount) return;
+  const inputEl = findInputElement(selection.anchorNode);
+  if (!inputEl) return;
+  rangeCache.set(inputEl, selection.getRangeAt(0).cloneRange());
 }
 
 /**
  * Clears the cached text selection range
  */
 export function cleanCurrentRange() {
-  currentRangeCached = undefined;
+  rangeCache.clear();
 }
 
 /**
@@ -64,7 +74,9 @@ export function handlePasteHtmlAtCaret(html) {
     if (sel === null) return;
 
     if (sel.getRangeAt && sel.rangeCount) {
-      range = currentRangeCached ?? sel.getRangeAt(0);
+      const inputEl = findInputElement(sel.anchorNode);
+      const cached = inputEl ? rangeCache.get(inputEl) : undefined;
+      range = cached ?? sel.getRangeAt(0);
       range.deleteContents();
 
       // Range.createContextualFragment() would be useful here but is
@@ -82,7 +94,7 @@ export function handlePasteHtmlAtCaret(html) {
       // Preserve the selection
       if (lastNode) {
         range = range.cloneRange();
-        currentRangeCached = range
+        if (inputEl) rangeCache.set(inputEl, range);
         range.setStartAfter(lastNode);
         range.collapse(true);
         sel.removeAllRanges();
