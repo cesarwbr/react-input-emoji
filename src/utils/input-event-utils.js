@@ -128,6 +128,12 @@ export function handlePaste(event) {
   let content;
   if (event.clipboardData) {
     content = event.clipboardData.getData("text/plain");
+    content = content
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
     content = replaceAllTextEmojis(content);
     document.execCommand("insertHTML", false, content);
   }
