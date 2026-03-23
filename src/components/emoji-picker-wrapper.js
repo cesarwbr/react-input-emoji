@@ -84,7 +84,8 @@ const EmojiPickerWrapper = props => {
 
       if (
         element.classList.contains("react-input-emoji--button") ||
-        element.classList.contains("react-input-emoji--button--icon")
+        element.classList.contains("react-input-emoji--button--icon") ||
+        element.closest(".react-emoji-picker--container")
       ) {
         return;
       }

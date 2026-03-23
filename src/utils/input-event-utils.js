@@ -244,7 +244,7 @@ export function removeHtmlExceptBr(inputDiv) {
   const tempContainer = document.createElement("div");
   tempContainer.innerHTML = temp;
   const stripped = tempContainer.innerText; // strip all html tags
-  const final = stripped.replaceAll(/\[BR\]/gi, "</br>"); // replace placeholders with <br>
+  const final = stripped.replaceAll(/\[BR\]/gi, "<br/>"); // replace placeholders with <br>
   return final;
 }
 
