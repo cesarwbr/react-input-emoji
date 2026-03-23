@@ -62,6 +62,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {HTMLDivElement=} buttonElement
  * @property {React.MutableRefObject=} buttonRef
  * @property {boolean} shouldConvertEmojiToImage
+ * @property {boolean=} disabled
  */
 
 /**
@@ -103,6 +104,7 @@ function InputEmoji(props, ref) {
     background,
     placeholderColor,
     color,
+    disabled,
   } = props;
 
   /** @type {React.MutableRefObject<import('./text-input').Ref | null>} */
@@ -294,6 +296,12 @@ function InputEmoji(props, ref) {
     let content;
     if (event.clipboardData) {
       content = event.clipboardData.getData("text/plain");
+      content = content
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
       content = pollute(content);
       document.execCommand("insertHTML", false, content);
     }
@@ -332,6 +340,7 @@ function InputEmoji(props, ref) {
         tabIndex={tabIndex}
         className={inputClass}
         onChange={handleTextInputChange}
+        disabled={disabled}
       />
       <EmojiPickerWrapper
         theme={theme}
@@ -344,6 +353,7 @@ function InputEmoji(props, ref) {
         buttonElement={buttonElement}
         buttonRef={buttonRef}
         language={language}
+        disabled={disabled}
       />
     </div>
   );
