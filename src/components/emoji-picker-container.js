@@ -10,6 +10,7 @@ import EmojiPicker from "./emoji-picker";
  * @property {any[]=} customEmojis
  * @property {('above' | 'below')=} position
  * @property {import('../types/types').Languages=} language
+ * @property {('native' | 'apple' | 'facebook' | 'google' | 'twitter')=} set
  */
 
 /**
@@ -24,7 +25,8 @@ function EmojiPickerContainer({
   disableRecent,
   customEmojis,
   position,
-  language
+  language,
+  set
 }) {
   return (
     <div className="react-emoji-picker--container">
@@ -41,6 +43,7 @@ function EmojiPickerContainer({
               disableRecent={disableRecent}
               customEmojis={customEmojis}
               language={language}
+              set={set}
             />
           </div>
         </div>

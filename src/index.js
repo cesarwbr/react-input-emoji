@@ -63,6 +63,7 @@ import { usePollute } from "./hooks/user-pollute";
  * @property {React.MutableRefObject=} buttonRef
  * @property {boolean} shouldConvertEmojiToImage
  * @property {boolean=} disabled
+ * @property {('native' | 'apple' | 'facebook' | 'google' | 'twitter')=} set
  */
 
 /**
@@ -105,6 +106,7 @@ function InputEmoji(props, ref) {
     placeholderColor,
     color,
     disabled,
+    set,
   } = props;
 
   /** @type {React.MutableRefObject<import('./text-input').Ref | null>} */
@@ -354,6 +356,7 @@ function InputEmoji(props, ref) {
         buttonRef={buttonRef}
         language={language}
         disabled={disabled}
+        set={set}
       />
     </div>
   );

@@ -12,6 +12,7 @@ const cacheI18n = {};
  * @property {boolean} disableRecent
  * @property {any[]=} customEmojis
  * @property {import('../types/types').Languages=} language
+ * @property {('native' | 'apple' | 'facebook' | 'google' | 'twitter')=} set
  */
 
 /**
@@ -19,7 +20,7 @@ const cacheI18n = {};
  * @param {Props} props
  */
 function EmojiPicker(props) {
-  const { theme, onSelectEmoji, disableRecent, customEmojis, language } = props;
+  const { theme, onSelectEmoji, disableRecent, customEmojis, language, set = "apple" } = props;
 
   /** @type {string[]} */
   const categories = useMemo(() => {
@@ -96,7 +97,7 @@ function EmojiPicker(props) {
       onEmojiSelect={onSelectEmoji}
       custom={customEmojis}
       categories={categories}
-      set="apple"
+      set={set}
       i18n={i18n}
     />
   );
