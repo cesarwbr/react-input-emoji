@@ -81,7 +81,8 @@ export function getImageEmoji(emoji) {
  * @returns
  */
 function getInputEmojiHTML(style, emoji) {
-  return `<img style="${style}; display: inline-block" data-emoji="${emoji}" src="${TRANSPARENT_GIF}" />`;
+  const styleAttr = style ? `${style}; display: inline-block` : "display: inline-block";
+  return `<img style="${styleAttr}" data-emoji="${emoji}" src="${TRANSPARENT_GIF}" />`;
 }
 
 /**
@@ -90,7 +91,7 @@ function getInputEmojiHTML(style, emoji) {
  * @returns 
  */
 function getInputEmojiNativeHTML(emoji) {
-  return `<span class="width: 18px; height: 18px; display: inline-block; margin: 0 1px;">${emoji}</span>`;
+  return `<span style="width: 18px; height: 18px; display: inline-block; margin: 0 1px;">${emoji}</span>`;
 }
 
 /**
