@@ -22,6 +22,7 @@ import { replaceAllTextEmojiToString } from "./utils/emoji-utils";
  * @property {number} tabIndex
  * @property {string} className
  * @property {(html: string) => void} onChange
+ * @property {boolean=} disabled
  */
 
 /**
@@ -203,7 +204,7 @@ const TextInput = (
           onKeyDown={handleKeyDown}
           onKeyUp={handleKeyUp}
           tabIndex={tabIndex}
-          contentEditable
+          contentEditable={!props.disabled}
           className={`react-input-emoji--input${className ? ` ${className}` : ""
             }`}
           onBlur={props.onBlur}
